@@ -14,8 +14,11 @@ public class main {
 
         selectUser.setBackground(new Color(100, 150, 250));
         selectUser.setForeground(Color.WHITE);
+        selectUser.setPreferredSize(new Dimension(80,30));
         selectOwner.setBackground(new Color(100, 150, 250));
         selectOwner.setForeground(Color.WHITE);
+        selectOwner.setPreferredSize(new Dimension(80,30));
+
         
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         selectUser.setFont(buttonFont);
