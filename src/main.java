@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class main {
+public class Main {
     private static JFrame mainFrame;
     private static JPanel mainPanel, buttonPanel;
     private static JButton selectUser, selectOwner;
@@ -12,7 +12,6 @@ public class main {
         selectUser = new JButton("User");
         selectOwner = new JButton("Owner");
 
-        // Customize button colors and fonts
         selectUser.setBackground(new Color(100, 150, 250));
         selectUser.setForeground(Color.WHITE);
         selectOwner.setBackground(new Color(100, 150, 250));
@@ -22,12 +21,11 @@ public class main {
         selectUser.setFont(buttonFont);
         selectOwner.setFont(buttonFont);
 
-        // Add action listeners
         selectUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new user(); // Assuming User is another class
+                new User(); // Assuming User is another class
             }
         });
 
@@ -35,7 +33,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new owner(); // Assuming Owner is another class
+                new Owner(); // Assuming Owner is another class
             }
         });
     }
@@ -52,14 +50,12 @@ public class main {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        // Customize the main panel background color
         mainPanel.setBackground(new Color(240, 240, 240)); // Light gray background
 
         JLabel welcomeMessage, userSelectMessage; 
         welcomeMessage = new JLabel("Welcome to VCRTS!");
         userSelectMessage = new JLabel("I'm a");
 
-        // Set font for labels
         Font labelFont = new Font("Arial", Font.BOLD, 18);
         welcomeMessage.setFont(labelFont);
         userSelectMessage.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -68,7 +64,6 @@ public class main {
         welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
         userSelectMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add labels and button panel to the main panel
         mainPanel.add(Box.createVerticalStrut(20)); // Add vertical space
         mainPanel.add(welcomeMessage);
         mainPanel.add(userSelectMessage);
