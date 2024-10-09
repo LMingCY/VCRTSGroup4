@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class main {
+public class Main {
     private static JFrame mainFrame;
     private static JPanel mainPanel, buttonPanel;
     private static JButton selectUser, selectOwner;
@@ -25,7 +25,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new user(); // Assuming User is another class
+                new User(); // Assuming User is another class
             }
         });
 
@@ -33,7 +33,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new owner(); // Assuming Owner is another class
+                new Owner(); // Assuming Owner is another class
             }
         });
     }
