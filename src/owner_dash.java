@@ -125,6 +125,9 @@ public class owner_dash extends JFrame {
      String ownerData = "Owner ID: " + ownerIDField.getText() + ", Vehicle Info: " + vehicleInfoField.getText() + ", Residency Time: " + residencyTimeField.getText();
      String timestamp = LocalDateTime.now().toString();
      saveToFile(ownerData + "\nTimestamp: " + timestamp); // Save data to file
+     ownerIDField.setText("");
+     vehicleInfoField.setText("");
+     residencyTimeField.setText("");
      JOptionPane.showMessageDialog(this, "Entries saved!"); // Show confirmation dialog
  }
 

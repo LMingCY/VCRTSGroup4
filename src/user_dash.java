@@ -113,6 +113,9 @@ public class user_dash extends JFrame implements ActionListener {
                     ", Job Deadline: " + jobDeadlineField.getText();
             String timestamp = LocalDateTime.now().toString();
             saveToFile(userData + "\nTimestamp: " + timestamp);
+            userIDField.setText("");
+            jobDurationField.setText("");
+            jobDeadlineField.setText("");
             JOptionPane.showMessageDialog(this, "Entries saved!");
         }
     }

@@ -1,1 +1,7 @@
 
+Owner ID: 111, Vehicle Info: 11, Residency Time: 111
+Timestamp: 2024-10-09T15:34:53.467166
+
+Owner ID: 111, Vehicle Info: 123, Residency Time: 222
+Timestamp: 2024-10-09T15:38:22.615064
+
