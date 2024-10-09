@@ -52,13 +52,13 @@ public class user_dash extends JFrame implements ActionListener {
         signOutButton = new JButton("Sign Out");
         helpButton = new JButton("Help");
 
-        // Customize button colors and fonts
+       
         customizeButton(submitButton);
         customizeButton(clearButton);
         customizeButton(signOutButton);
         customizeButton(helpButton);
 
-        // Add action listeners
+        // Adding action listeners
         submitButton.addActionListener(this);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -74,7 +74,7 @@ public class user_dash extends JFrame implements ActionListener {
                 userIDField.setText("");
                 jobDurationField.setText("");
                 jobDeadlineField.setText("");
-                main.getMainFrame(); // Navigate back to main dashboard
+                main.getMainFrame(); 
                 dispose();
             }
         });
@@ -85,24 +85,24 @@ public class user_dash extends JFrame implements ActionListener {
             }
         });
 
-        // Add buttons to button panel
+        // Adding buttons to button panel
         buttonPanel.add(submitButton);
         buttonPanel.add(clearButton);
         buttonPanel.add(signOutButton);
         buttonPanel.add(helpButton);
 
-        // Add panels to the frame
+        // Adding panels to the frame
         add(mainPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        setLocationRelativeTo(null); // Center window
+        setLocationRelativeTo(null); 
         setVisible(true);
     }
 
     private void customizeButton(JButton button) {
-        button.setBackground(new Color(100, 150, 250)); // Set button color
-        button.setForeground(Color.WHITE);              // Set text color
-        button.setFont(new Font("Arial", Font.BOLD, 14)); // Set font style
+        button.setBackground(new Color(100, 150, 250)); 
+        button.setForeground(Color.WHITE);              
+        button.setFont(new Font("Arial", Font.BOLD, 14)); 
     }
 
     @Override
