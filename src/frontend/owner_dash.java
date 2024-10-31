@@ -1,3 +1,5 @@
+package frontend;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,7 +35,7 @@ public class owner_dash extends JFrame {
      Font fieldFont = new Font("Arial", Font.PLAIN, 14);
      Color buttonColor = new Color(100, 150, 250); 
 
-     // Create and configure labels and text fields for owner data input
+     // Create and configure labels and text fields for frontend.owner data input
      JLabel ownerIDLabel = new JLabel("Owner ID:");
      ownerIDLabel.setFont(labelFont);
      ownerIDField = new JTextField();
@@ -65,13 +67,13 @@ public class owner_dash extends JFrame {
      clearButton.setFocusPainted(false);
      clearButton.addActionListener(e -> clearFields()); // Clear fields when clicked
 
-     // Configure the Sign Out button to return to main menu
+     // Configure the Sign Out button to return to frontend.main menu
      signOutButton = new JButton("Sign Out");
      signOutButton.setFont(labelFont);
      signOutButton.setBackground(buttonColor);
      signOutButton.setForeground(Color.WHITE);
      signOutButton.setFocusPainted(false);
-     signOutButton.addActionListener(e -> signOut()); // Return to main frame when clicked
+     signOutButton.addActionListener(e -> signOut()); // Return to frontend.main frame when clicked
 
      // Configure the Help button and set its action to display help information
      helpButton = new JButton("Help");
@@ -114,7 +116,7 @@ public class owner_dash extends JFrame {
      gbc.gridx = 0; gbc.gridwidth = 2;
      mainPanel.add(helpButton, gbc); // Add help button centered in layout
 
-     // Add the main panel to the frame and make it visible
+     // Add the frontend.main panel to the frame and make it visible
      add(mainPanel);
      setVisible(true);
  }
@@ -138,9 +140,9 @@ public class owner_dash extends JFrame {
      residencyTimeField.setText("");
  }
 
- // Method to handle Sign Out button action - returns to main frame
+ // Method to handle Sign Out button action - returns to frontend.main frame
  private void signOut() {
-     main.getMainFrame(); // Show main frame again
+     main.getMainFrame(); // Show frontend.main frame again
      dispose(); // Close this window
  }
 

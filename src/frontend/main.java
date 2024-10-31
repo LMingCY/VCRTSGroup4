@@ -1,7 +1,10 @@
+package frontend;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class main {
     private static JFrame mainFrame;
@@ -28,7 +31,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new user(); // Assuming User is another class
+                new user(); // Calls the user class
             }
         });
 
@@ -36,7 +39,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new owner(); // Assuming Owner is another class
+                new owner(); // Calls the owner class
             }
         });
     }
@@ -93,7 +96,7 @@ public class main {
         mainFrame.setVisible(true);
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, SQLException {
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //MAC Support
         getMainFrame();
     }

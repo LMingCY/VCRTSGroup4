@@ -1,18 +1,20 @@
+package frontend;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class user extends JFrame {
+public class owner extends JFrame {
     // Declare UI components
-    JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
-    JTextField usernameField;
+    JLabel welcomeLabel, loginPromptLabel, ownernameLabel, passwordLabel;
+    JTextField ownernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
-    public user() {
-        // Set up the main frame properties
-        super("User Login");
+    public owner() {
+        // Set up the frontend.main frame properties
+        super("Owner Login");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
@@ -23,7 +25,7 @@ public class user extends JFrame {
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 
-        // Create main panel with padding and background color
+        // Create frontend.main panel with padding and background color
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add padding around the panel
@@ -36,14 +38,14 @@ public class user extends JFrame {
         loginPromptLabel = new JLabel("Please login:");
         loginPromptLabel.setFont(labelFont);
 
-        usernameLabel = new JLabel("Username:");
-        usernameLabel.setFont(labelFont);
+        ownernameLabel = new JLabel("Username:");
+        ownernameLabel.setFont(labelFont);
         passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
 
         // Initialize text fields for username and password
-        usernameField = new JTextField(15);
-        usernameField.setFont(fieldFont);
+        ownernameField = new JTextField(15);
+        ownernameField.setFont(fieldFont);
         passwordField = new JPasswordField(15);
         passwordField.setFont(fieldFont);
 
@@ -66,9 +68,9 @@ public class user extends JFrame {
 
         gbc.gridy++; gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.EAST;
-        panel.add(usernameLabel, gbc); // Username label
+        panel.add(ownernameLabel, gbc); // Username label
         gbc.gridx = 1;
-        panel.add(usernameField, gbc); // Username field
+        panel.add(ownernameField, gbc); // Username field
 
         gbc.gridx = 0; gbc.gridy++;
         panel.add(passwordLabel, gbc); // Password label
@@ -81,7 +83,7 @@ public class user extends JFrame {
         gbc.gridy++;
         panel.add(backButton, gbc);
 
-        // Add the main panel to the frame
+        // Add the frontend.main panel to the frame
         add(panel);
         setVisible(true); // Display the frame
 
@@ -89,10 +91,11 @@ public class user extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                // Perform a simple login action
+                String username = ownernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new user_dash(); // Open the dashboard
+                new owner_dash(); // Open the dashboard
                 setVisible(false); // Hide the login frame
             }
         });
@@ -100,10 +103,10 @@ public class user extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame(); // Go back to the main frame
+                // Go back to the frontend.main frame
+                main.getMainFrame();
                 dispose(); // Close the login frame
             }
         });
     }
-
 }
