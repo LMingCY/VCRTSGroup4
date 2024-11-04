@@ -122,7 +122,7 @@ public class owner_dash extends JFrame {
  // Method to handle Submit button action - captures input data and saves to file
  private void submitData(ActionEvent e) {
      // Combine input data with a timestamp
-     String ownerData = "Owner ID: " + ownerIDField.getText() + ", Vehicle Info: " + vehicleInfoField.getText() + ", Residency Time: " + residencyTimeField.getText();
+     String ownerData = "Owner ID: " + ownerIDField.getText() + ", Vehicle Info : " + vehicleInfoField.getText() + ", Residency Time (minutes): " + residencyTimeField.getText();
      String timestamp = LocalDateTime.now().toString();
      saveToFile(ownerData + "\nTimestamp: " + timestamp); // Save data to file
      JOptionPane.showMessageDialog(this, "Entries saved!"); // Show confirmation dialog
