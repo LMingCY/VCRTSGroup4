@@ -33,7 +33,7 @@ public class user_dash extends JFrame {
         userIDField = new JTextField();
         userIDField.setFont(fieldFont);
 
-        JLabel jobDurationLabel = new JLabel("Job Duration:");
+        JLabel jobDurationLabel = new JLabel("Job Duration (minutes) :");
         jobDurationLabel.setFont(labelFont);
         jobDurationField = new JTextField();
         jobDurationField.setFont(fieldFont);
@@ -109,7 +109,7 @@ public class user_dash extends JFrame {
 
     private void submitData(ActionEvent e) {
         String userData = "User ID: " + userIDField.getText() +
-                ", Job Duration: " + jobDurationField.getText() +
+                ", Job Duration (minutes): " + jobDurationField.getText() +
                 ", Job Deadline: " + jobDeadlineField.getText();
         String timestamp = LocalDateTime.now().toString();
         saveToFile(userData + "\nTimestamp: " + timestamp);
