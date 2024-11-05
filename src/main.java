@@ -30,7 +30,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new user(); // Assuming user class exists
+                new user(); 
             }
         });
 
@@ -38,7 +38,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new owner(); // Assuming owner class exists
+                new owner(); 
             }
         });
 
@@ -46,7 +46,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new vc(); // Opens the vc class window
+                new vc(); 
             }
         });
     }
@@ -56,7 +56,7 @@ public class main {
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
-        buttonPanel.add(selectVC); // Add VC button to the panel
+        buttonPanel.add(selectVC); 
     }
 
     private static void setMainPanel() {
