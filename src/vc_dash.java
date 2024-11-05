@@ -23,7 +23,7 @@ public class vc_dash extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.anchor = GridBagConstraints.WEST;
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
@@ -67,19 +67,22 @@ public class vc_dash extends JFrame {
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> backToMain());
 
-        // Add components to the panel, centering buttons
+        // Add components to the panel, left-aligning buttons
         gbc.gridx = 0;
         gbc.gridy = 0;
         mainPanel.add(jobIDLabel, gbc);
-        gbc.gridy++;
+        gbc.gridx = 1;
         mainPanel.add(jobIDField, gbc);
 
         gbc.gridy++;
+        gbc.gridx = 0;
         mainPanel.add(jobDurationLabel, gbc);
-        gbc.gridy++;
+        gbc.gridx = 1;
         mainPanel.add(jobDurationField, gbc);
 
         gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
         mainPanel.add(addJobButton, gbc);
 
         gbc.gridy++;
