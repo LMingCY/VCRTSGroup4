@@ -4,34 +4,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class vc extends JFrame {
-    // Declare UI components
+ 
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
-<<<<<<< HEAD
-    public vc() {
-=======
     public vc () {
->>>>>>> a62acc44d924b28ec87145074f0135ddf6c15ac0
-        // Set up the main frame properties
+       
         super("Vehicular Cloud Login");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
 
+        
         Color buttonColor = new Color(100, 150, 250);
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 
+       
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); 
 
+        
         welcomeLabel = new JLabel("Welcome to Vehicular Cloud!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         loginPromptLabel = new JLabel("Please log in:");
@@ -42,11 +41,13 @@ public class vc extends JFrame {
         passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
 
+        
         usernameField = new JTextField(15);
         usernameField.setFont(fieldFont);
         passwordField = new JPasswordField(15);
         passwordField.setFont(fieldFont);
 
+       
         loginButton = new JButton("Login");
         loginButton.setBackground(buttonColor);
         loginButton.setForeground(Color.WHITE);
@@ -57,8 +58,9 @@ public class vc extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
 
+       
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-        panel.add(welcomeLabel, gbc); 
+        panel.add(welcomeLabel, gbc);
         gbc.gridy++;
         panel.add(loginPromptLabel, gbc);
 
@@ -71,16 +73,19 @@ public class vc extends JFrame {
         gbc.gridx = 0; gbc.gridy++;
         panel.add(passwordLabel, gbc); 
         gbc.gridx = 1;
-        panel.add(passwordField, gbc);
+        panel.add(passwordField, gbc); 
 
+        
         gbc.gridy++; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
         panel.add(loginButton, gbc);
         gbc.gridy++;
         panel.add(backButton, gbc);
 
+       
         add(panel);
         setVisible(true); 
 
+        
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,8 +94,8 @@ public class vc extends JFrame {
 
                 if (username.equals("vcuser") && password.equals("vcpass")) { 
                     JOptionPane.showMessageDialog(null, "Login successful");
-                    new vc_dash(); 
-                    setVisible(false);
+                    new vc_dash();
+                    setVisible(false); 
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials. Try again.");
                 }
@@ -106,3 +111,4 @@ public class vc extends JFrame {
         });
     }
 }
+
