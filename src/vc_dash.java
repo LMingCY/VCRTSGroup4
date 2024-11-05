@@ -67,7 +67,6 @@ public class vc_dash extends JFrame {
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> backToMain());
 
-        // Add components to the panel, left-aligning buttons
         gbc.gridx = 0;
         gbc.gridy = 0;
         mainPanel.add(jobIDLabel, gbc);
