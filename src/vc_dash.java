@@ -1,119 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class vcDashLogin extends JFrame {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton, backButton;
-
-    public vcDashLogin() {
-        setTitle("VC Dashboard Login");
-        setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        JPanel loginPanel = new JPanel(new GridBagLayout());
-        loginPanel.setBackground(new Color(240, 240, 240));
-        loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-
-        Font labelFont = new Font("Arial", Font.BOLD, 14);
-        Color buttonColor = new Color(100, 150, 250);
-
-        JLabel welcomeLabel = new JLabel("Welcome to VC Dashboard!");
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        loginPanel.add(welcomeLabel, gbc);
-
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setFont(labelFont);
-        gbc.gridy++;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.EAST;
-        loginPanel.add(usernameLabel, gbc);
-
-        usernameField = new JTextField(15);
-        usernameField.setFont(labelFont);
-        gbc.gridx = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        loginPanel.add(usernameField, gbc);
-
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setFont(labelFont);
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.EAST;
-        loginPanel.add(passwordLabel, gbc);
-
-        passwordField = new JPasswordField(15);
-        passwordField.setFont(labelFont);
-        gbc.gridx = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        loginPanel.add(passwordField, gbc);
-
-        loginButton = new JButton("Login");
-        loginButton.setFont(labelFont);
-        loginButton.setBackground(buttonColor);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setFocusPainted(false);
-        loginButton.addActionListener(e -> attemptLogin());
-
-        backButton = new JButton("Back");
-        backButton.setFont(labelFont);
-        backButton.setBackground(buttonColor);
-        backButton.setForeground(Color.WHITE);
-        backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> backToMain());
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(loginButton, gbc);
-
-        gbc.gridy++;
-        loginPanel.add(backButton, gbc);
-
-        add(loginPanel);
-        setVisible(true);
-    }
-
-    private void attemptLogin() {
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
-       
-        if (username.equals("vcuser") && password.equals("vcpass")) { // Example credentials
-            JOptionPane.showMessageDialog(this, "Login successful.");
-            new vc_dash(); // Open the main dashboard
-            dispose(); // Close the login window
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid username or password.");
-        }
-    }
-
-    private void backToMain() {
-        main.getMainFrame(); // Return to main application frame
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        new vcDashLogin();
-    }
-}
-
-class vc_dash extends JFrame {
+public class vc_dash extends JFrame {
     private JTextField jobIDField, jobDurationField;
     private JButton addJobButton, calculateCompletionTimeButton, clearButton, backButton;
     private List<Integer> jobDurations = new ArrayList<>();
 
     public vc_dash() {
+        createDashboard();
+    }
+
+    private void createDashboard() {
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
         setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -126,21 +26,20 @@ class vc_dash extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.anchor = GridBagConstraints.CENTER; 
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
-        Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
         JLabel jobIDLabel = new JLabel("Job ID:");
         jobIDLabel.setFont(labelFont);
-        jobIDField = new JTextField();
-        jobIDField.setFont(fieldFont);
+        jobIDField = new JTextField(10);
+        jobIDField.setFont(labelFont);
 
         JLabel jobDurationLabel = new JLabel("Job Duration (minutes):");
         jobDurationLabel.setFont(labelFont);
-        jobDurationField = new JTextField();
-        jobDurationField.setFont(fieldFont);
+        jobDurationField = new JTextField(10);
+        jobDurationField.setFont(labelFont);
 
         addJobButton = new JButton("Add Job");
         addJobButton.setFont(labelFont);
@@ -168,10 +67,9 @@ class vc_dash extends JFrame {
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> backToMain());
+        backButton.addActionListener(e -> signOut());
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridx = 0; gbc.gridy = 0;
         mainPanel.add(jobIDLabel, gbc);
         gbc.gridx = 1;
         mainPanel.add(jobIDField, gbc);
@@ -183,8 +81,7 @@ class vc_dash extends JFrame {
         mainPanel.add(jobDurationField, gbc);
 
         gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER; 
         mainPanel.add(addJobButton, gbc);
 
         gbc.gridy++;
@@ -233,8 +130,11 @@ class vc_dash extends JFrame {
         jobDurationField.setText("");
     }
 
-    private void backToMain() {
-        main.getMainFrame(); // Return to main application frame
-        dispose();
+    private void signOut() {
+        System.exit(0); 
+    }
+
+    public static void main(String[] args) {
+        new vc_dash();
     }
 }
