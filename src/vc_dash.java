@@ -6,8 +6,8 @@ import java.util.List;
 
 public class vc_dash extends JFrame {
     private JTextField jobIDField, jobDurationField;
-    private JButton addJobButton, calculateCompletionTimeButton, clearButton, backButton;
-    private List<Integer> jobDurations = new ArrayList<>();
+    private JButton viewJobsButton, calculateCompletionTimeButton, clearButton, backButton;
+    private List<Job> jobs = new ArrayList<>(); // Store jobs as Job objects
 
     public vc_dash() {
         createDashboard();
@@ -26,7 +26,7 @@ public class vc_dash extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.CENTER; 
+        gbc.anchor = GridBagConstraints.CENTER; // Center all components
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
         Color buttonColor = new Color(100, 150, 250);
@@ -41,12 +41,12 @@ public class vc_dash extends JFrame {
         jobDurationField = new JTextField(10);
         jobDurationField.setFont(labelFont);
 
-        addJobButton = new JButton("Add Job");
-        addJobButton.setFont(labelFont);
-        addJobButton.setBackground(buttonColor);
-        addJobButton.setForeground(Color.WHITE);
-        addJobButton.setFocusPainted(false);
-        addJobButton.addActionListener(this::addJob);
+        viewJobsButton = new JButton("View Jobs");
+        viewJobsButton.setFont(labelFont);
+        viewJobsButton.setBackground(buttonColor);
+        viewJobsButton.setForeground(Color.WHITE);
+        viewJobsButton.setFocusPainted(false);
+        viewJobsButton.addActionListener(this::viewJobs);
 
         calculateCompletionTimeButton = new JButton("Calculate Completion Time");
         calculateCompletionTimeButton.setFont(labelFont);
@@ -69,6 +69,7 @@ public class vc_dash extends JFrame {
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> signOut());
 
+        // Add components to the panel
         gbc.gridx = 0; gbc.gridy = 0;
         mainPanel.add(jobIDLabel, gbc);
         gbc.gridx = 1;
@@ -81,8 +82,8 @@ public class vc_dash extends JFrame {
         mainPanel.add(jobDurationField, gbc);
 
         gbc.gridy++;
-        gbc.gridx = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER; 
-        mainPanel.add(addJobButton, gbc);
+        gbc.gridx = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER; // Center button
+        mainPanel.add(viewJobsButton, gbc);
 
         gbc.gridy++;
         mainPanel.add(calculateCompletionTimeButton, gbc);
@@ -97,14 +98,15 @@ public class vc_dash extends JFrame {
         setVisible(true);
     }
 
-    private void addJob(ActionEvent e) {
-        try {
-            int duration = Integer.parseInt(jobDurationField.getText());
-            jobDurations.add(duration);
-            JOptionPane.showMessageDialog(this, "Job added with duration " + duration + " minutes.");
-            clearFields();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid duration.");
+    private void viewJobs(ActionEvent e) {
+        if (jobs.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No jobs available.");
+        } else {
+            StringBuilder jobList = new StringBuilder("Current Jobs:\n");
+            for (Job job : jobs) {
+                jobList.append("Job ID: ").append(job.getId()).append(", Duration: ").append(job.getDuration()).append(" minutes\n");
+            }
+            JOptionPane.showMessageDialog(this, jobList.toString());
         }
     }
 
@@ -112,8 +114,8 @@ public class vc_dash extends JFrame {
         List<Integer> completionTimes = new ArrayList<>();
         int currentTime = 0;
 
-        for (int duration : jobDurations) {
-            currentTime += duration;
+        for (Job job : jobs) {
+            currentTime += job.getDuration();
             completionTimes.add(currentTime);
         }
 
@@ -131,10 +133,29 @@ public class vc_dash extends JFrame {
     }
 
     private void signOut() {
-        System.exit(0); 
+        System.exit(0); // Sign out action
     }
 
     public static void main(String[] args) {
         new vc_dash();
+    }
+
+    // Job class to store job information
+    private static class Job {
+        private final String id;
+        private final int duration;
+
+        public Job(String id, int duration) {
+            this.id = id;
+            this.duration = duration;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
     }
 }
