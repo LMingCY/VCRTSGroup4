@@ -4,29 +4,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class vcLogin extends JFrame {
+    // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
     public vcLogin() {
-        super("VC Login");
+        // Set up the main frame properties
+        super("Vehicular Cloud Login");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // Center the window on the screen
 
+        // Define color scheme and fonts for UI consistency
         Color buttonColor = new Color(100, 150, 250);
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 
+        // Create main panel with padding and background color
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add padding around the panel
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 10, 10, 10); // Set component padding
 
-        welcomeLabel = new JLabel("Welcome to VC!");
+        // Initialize labels with specific fonts
+        welcomeLabel = new JLabel("Welcome to Vehicular Cloud!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         loginPromptLabel = new JLabel("Please log in:");
         loginPromptLabel.setFont(labelFont);
@@ -36,11 +41,13 @@ public class vcLogin extends JFrame {
         passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
 
+        // Initialize text fields for username and password
         usernameField = new JTextField(15);
         usernameField.setFont(fieldFont);
         passwordField = new JPasswordField(15);
         passwordField.setFont(fieldFont);
 
+        // Initialize buttons with colors and fonts, and add action listeners
         loginButton = new JButton("Login");
         loginButton.setBackground(buttonColor);
         loginButton.setForeground(Color.WHITE);
@@ -51,39 +58,44 @@ public class vcLogin extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
 
+        // Position and add components to the panel using GridBagLayout
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-        panel.add(welcomeLabel, gbc);
+        panel.add(welcomeLabel, gbc); // Welcome message at the top
         gbc.gridy++;
         panel.add(loginPromptLabel, gbc);
 
         gbc.gridy++; gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.EAST;
-        panel.add(usernameLabel, gbc);
+        panel.add(usernameLabel, gbc); // Username label
         gbc.gridx = 1;
-        panel.add(usernameField, gbc);
+        panel.add(usernameField, gbc); // Username field
 
         gbc.gridx = 0; gbc.gridy++;
-        panel.add(passwordLabel, gbc);
+        panel.add(passwordLabel, gbc); // Password label
         gbc.gridx = 1;
-        panel.add(passwordField, gbc);
+        panel.add(passwordField, gbc); // Password field
 
+        // Position buttons and center them
         gbc.gridy++; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
         panel.add(loginButton, gbc);
         gbc.gridy++;
         panel.add(backButton, gbc);
 
+        // Add the main panel to the frame
         add(panel);
-        setVisible(true);
+        setVisible(true); // Display the frame
 
+        // Set up button actions
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
+
                 if (username.equals("vcuser") && password.equals("vcpass")) { // Example credentials
                     JOptionPane.showMessageDialog(null, "Login successful");
-                    new vc(); // Open VC main window
-                    setVisible(false);
+                    new vc_dash(); // Open the dashboard
+                    setVisible(false); // Hide the login frame
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials. Try again.");
                 }
@@ -93,94 +105,9 @@ public class vcLogin extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame();
-                dispose();
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-        new vcLogin();
-    }
-}
-
-class vc extends JFrame {
-    JLabel titleLabel;
-    JButton inspectJobButton, jobCompletionTimeButton, backButton;
-
-    public vc() {
-        super("Vehicular Cloud RTS Controller");
-        setSize(400, 350);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
-        setLocationRelativeTo(null);
-
-        Color buttonColor = new Color(100, 150, 250);
-        Font labelFont = new Font("Arial", Font.BOLD, 16);
-
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(240, 240, 240));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-
-        titleLabel = new JLabel("Vehicular Cloud RTS - Controller");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-
-        inspectJobButton = new JButton("Inspect Job");
-        inspectJobButton.setBackground(buttonColor);
-        inspectJobButton.setForeground(Color.WHITE);
-        inspectJobButton.setFont(labelFont);
-
-        jobCompletionTimeButton = new JButton("Job Completion Time");
-        jobCompletionTimeButton.setBackground(buttonColor);
-        jobCompletionTimeButton.setForeground(Color.WHITE);
-        jobCompletionTimeButton.setFont(labelFont);
-
-        backButton = new JButton("Back");
-        backButton.setBackground(buttonColor);
-        backButton.setForeground(Color.WHITE);
-        backButton.setFont(labelFont);
-
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-        panel.add(titleLabel, gbc);
-
-        gbc.gridy++;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(inspectJobButton, gbc);
-
-        gbc.gridy++;
-        panel.add(jobCompletionTimeButton, gbc);
-
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        panel.add(backButton, gbc);
-
-        add(panel);
-        setVisible(true);
-
-        inspectJobButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Inspecting job details...");
-            }
-        });
-
-        jobCompletionTimeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Calculating job completion time...");
-            }
-        });
-
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                main.getMainFrame();
-                dispose();
+                main.getMainFrame(); // Go back to the main frame
+                dispose(); // Close the login frame
             }
         });
     }
 }
-
