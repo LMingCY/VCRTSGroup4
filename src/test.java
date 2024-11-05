@@ -1,8 +1,8 @@
-import dashboard.ClientDashboard;
-import dashboard.OwnerDashboard;
-import job.Job;
-import master.Idgenerator;
-import vehicle.Vehicle;
+import backend.dashboard.ClientDashboard;
+import backend.dashboard.OwnerDashboard;
+import backend.job.Job;
+import backend.master.Idgenerator;
+import backend.vehicle.Vehicle;
 
 import java.time.Duration;
 import java.util.Date;
@@ -17,7 +17,7 @@ public class test {
         for (int i = 0; i < 101; i++){
             Vehicle vehicle = owner.addVehicle("Toyota", "Corolla", ownerId, Duration.ofHours(5));
 
-            // Output vehicle information to a file
+            // Output backend.vehicle information to a file
             owner.writeVehicleToFile(vehicle, "vehicles.txt");
 
             System.out.println("Vehicle added and information written to file.");
@@ -25,7 +25,7 @@ public class test {
         for (int i = 0; i < 101; i++) {
             Job job = client.addJob("Calculation", clientId, Duration.ofHours(1),deadline);
             client.writeJobToFile(job, "jobs.txt");
-            System.out.println("job added and information written to file.");
+            System.out.println("backend.job added and information written to file.");
 
         }
     }

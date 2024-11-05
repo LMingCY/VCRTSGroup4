@@ -1,4 +1,4 @@
-package MySQL;
+package backend.MySQL;
 
 import java.sql.*;
 

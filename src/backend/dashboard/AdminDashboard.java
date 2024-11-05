@@ -1,14 +1,13 @@
-package dashboard;
+package backend.dashboard;
 
-import job.Job;
-import vehicle.Vehicle;
+import backend.job.Job;
+import backend.vehicle.Vehicle;
 import java.util.HashMap;
-import java.util.Map;
 
 public class AdminDashboard {
     /*
     TODO:
-    -$ vehicle.Vehicle methods.Availability
+    -$ backend.vehicle.Vehicle methods.Availability
     - Read vehicles.txt to get all available vehicles.
     - Read jobs.txt to get all available jobs.
     - Job Status and Management
@@ -18,13 +17,13 @@ public class AdminDashboard {
     private HashMap<String, Job> jobs = new HashMap();
 
     public void checkAvailability() {
-        System.out.println("Checking vehicle availability:");
+        System.out.println("Checking backend.vehicle availability:");
         for (Vehicle vehicle : vehicles.values()) {
             System.out.println("Vehicle ID: " + vehicle.getVehicleId() + ", Available: " + vehicle.checkAvailability());
         }
     }
     public void checkJobStatus() {
-        System.out.println("Checking job status:");
+        System.out.println("Checking backend.job status:");
         for (Job job : jobs.values()) {
             System.out.println("Job ID: " + job.getJobId() + ", Available: " + job.getStatus());
         }

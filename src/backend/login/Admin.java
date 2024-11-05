@@ -1,6 +1,6 @@
-package login;
+package backend.login;
 
-import master.Account;
+import backend.master.Account;
 
 public class Admin extends Account {
     private int adminId;

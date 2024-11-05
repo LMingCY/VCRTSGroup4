@@ -33,7 +33,7 @@ public class owner extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginPromptLabel = new JLabel("Please login:");
+        loginPromptLabel = new JLabel("Please backend.login:");
         loginPromptLabel.setFont(labelFont);
 
         ownernameLabel = new JLabel("Username:");
@@ -89,12 +89,12 @@ public class owner extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Perform a simple login action
+                // Perform a simple backend.login action
                 String username = ownernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new owner_dash(); // Open the dashboard
-                setVisible(false); // Hide the login frame
+                new owner_dash(); // Open the backend.dashboard
+                setVisible(false); // Hide the backend.login frame
             }
         });
 
@@ -103,7 +103,7 @@ public class owner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Go back to the main frame
                 main.getMainFrame();
-                dispose(); // Close the login frame
+                dispose(); // Close the backend.login frame
             }
         });
     }

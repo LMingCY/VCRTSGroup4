@@ -1,7 +1,7 @@
-package master;
+package backend.master;
 
 public class Account {
-    private String username, password; //these are for login
+    private String username, password; //these are for backend.login
     private String name, email; //these are credentials
     public Account(String username, String password) {
         this.username = username;

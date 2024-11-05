@@ -1,15 +1,14 @@
-package dashboard;
+package backend.dashboard;
 /*
     TODO:
-    >Submit job
-    >Inspect job
+    >Submit backend.job
+    >Inspect backend.job
     >See available vehicles
-    >Cancel job
+    >Cancel backend.job
  */
 
-import job.Job;
-import master.Idgenerator;
-import vehicle.Vehicle;
+import backend.job.Job;
+import backend.master.Idgenerator;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class ClientDashboard {
         try (FileWriter writer = new FileWriter(filePath, true)) {
             writer.write(job.toString() + "\n");
         } catch (IOException e) {
-            System.out.println("Error writing job information to file: " + e.getMessage());
+            System.out.println("Error writing backend.job information to file: " + e.getMessage());
         }
     }
 }

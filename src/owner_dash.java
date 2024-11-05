@@ -1,3 +1,6 @@
+import backend.dashboard.OwnerDashboard;
+import backend.vehicle.Vehicle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +13,13 @@ import java.io.IOException;
 public class owner_dash extends JFrame {
  private JTextField ownerIDField, vehicleInfoField, residencyTimeField;
  private JButton submitButton, clearButton, signOutButton, helpButton;
+ private OwnerDashboard ownerDashboard = new OwnerDashboard();
+ private Vehicle vehicle;
 
- // Constructor to initialize and configure the GUI
+
+    // Constructor to initialize and configure the GUI
  public owner_dash() {
-     setTitle("Vehicular Cloud Console"); 
+     setTitle("Vehicular Cloud Console");
      setSize(400, 400); // Set window size
      setDefaultCloseOperation(EXIT_ON_CLOSE); 
      setLocationRelativeTo(null); 
@@ -39,7 +45,7 @@ public class owner_dash extends JFrame {
      ownerIDField = new JTextField();
      ownerIDField.setFont(fieldFont);
 
-     JLabel vehicleInfoLabel = new JLabel("Vehicle Info:");
+     JLabel vehicleInfoLabel = new JLabel("Vehicle Make:");
      vehicleInfoLabel.setFont(labelFont);
      vehicleInfoField = new JTextField();
      vehicleInfoField.setFont(fieldFont);
@@ -122,9 +128,7 @@ public class owner_dash extends JFrame {
  // Method to handle Submit button action - captures input data and saves to file
  private void submitData(ActionEvent e) {
      // Combine input data with a timestamp
-     String ownerData = "Owner ID: " + ownerIDField.getText() + ", Vehicle Info: " + vehicleInfoField.getText() + ", Residency Time: " + residencyTimeField.getText();
-     String timestamp = LocalDateTime.now().toString();
-     saveToFile(ownerData + "\nTimestamp: " + timestamp); // Save data to file
+     ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleInfoField.getText(), ownerIDField.get, residencyTimeField.getText()); //need to come up a way to store id as int.
      JOptionPane.showMessageDialog(this, "Entries saved!"); // Show confirmation dialog
  }
 

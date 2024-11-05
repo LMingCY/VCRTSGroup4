@@ -1,4 +1,4 @@
-package master;
+package backend.master;
 
 public class Idgenerator {
     private static int userCounter = 100_000_000;

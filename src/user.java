@@ -33,7 +33,7 @@ public class user extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginPromptLabel = new JLabel("Please login:");
+        loginPromptLabel = new JLabel("Please backend.login:");
         loginPromptLabel.setFont(labelFont);
 
         usernameLabel = new JLabel("Username:");
@@ -92,8 +92,8 @@ public class user extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new user_dash(); // Open the dashboard
-                setVisible(false); // Hide the login frame
+                new user_dash(); // Open the backend.dashboard
+                setVisible(false); // Hide the backend.login frame
             }
         });
 
@@ -101,7 +101,7 @@ public class user extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 main.getMainFrame(); // Go back to the main frame
-                dispose(); // Close the login frame
+                dispose(); // Close the backend.login frame
             }
         });
     }

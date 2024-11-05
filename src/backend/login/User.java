@@ -1,6 +1,6 @@
-package login;
+package backend.login;
 
-import master.Account;
+import backend.master.Account;
 
 /*
     Needs Debate - whether we should have both user id and username since both are unique

@@ -1,6 +1,6 @@
-package vehicle;
+package backend.vehicle;
 
-import job.Job;
+import backend.job.Job;
 
 import java.time.*;
 /*
@@ -8,14 +8,14 @@ import java.time.*;
             - WTF is vehicleStatus?
  */
 public class Vehicle {
-    private int vehicleId, ownerId; //vehicle identifiers
+    private int vehicleId, ownerId; //backend.vehicle identifiers
     private String make;
     private String model;
     private char vehicleStatus;
     private String currentJob; //realtime information
     private Duration residencyTime;
 
-    //vehicle info
+    //backend.vehicle info
     public Vehicle(int vehicleId, String make, String model,int ownerId, char vehicleStatus, String currentJob, Duration residencyTime) {
         this.vehicleId = vehicleId;
         this.make = make;
