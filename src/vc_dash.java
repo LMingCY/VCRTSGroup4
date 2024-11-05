@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,81 @@ public class vc_dash extends JFrame {
     private List<Integer> jobDurations = new ArrayList<>();
 
     public vc_dash() {
+        // Start with the login dialog
+        if (showLoginDialog()) {
+            createDashboard();
+        } else {
+            System.exit(0); // Exit if login fails
+        }
+    }
+
+    private boolean showLoginDialog() {
+        JLabel welcomeLabel = new JLabel("Welcome to VC!");
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel usernameLabel = new JLabel("Username:");
+        JTextField usernameField = new JTextField(15);
+        JLabel passwordLabel = new JLabel("Password:");
+        JPasswordField passwordField = new JPasswordField(15);
+        JButton loginButton = new JButton("Login");
+        JButton backButton = new JButton("Back");
+
+        // Create a panel for the login dialog
+        JPanel loginPanel = new JPanel(new GridBagLayout());
+        loginPanel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Adding components to the panel
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        loginPanel.add(welcomeLabel, gbc);
+        gbc.gridy++;
+        loginPanel.add(usernameLabel, gbc);
+        gbc.gridx = 1;
+        loginPanel.add(usernameField, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        loginPanel.add(passwordLabel, gbc);
+        gbc.gridx = 1;
+        loginPanel.add(passwordField, gbc);
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        loginPanel.add(loginButton, gbc);
+        gbc.gridy++;
+        loginPanel.add(backButton, gbc);
+
+        // Create the login dialog
+        int option = JOptionPane.showConfirmDialog(null, loginPanel, "Login", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (option != JOptionPane.OK_OPTION) {
+            return false; // User cancelled
+        }
+
+        // Handle login button action
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+                if (username.equals("vcuser") && password.equals("vcpass")) { // Example credentials
+                    JOptionPane.showMessageDialog(null, "Login successful");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid credentials. Try again.");
+                    System.exit(0); // Exit on failed login
+                }
+            }
+        });
+
+        // Handle back button action
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0); // Exit if back is pressed
+            }
+        });
+
+        return true; // Login successful
+    }
+
+    private void createDashboard() {
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
         setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,18 +104,17 @@ public class vc_dash extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
-        Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
         JLabel jobIDLabel = new JLabel("Job ID:");
         jobIDLabel.setFont(labelFont);
         jobIDField = new JTextField();
-        jobIDField.setFont(fieldFont);
+        jobIDField.setFont(labelFont);
 
         JLabel jobDurationLabel = new JLabel("Job Duration (minutes):");
         jobDurationLabel.setFont(labelFont);
         jobDurationField = new JTextField();
-        jobDurationField.setFont(fieldFont);
+        jobDurationField.setFont(labelFont);
 
         addJobButton = new JButton("Add Job");
         addJobButton.setFont(labelFont);
@@ -65,10 +142,10 @@ public class vc_dash extends JFrame {
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> backToMain());
+        backButton.addActionListener(e -> signOut());
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        // Add components to the panel
+        gbc.gridx = 0; gbc.gridy = 0;
         mainPanel.add(jobIDLabel, gbc);
         gbc.gridx = 1;
         mainPanel.add(jobIDField, gbc);
@@ -80,8 +157,7 @@ public class vc_dash extends JFrame {
         mainPanel.add(jobDurationField, gbc);
 
         gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridwidth = 2;
         mainPanel.add(addJobButton, gbc);
 
         gbc.gridy++;
@@ -130,8 +206,11 @@ public class vc_dash extends JFrame {
         jobDurationField.setText("");
     }
 
-    private void backToMain() {
-        main.getMainFrame();
-        dispose();
+    private void signOut() {
+        System.exit(0); // Sign out action
+    }
+
+    public static void main(String[] args) {
+        new vc_dash();
     }
 }
