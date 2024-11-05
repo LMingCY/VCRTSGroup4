@@ -105,8 +105,8 @@ public class vc extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame(); 
-                dispose(); 
+                main.getMainFrame();
+                dispose(); // Close the login frame
             }
         });
     }
