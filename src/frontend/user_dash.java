@@ -1,5 +1,3 @@
-package frontend;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,118 +6,129 @@ import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class user_dash extends JFrame implements ActionListener {
+public class user_dash extends JFrame {
     private JTextField userIDField, jobDurationField, jobDeadlineField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
-    private JPanel mainPanel, buttonPanel;
 
     public user_dash() {
         setTitle("Vehicular Cloud Console");
-        setSize(400, 300);
+        setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
 
-        // Main panel
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(4, 2, 10, 10));
-        mainPanel.setBackground(new Color(240, 240, 240)); // Light gray background
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(new Color(240, 240, 240));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Client fields
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        Font labelFont = new Font("Arial", Font.BOLD, 14);
+        Font fieldFont = new Font("Arial", Font.PLAIN, 14);
+        Color buttonColor = new Color(100, 150, 250);
+
         JLabel userIDLabel = new JLabel("Client ID:");
-        JLabel jobDurationLabel = new JLabel("Job Duration:");
-        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");
-
-        userIDField = new JTextField();
-        jobDurationField = new JTextField();
-        jobDeadlineField = new JTextField();
-
-        Font labelFont = new Font("Arial", Font.PLAIN, 16);
         userIDLabel.setFont(labelFont);
+        userIDField = new JTextField();
+        userIDField.setFont(fieldFont);
+
+        JLabel jobDurationLabel = new JLabel("Job Duration:");
         jobDurationLabel.setFont(labelFont);
+        jobDurationField = new JTextField();
+        jobDurationField.setFont(fieldFont);
+
+        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");
         jobDeadlineLabel.setFont(labelFont);
-
-        mainPanel.add(userIDLabel);
-        mainPanel.add(userIDField);
-        mainPanel.add(jobDurationLabel);
-        mainPanel.add(jobDurationField);
-        mainPanel.add(jobDeadlineLabel);
-        mainPanel.add(jobDeadlineField);
-
-        // Button panel
-        buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setBackground(Color.WHITE);
+        jobDeadlineField = new JTextField();
+        jobDeadlineField.setFont(fieldFont);
 
         submitButton = new JButton("Submit");
+        submitButton.setFont(labelFont);
+        submitButton.setBackground(buttonColor);
+        submitButton.setForeground(Color.WHITE);
+        submitButton.setFocusPainted(false);
+        submitButton.addActionListener(this::submitData);
+
         clearButton = new JButton("Clear");
+        clearButton.setFont(labelFont);
+        clearButton.setBackground(buttonColor);
+        clearButton.setForeground(Color.WHITE);
+        clearButton.setFocusPainted(false);
+        clearButton.addActionListener(e -> clearFields());
+
         signOutButton = new JButton("Sign Out");
+        signOutButton.setFont(labelFont);
+        signOutButton.setBackground(buttonColor);
+        signOutButton.setForeground(Color.WHITE);
+        signOutButton.setFocusPainted(false);
+        signOutButton.addActionListener(e -> signOut());
+
         helpButton = new JButton("Help");
+        helpButton.setFont(labelFont);
+        helpButton.setBackground(buttonColor);
+        helpButton.setForeground(Color.WHITE);
+        helpButton.setFocusPainted(false);
+        helpButton.addActionListener(e -> showHelp());
 
-       
-        customizeButton(submitButton);
-        customizeButton(clearButton);
-        customizeButton(signOutButton);
-        customizeButton(helpButton);
+        gbc.gridx = 0; gbc.gridy = 0;
+        mainPanel.add(userIDLabel, gbc);
+        gbc.gridx = 1;
+        mainPanel.add(userIDField, gbc);
 
-        // Adding action listeners
-        submitButton.addActionListener(this);
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                userIDField.setText("");
-                jobDurationField.setText("");
-                jobDeadlineField.setText("");
-            }
-        });
-        signOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                userIDField.setText("");
-                jobDurationField.setText("");
-                jobDeadlineField.setText("");
-                main.getMainFrame(); 
-                dispose();
-            }
-        });
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Enter valid details and click submit.");
-            }
-        });
+        gbc.gridy++;
+        gbc.gridx = 0;
+        mainPanel.add(jobDurationLabel, gbc);
+        gbc.gridx = 1;
+        mainPanel.add(jobDurationField, gbc);
 
-        // Adding buttons to button panel
-        buttonPanel.add(submitButton);
-        buttonPanel.add(clearButton);
-        buttonPanel.add(signOutButton);
-        buttonPanel.add(helpButton);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        mainPanel.add(jobDeadlineLabel, gbc);
+        gbc.gridx = 1;
+        mainPanel.add(jobDeadlineField, gbc);
 
-        // Adding panels to the frame
-        add(mainPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        gbc.gridy++;
+        gbc.gridx = 0; gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(submitButton, gbc);
 
-        setLocationRelativeTo(null); 
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        mainPanel.add(clearButton, gbc);
+        gbc.gridx = 1;
+        mainPanel.add(signOutButton, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0; gbc.gridwidth = 2;
+        mainPanel.add(helpButton, gbc);
+
+        add(mainPanel);
         setVisible(true);
     }
 
-    private void customizeButton(JButton button) {
-        button.setBackground(new Color(100, 150, 250)); 
-        button.setForeground(Color.WHITE);              
-        button.setFont(new Font("Arial", Font.BOLD, 14)); 
+    private void submitData(ActionEvent e) {
+        String userData = "User ID: " + userIDField.getText() +
+                ", Job Duration: " + jobDurationField.getText() +
+                ", Job Deadline: " + jobDeadlineField.getText();
+        String timestamp = LocalDateTime.now().toString();
+        saveToFile(userData + "\nTimestamp: " + timestamp);
+        JOptionPane.showMessageDialog(this, "Entries saved!");
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submitButton) {
-            String userData = "User ID: " + userIDField.getText() +
-                    ", Job Duration: " + jobDurationField.getText() +
-                    ", Job Deadline: " + jobDeadlineField.getText();
-            String timestamp = LocalDateTime.now().toString();
-            saveToFile(userData + "\nTimestamp: " + timestamp);
-            userIDField.setText("");
-            jobDurationField.setText("");
-            jobDeadlineField.setText("");
-            JOptionPane.showMessageDialog(this, "Entries saved!");
-        }
+    private void clearFields() {
+        userIDField.setText("");
+        jobDurationField.setText("");
+        jobDeadlineField.setText("");
+    }
+
+    private void signOut() {
+        main.getMainFrame();
+        dispose();
+    }
+
+    private void showHelp() {
+        JOptionPane.showMessageDialog(this, "Enter valid details and click submit.");
     }
 
     private void saveToFile(String data) {

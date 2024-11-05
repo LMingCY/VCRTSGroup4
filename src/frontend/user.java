@@ -1,5 +1,3 @@
-package frontend;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,10 +8,10 @@ public class user extends JFrame {
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
     JPasswordField passwordField;
-    JButton loginButton, backButton, createAccountButton;
+    JButton loginButton, backButton;
 
     public user() {
-        // Set up the frontend.main frame properties
+        // Set up the main frame properties
         super("User Login");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +23,7 @@ public class user extends JFrame {
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 
-        // Create frontend.main panel with padding and background color
+        // Create main panel with padding and background color
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add padding around the panel
@@ -35,7 +33,7 @@ public class user extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginPromptLabel = new JLabel("Please login:");
+        loginPromptLabel = new JLabel("Please backend.login:");
         loginPromptLabel.setFont(labelFont);
 
         usernameLabel = new JLabel("Username:");
@@ -54,11 +52,6 @@ public class user extends JFrame {
         loginButton.setBackground(buttonColor);
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(labelFont);
-
-        createAccountButton = new JButton("Create Account");
-        createAccountButton.setBackground(buttonColor);
-        createAccountButton.setForeground(Color.WHITE);
-        createAccountButton.setFont(labelFont);
 
         backButton = new JButton("Back");
         backButton.setBackground(buttonColor);
@@ -88,7 +81,7 @@ public class user extends JFrame {
         gbc.gridy++;
         panel.add(backButton, gbc);
 
-        // Add the frontend.main panel to the frame
+        // Add the main panel to the frame
         add(panel);
         setVisible(true); // Display the frame
 
@@ -99,16 +92,16 @@ public class user extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new user_dash(); // Open the dashboard
-                setVisible(false); // Hide the login frame
+                new user_dash(); // Open the backend.dashboard
+                setVisible(false); // Hide the backend.login frame
             }
         });
 
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame(); // Go back to the frontend.main frame
-                dispose(); // Close the login frame
+                main.getMainFrame(); // Go back to the main frame
+                dispose(); // Close the backend.login frame
             }
         });
     }

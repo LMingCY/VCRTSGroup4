@@ -1,4 +1,5 @@
-package frontend;
+import backend.dashboard.OwnerDashboard;
+import backend.vehicle.Vehicle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +13,13 @@ import java.io.IOException;
 public class owner_dash extends JFrame {
  private JTextField ownerIDField, vehicleInfoField, residencyTimeField;
  private JButton submitButton, clearButton, signOutButton, helpButton;
+ private OwnerDashboard ownerDashboard = new OwnerDashboard();
+ private Vehicle vehicle;
 
- // Constructor to initialize and configure the GUI
+
+    // Constructor to initialize and configure the GUI
  public owner_dash() {
-     setTitle("Vehicular Cloud Console"); 
+     setTitle("Vehicular Cloud Console");
      setSize(400, 400); // Set window size
      setDefaultCloseOperation(EXIT_ON_CLOSE); 
      setLocationRelativeTo(null); 
@@ -35,13 +39,13 @@ public class owner_dash extends JFrame {
      Font fieldFont = new Font("Arial", Font.PLAIN, 14);
      Color buttonColor = new Color(100, 150, 250); 
 
-     // Create and configure labels and text fields for frontend.owner data input
+     // Create and configure labels and text fields for owner data input
      JLabel ownerIDLabel = new JLabel("Owner ID:");
      ownerIDLabel.setFont(labelFont);
      ownerIDField = new JTextField();
      ownerIDField.setFont(fieldFont);
 
-     JLabel vehicleInfoLabel = new JLabel("Vehicle Info:");
+     JLabel vehicleInfoLabel = new JLabel("Vehicle Make:");
      vehicleInfoLabel.setFont(labelFont);
      vehicleInfoField = new JTextField();
      vehicleInfoField.setFont(fieldFont);
@@ -67,13 +71,13 @@ public class owner_dash extends JFrame {
      clearButton.setFocusPainted(false);
      clearButton.addActionListener(e -> clearFields()); // Clear fields when clicked
 
-     // Configure the Sign Out button to return to frontend.main menu
+     // Configure the Sign Out button to return to main menu
      signOutButton = new JButton("Sign Out");
      signOutButton.setFont(labelFont);
      signOutButton.setBackground(buttonColor);
      signOutButton.setForeground(Color.WHITE);
      signOutButton.setFocusPainted(false);
-     signOutButton.addActionListener(e -> signOut()); // Return to frontend.main frame when clicked
+     signOutButton.addActionListener(e -> signOut()); // Return to main frame when clicked
 
      // Configure the Help button and set its action to display help information
      helpButton = new JButton("Help");
@@ -116,7 +120,7 @@ public class owner_dash extends JFrame {
      gbc.gridx = 0; gbc.gridwidth = 2;
      mainPanel.add(helpButton, gbc); // Add help button centered in layout
 
-     // Add the frontend.main panel to the frame and make it visible
+     // Add the main panel to the frame and make it visible
      add(mainPanel);
      setVisible(true);
  }
@@ -124,12 +128,7 @@ public class owner_dash extends JFrame {
  // Method to handle Submit button action - captures input data and saves to file
  private void submitData(ActionEvent e) {
      // Combine input data with a timestamp
-     String ownerData = "Owner ID: " + ownerIDField.getText() + ", Vehicle Info: " + vehicleInfoField.getText() + ", Residency Time: " + residencyTimeField.getText();
-     String timestamp = LocalDateTime.now().toString();
-     saveToFile(ownerData + "\nTimestamp: " + timestamp); // Save data to file
-     ownerIDField.setText("");
-     vehicleInfoField.setText("");
-     residencyTimeField.setText("");
+     ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleInfoField.getText(), ownerIDField.get, residencyTimeField.getText()); //need to come up a way to store id as int.
      JOptionPane.showMessageDialog(this, "Entries saved!"); // Show confirmation dialog
  }
 
@@ -140,9 +139,9 @@ public class owner_dash extends JFrame {
      residencyTimeField.setText("");
  }
 
- // Method to handle Sign Out button action - returns to frontend.main frame
+ // Method to handle Sign Out button action - returns to main frame
  private void signOut() {
-     main.getMainFrame(); // Show frontend.main frame again
+     main.getMainFrame(); // Show main frame again
      dispose(); // Close this window
  }
 
