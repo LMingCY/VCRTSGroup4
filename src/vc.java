@@ -3,14 +3,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class vcLogin extends JFrame {
+public class vc extends JFrame {
     // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
-    public vcLogin() {
+    public vc () {
         // Set up the main frame properties
         super("Vehicular Cloud Login");
         setSize(400, 350);
