@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class vc_dash extends JFrame {
-    private JTextField jobIDField, jobDurationField;
-    private JButton viewJobsButton, calculateCompletionTimeButton, clearButton, backButton;
-    private List<Job> jobs = new ArrayList<>(); // Store jobs as Job objects
+    private JButton viewJobsButton, calculateCompletionTimeButton, backButton;
+    private List<Job> jobs = new ArrayList<>(); 
 
     public vc_dash() {
         createDashboard();
@@ -15,7 +14,7 @@ public class vc_dash extends JFrame {
 
     private void createDashboard() {
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
-        setSize(400, 400);
+        setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -26,20 +25,10 @@ public class vc_dash extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.CENTER; // Center all components
+        gbc.anchor = GridBagConstraints.CENTER; 
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
         Color buttonColor = new Color(100, 150, 250);
-
-        JLabel jobIDLabel = new JLabel("Job ID:");
-        jobIDLabel.setFont(labelFont);
-        jobIDField = new JTextField(10);
-        jobIDField.setFont(labelFont);
-
-        JLabel jobDurationLabel = new JLabel("Job Duration (minutes):");
-        jobDurationLabel.setFont(labelFont);
-        jobDurationField = new JTextField(10);
-        jobDurationField.setFont(labelFont);
 
         viewJobsButton = new JButton("View Jobs");
         viewJobsButton.setFont(labelFont);
@@ -55,13 +44,6 @@ public class vc_dash extends JFrame {
         calculateCompletionTimeButton.setFocusPainted(false);
         calculateCompletionTimeButton.addActionListener(this::calculateCompletionTime);
 
-        clearButton = new JButton("Clear");
-        clearButton.setFont(labelFont);
-        clearButton.setBackground(buttonColor);
-        clearButton.setForeground(Color.WHITE);
-        clearButton.setFocusPainted(false);
-        clearButton.addActionListener(e -> clearFields());
-
         backButton = new JButton("Back");
         backButton.setFont(labelFont);
         backButton.setBackground(buttonColor);
@@ -69,27 +51,11 @@ public class vc_dash extends JFrame {
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> signOut());
 
-        // Add components to the panel
-        gbc.gridx = 0; gbc.gridy = 0;
-        mainPanel.add(jobIDLabel, gbc);
-        gbc.gridx = 1;
-        mainPanel.add(jobIDField, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        mainPanel.add(jobDurationLabel, gbc);
-        gbc.gridx = 1;
-        mainPanel.add(jobDurationField, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER; // Center button
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; 
         mainPanel.add(viewJobsButton, gbc);
 
         gbc.gridy++;
         mainPanel.add(calculateCompletionTimeButton, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(clearButton, gbc);
 
         gbc.gridy++;
         mainPanel.add(backButton, gbc);
@@ -127,20 +93,14 @@ public class vc_dash extends JFrame {
         JOptionPane.showMessageDialog(this, message.toString());
     }
 
-    private void clearFields() {
-        jobIDField.setText("");
-        jobDurationField.setText("");
-    }
-
     private void signOut() {
-        System.exit(0); // Sign out action
+        System.exit(0);
     }
 
     public static void main(String[] args) {
         new vc_dash();
     }
 
-    // Job class to store job information
     private static class Job {
         private final String id;
         private final int duration;
