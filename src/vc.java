@@ -10,7 +10,11 @@ public class vc extends JFrame {
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
+<<<<<<< HEAD
     public vc() {
+=======
+    public vc () {
+>>>>>>> a62acc44d924b28ec87145074f0135ddf6c15ac0
         // Set up the main frame properties
         super("Vehicular Cloud Login");
         setSize(400, 350);
