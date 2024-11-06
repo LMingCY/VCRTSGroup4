@@ -84,9 +84,7 @@ public class vc_dash extends JFrame {
     private void calculateCompletionTime(ActionEvent e) {
         adminDashboard.readJobsFromFile("user_transaction.txt");
         adminDashboard.parse(adminDashboard.jobs.toString());
-        long completion = adminDashboard.calculateTotalCompletionTime();
-
-        JOptionPane.showMessageDialog(this, "Total Completion time: " + completion + " minutes");
+        JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
 
     private void backToMain() {

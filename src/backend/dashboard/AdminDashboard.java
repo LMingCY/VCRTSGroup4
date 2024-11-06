@@ -29,27 +29,6 @@ public class AdminDashboard {
     //private HashMap<String, Job> jobs = new HashMap();
     public List<Job> jobs = new ArrayList<>();
 
-    /* public static List<Job> readJobsFromFile(String filePath) {
-        List<Job> jobs = new ArrayList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                String[] jobData = line.split(",");
-                
-                int jobId = Integer.parseInt(jobData[0].trim());
-                int duration = Integer.parseInt(jobData[1].trim());
-                
-                jobs.add(new Job(jobId, duration));
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-        }
-
-        return jobs;
-    }
-     */
     public static Job parse(String line) {
         String[] parts = line.split(",");
         if (parts.length < 8) {  // Ensuring there are enough parts, including the timestamp
@@ -89,6 +68,7 @@ public class AdminDashboard {
     }
 
 
+
     public long calculateTotalCompletionTime() {
         long totalMinutes = 0;
         for (Job job : jobs) {
@@ -98,8 +78,35 @@ public class AdminDashboard {
         return totalMinutes;
     }
 
+    public String getJobSummary() {
+        StringBuilder jobIds = new StringBuilder("Job ID(s): ");
+        StringBuilder jobDurations = new StringBuilder("Job Duration(s): ");
+        StringBuilder jobCompletionTimes = new StringBuilder("Completion Time: ");
 
-    public void checkAvailability() {
+        long cumulativeDurationMinutes = 0;
+
+        for (Job job : jobs) {
+            long durationMinutes = job.getDuration().toMinutes();
+
+            jobIds.append(job.getJobId()).append(", ");
+            jobDurations.append(durationMinutes).append(" min, ");
+
+            cumulativeDurationMinutes += durationMinutes;
+            jobCompletionTimes.append(cumulativeDurationMinutes).append(" min, ");
+        }
+
+        if (jobs.size() > 0) {
+            jobIds.setLength(jobIds.length() - 2);
+            jobDurations.setLength(jobDurations.length() - 2);
+            jobCompletionTimes.setLength(jobCompletionTimes.length() - 2);
+        }
+
+        return jobIds.toString() + "\n" + jobDurations.toString() + "\n" + jobCompletionTimes.toString();
+    }
+
+
+
+        public void checkAvailability() {
         System.out.println("Checking backend.vehicle availability:");
         for (Vehicle vehicle : vehicles.values()) {
             System.out.println("Vehicle ID: " + vehicle.getVehicleId() + ", Available: " + vehicle.checkAvailability());

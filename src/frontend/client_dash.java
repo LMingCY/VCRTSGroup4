@@ -7,22 +7,19 @@ import backend.master.NumericTextField;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 
-public class user_dash extends JFrame {
-    private JTextField userIDField, jobDurationField, jobDeadlineField;
+public class client_dash extends JFrame {
+    private JTextField jobNameField, jobDurationField, jobDeadlineField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
     private Job job;
     private ClientDashboard clientDashboard = new ClientDashboard();
     private LocalDate deadline = LocalDate.of(2024,12,1);
 
-    public user_dash() {
+    public client_dash() {
         setTitle("Vehicular Cloud Console");
         setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,10 +37,10 @@ public class user_dash extends JFrame {
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
-        JLabel userIDLabel = new JLabel("Job Name:");
-        userIDLabel.setFont(labelFont);
-        userIDField = new JTextField();
-        userIDField.setFont(fieldFont);
+        JLabel jobNameLabel = new JLabel("Job Name:");
+        jobNameLabel.setFont(labelFont);
+        jobNameField = new JTextField();
+        jobNameField.setFont(fieldFont);
 
         /*
         JLabel clientID = new JLabel("Client ID:");
@@ -92,9 +89,9 @@ public class user_dash extends JFrame {
         helpButton.addActionListener(e -> showHelp());
 
         gbc.gridx = 0; gbc.gridy = 0;
-        mainPanel.add(userIDLabel, gbc);
+        mainPanel.add(jobNameLabel, gbc);
         gbc.gridx = 1;
-        mainPanel.add(userIDField, gbc);
+        mainPanel.add(jobNameField, gbc);
 
         gbc.gridy++;
         gbc.gridx = 0;
@@ -128,13 +125,13 @@ public class user_dash extends JFrame {
     }
 
     private void submitData(ActionEvent e) {
-        job = clientDashboard.addJob(userIDField.getText(), 100000000, Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
+        job = clientDashboard.addJob(jobNameField.getText(), 100000000, Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
         saveToFile(job.toString());
         JOptionPane.showMessageDialog(this, "Entries saved!");
     }
 
     private void clearFields() {
-        userIDField.setText("");
+        jobNameField.setText("");
         jobDurationField.setText("");
         jobDeadlineField.setText("");
     }

@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class user extends JFrame {
+public class client extends JFrame {
     // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
 
-    public user() {
+    public client() {
         // Set up the main frame properties
         super("User Login");
         setSize(400, 350);
@@ -94,7 +94,7 @@ public class user extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new user_dash(); // Open the backend.dashboard
+                new client_dash(); // Open the backend.dashboard
                 setVisible(false); // Hide the backend.login frame
             }
         });

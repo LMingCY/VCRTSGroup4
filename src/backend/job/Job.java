@@ -26,12 +26,6 @@ public class Job {
         this.status=status;
         this.result=result;
     }
-    public Job(int jobId2, int clientId2, int jobName2, int status2, int result2, int deadline2, int duration2) {
-		// TODO Auto-generated constructor stub
-	}
-	public Job(int jobId2, int duration2) {
-		// TODO Auto-generated constructor stub
-	}
 	public int getJobId() {
         return jobId;
     }
