@@ -142,7 +142,7 @@ public class client_dash extends JFrame {
     }
 
     private void saveToFile(String data) {
-        try (FileWriter writer = new FileWriter("user_transaction.txt", true)) {
+        try (FileWriter writer = new FileWriter("client_transaction.txt", true)) {
             writer.write(data + "\n");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error saving data.");

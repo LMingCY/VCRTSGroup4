@@ -18,7 +18,7 @@ public class vc_dash extends JFrame {
     }
 
     private void createDashboard() {
-        adminDashboard.readJobsFromFile("user_transaction.txt");
+        adminDashboard.readJobsFromFile("client_transaction.txt");
         adminDashboard.parse(adminDashboard.getJobs().toString());
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
         setSize(400, 300);

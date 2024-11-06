@@ -34,7 +34,7 @@ public class AdminDashboard {
     }
     public static Job parse(String line) {
         String[] parts = line.split(",");
-        if (parts.length < 8) {  // Ensuring there are enough parts, including the timestamp
+        if (parts.length < 8) {
             throw new IllegalArgumentException("Malformed job data");
         }
 

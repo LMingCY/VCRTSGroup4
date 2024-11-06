@@ -114,8 +114,8 @@ public class client extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame(); // Go back to the main frame
-                dispose(); // Close the backend.login frame
+                main.getMainFrame();
+                dispose();
             }
         }); 
         /* backButton.addActionListener(new ActionListener() {
