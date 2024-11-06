@@ -1,5 +1,8 @@
 package frontend;
 
+import backend.MySQL.Driver;
+import backend.login.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +14,7 @@ public class user extends JFrame {
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
+    Driver db = new Driver();
 
     public user() {
         // Set up the main frame properties
@@ -35,7 +39,7 @@ public class user extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginPromptLabel = new JLabel("Please backend.login:");
+        loginPromptLabel = new JLabel("Please login:");
         loginPromptLabel.setFont(labelFont);
 
         usernameLabel = new JLabel("Username:");
@@ -93,9 +97,15 @@ public class user extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new user_dash(); // Open the backend.dashboard
-                setVisible(false); // Hide the backend.login frame
+                User user = db.validateLogin(username, password);
+
+                if (user != null) {
+                    JOptionPane.showMessageDialog(null, "Logging in as " + username);
+                    new user_dash(); // Open the user dashboard
+                    setVisible(false); // Hide the login frame
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 

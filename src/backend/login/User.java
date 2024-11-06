@@ -14,7 +14,7 @@ public class User extends Account {
     private String name;
     private String email;
 
-    public User(String username, String password, int userId, String name, String email) {
+    public User(int userId, String username, String password, String name, String email) {
         super(username, password);
         this.userId = userId;
         this.name = name;
@@ -43,4 +43,5 @@ public class User extends Account {
     public void setEmail(String contactInfo) {
         this.email = contactInfo;
     }
+
 }
