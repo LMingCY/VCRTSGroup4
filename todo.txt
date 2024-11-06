@@ -7,3 +7,9 @@
 > *Implement backend code to UI.
 
 ***I created a NumericTextfield as a replacement for Jtextfield which it only accepts numbers, you can use that for any number fields, on how to declare it follow owner_dash***
+
+Added on 11/06
+!!!!!!!!!FOR FRONTEND!!!!!!!!
+>need a PROPER "create account" button for user login page
+>Also a "user_account_registration" page that takes in user name, password, name, and email
+>need to change the deadline input field into 5 fields as year(4), month(2), day(2), hour(2), minute(2)
