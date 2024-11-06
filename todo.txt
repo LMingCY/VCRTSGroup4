@@ -1,14 +1,9 @@
-TO DO:
-- Set up a login page for both users and owners.
-	- Login credentials read from spreadsheets and write the spreadsheet (create new user)\
-	- First enter a login email (test@gmail.com), then the program loops through the spreadsheet and find 	  the email for login, save its password as a string called \'93correctPassword,\'94 then the program asks 	  the user to input password and save it as a string called \'93inputPassword\'94 and compare.\
-- Set up a dashboard for user and owners after login, according to the requirement doc, both are simply text fields to let user/owner input the information. Save the entry as text files name as \'93U_Info_xxxx.txt\'94 (U stands for user, O will be owner, xxxx as the username) each user/owner will have their own separate file (so far is easy to visualize, once the number of users/owners go up may need to think a better idea)\
+> MYSQL Integration (Not Important By Now)
+> $Client Dashboard
+> Owner Dashboard - polishing (N.I.B.N.)
+> Login logout mechanism (N.I.B.N.)
+> Write time stamp for vehicle and job (N.I.B.N.)
+> *Calculate the completion time of each and every job
+> *Implement backend code to UI.
 
-*Use MySQL database for login credentials and other information instead of spreadsheets for easier data manipulation.\
-*Make them look nice. (Styling)
-
-!!Leon: We could drop the credentials for now. (10/8/2024 17:20)
-
-- : Functional Tasks
-* : Good-to-Have
-!! : Comments
+***I created a NumericTextfield as a replacement for Jtextfield which it only accepts numbers, you can use that for any number fields, on how to declare it follow owner_dash***
