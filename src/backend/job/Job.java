@@ -1,6 +1,8 @@
 package backend.job;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 /*
     TODO:
@@ -9,11 +11,11 @@ import java.util.Date;
 public class Job {
     private String jobName;
     private int jobId, clientId;
-    private char status; //representation of status i.e. 1-unstarted 2-inprocess 3-suspended 9-finished 0-deleted.
+    private int status; //representation of status i.e. 1-unstarted 2-inprocess 3-suspended 9-finished 0-deleted.
     private String result; //using result as placeholder, don't know what the result is gonna be
-    private Date deadline;
+    private LocalDate deadline;
     private Duration duration;
-    public Job(int jobId, int clientId, String jobName, char status, String result, Date deadline, Duration duration) {
+    public Job(int jobId, int clientId, String jobName, int status, String result, LocalDate deadline, Duration duration) {
         this.jobName=jobName;
         this.deadline = deadline;
         this.clientId=clientId;
@@ -25,12 +27,20 @@ public class Job {
     public int getJobId() {
         return jobId;
     }
-
-    public char getStatus() {
+    public Duration getDuration() {
+        return duration;
+    }
+    public int getStatus() {
         return status;
     }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
     @Override
     public String toString() {
-        return String.valueOf(jobId) + "|" + jobName + "|" + status + "|" + String.valueOf(clientId) + "|" + duration + "|" + deadline + "|" + result + "|";
+        String timestamp = LocalDateTime.now().toString();
+        return String.valueOf(jobId) + "," + jobName + "," + status + "," + String.valueOf(clientId) + "," + duration + "," + deadline + "," + result + "," + timestamp;
     }
 }

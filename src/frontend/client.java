@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.MySQL.Driver;
+import backend.dashboard.ClientDashboard;
 import backend.login.User;
 import backend.master.Idgenerator;
 
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class user extends JFrame {
+public class client extends JFrame {
     // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
@@ -18,7 +19,7 @@ public class user extends JFrame {
     Driver db = new Driver();
     Idgenerator idgenerator;
 
-    public user() {
+    public client() {
         // Set up the main frame properties
         super("User Login");
         setSize(400, 350);
@@ -89,11 +90,9 @@ public class user extends JFrame {
         gbc.gridy++;
         panel.add(backButton, gbc);
 
-        // Add the main panel to the frame
         add(panel);
-        setVisible(true); // Display the frame
+        setVisible(true);
 
-        // Set up button actions
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,9 +101,10 @@ public class user extends JFrame {
                 User user = db.validateLogin(username, password);
 
                 if (user != null) {
-                    JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                    new user_dash(); // Open the user dashboard
-                    setVisible(false); // Hide the login frame
+                    int userId = user.getUserId();
+                    JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", User ID: " + userId);
+                    new client_dash(user);
+                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
                 }

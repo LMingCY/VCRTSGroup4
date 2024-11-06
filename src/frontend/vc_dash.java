@@ -1,20 +1,25 @@
 package frontend;
 
+import backend.dashboard.AdminDashboard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class vc_dash extends JFrame {
     private JButton viewJobsButton, calculateCompletionTimeButton, backButton;
-    private List<Job> jobs = new ArrayList<>(); 
+    private AdminDashboard adminDashboard = new AdminDashboard();
 
     public vc_dash() {
         createDashboard();
     }
 
     private void createDashboard() {
+        adminDashboard.readJobsFromFile("user_transaction.txt");
+        adminDashboard.parse(adminDashboard.getJobs().toString());
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
         setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,7 +42,12 @@ public class vc_dash extends JFrame {
         viewJobsButton.setBackground(buttonColor);
         viewJobsButton.setForeground(Color.WHITE);
         viewJobsButton.setFocusPainted(false);
-        viewJobsButton.addActionListener(this::viewJobs);
+        viewJobsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
+            }
+        });
 
         calculateCompletionTimeButton = new JButton("Calculate Completion Time");
         calculateCompletionTimeButton.setFont(labelFont);
@@ -66,6 +76,7 @@ public class vc_dash extends JFrame {
         setVisible(true);
     }
 
+    /*
     private void viewJobs(ActionEvent e) {
         if (jobs.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No jobs available.");
@@ -78,30 +89,17 @@ public class vc_dash extends JFrame {
         }
     }
 
+     */
+
     private void calculateCompletionTime(ActionEvent e) {
-        List<Integer> completionTimes = new ArrayList<>();
-        int currentTime = 0;
-
-        for (Job job : jobs) {
-            currentTime += job.getDuration();
-            completionTimes.add(currentTime);
-        }
-
-        StringBuilder message = new StringBuilder("Completion Times: ");
-        for (int time : completionTimes) {
-            message.append(time).append(" ");
-        }
-
-        JOptionPane.showMessageDialog(this, message.toString());
+        JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
 
     private void signOut() {
-        System.exit(0);
+        main.getMainFrame(); // Go back to the main frame
+        dispose(); // Close the backend.login frame
     }
 
-    public static void main(String[] args) {
-        new vc_dash();
-    }
 
     private static class Job {
         private final String id;

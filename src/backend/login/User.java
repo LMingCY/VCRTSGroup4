@@ -47,6 +47,8 @@ public class User extends Account {
     public void setEmail(String contactInfo) {
         this.email = contactInfo;
     }
+
+    /*
     public boolean registerUser(int userId, String username, String password, String name, String email) {
 
         User newUser = new User(userId, username, password, name, email);
@@ -55,5 +57,7 @@ public class User extends Account {
         System.out.println("User registered with ID: " + String.format("%09d", userId));
         return true;
     }
+
+     */
 
 }
