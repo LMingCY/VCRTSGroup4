@@ -1,17 +1,22 @@
+package frontend;
+
 import backend.dashboard.OwnerDashboard;
+import backend.master.NumericTextField;
 import backend.vehicle.Vehicle;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.IOException;
 
 
 public class owner_dash extends JFrame {
- private JTextField ownerIDField, vehicleInfoField, residencyTimeField;
+ private JTextField vehicleInfoField;
+ private NumericTextField ownerIDField, residencyTimeField;
  private JButton submitButton, clearButton, signOutButton, helpButton;
  private OwnerDashboard ownerDashboard = new OwnerDashboard();
  private Vehicle vehicle;
@@ -42,7 +47,7 @@ public class owner_dash extends JFrame {
      // Create and configure labels and text fields for owner data input
      JLabel ownerIDLabel = new JLabel("Owner ID:");
      ownerIDLabel.setFont(labelFont);
-     ownerIDField = new JTextField();
+     ownerIDField = new NumericTextField(9);
      ownerIDField.setFont(fieldFont);
 
      JLabel vehicleInfoLabel = new JLabel("Vehicle Make:");
@@ -52,7 +57,7 @@ public class owner_dash extends JFrame {
 
      JLabel residencyTimeLabel = new JLabel("Residency Time:");
      residencyTimeLabel.setFont(labelFont);
-     residencyTimeField = new JTextField();
+     residencyTimeField = new NumericTextField(10);
      residencyTimeField.setFont(fieldFont);
 
      // Configure the Submit button, add styling, and set its action
@@ -128,7 +133,8 @@ public class owner_dash extends JFrame {
  // Method to handle Submit button action - captures input data and saves to file
  private void submitData(ActionEvent e) {
      // Combine input data with a timestamp
-     ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleInfoField.getText(), ownerIDField.get, residencyTimeField.getText()); //need to come up a way to store id as int.
+     vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleInfoField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
+     ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction.txt");
      JOptionPane.showMessageDialog(this, "Entries saved!"); // Show confirmation dialog
  }
 

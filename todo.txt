@@ -5,3 +5,5 @@
 > Write time stamp for vehicle and job (N.I.B.N.)
 > *Calculate the completion time of each and every job
 > *Implement backend code to UI.
+
+***I created a NumericTextfield as a replacement for Jtextfield which it only accepts numbers, you can use that for any number fields, on how to declare it follow owner_dash***
