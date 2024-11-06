@@ -1,16 +1,26 @@
 package frontend;
 
+import backend.dashboard.ClientDashboard;
+import backend.job.Job;
+import backend.master.NumericTextField;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 public class user_dash extends JFrame {
     private JTextField userIDField, jobDurationField, jobDeadlineField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
+    private Job job;
+    private ClientDashboard clientDashboard = new ClientDashboard();
+    private LocalDate deadline = LocalDate.of(2024,12,1);
 
     public user_dash() {
         setTitle("Vehicular Cloud Console");
@@ -30,17 +40,25 @@ public class user_dash extends JFrame {
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
-        JLabel userIDLabel = new JLabel("Client ID:");
+        JLabel userIDLabel = new JLabel("Job Name:");
         userIDLabel.setFont(labelFont);
         userIDField = new JTextField();
         userIDField.setFont(fieldFont);
 
+        /*
+        JLabel clientID = new JLabel("Client ID:");
+        clientID.setFont(labelFont);
+        userIDField = new NumericTextField(9);
+        userIDField.setFont(fieldFont);
+         */
+
+
         JLabel jobDurationLabel = new JLabel("Job Duration:");
         jobDurationLabel.setFont(labelFont);
-        jobDurationField = new JTextField();
+        jobDurationField = new NumericTextField(10);
         jobDurationField.setFont(fieldFont);
 
-        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");
+        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");  //For later, this should be a calender selection thing.
         jobDeadlineLabel.setFont(labelFont);
         jobDeadlineField = new JTextField();
         jobDeadlineField.setFont(fieldFont);
@@ -110,11 +128,8 @@ public class user_dash extends JFrame {
     }
 
     private void submitData(ActionEvent e) {
-        String userData = "User ID: " + userIDField.getText() +
-                ", Job Duration: " + jobDurationField.getText() +
-                ", Job Deadline: " + jobDeadlineField.getText();
-        String timestamp = LocalDateTime.now().toString();
-        saveToFile(userData + "\nTimestamp: " + timestamp);
+        job = clientDashboard.addJob(userIDField.getText(), 100000000, Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
+        saveToFile(job.toString());
         JOptionPane.showMessageDialog(this, "Entries saved!");
     }
 
@@ -135,7 +150,7 @@ public class user_dash extends JFrame {
 
     private void saveToFile(String data) {
         try (FileWriter writer = new FileWriter("user_transaction.txt", true)) {
-            writer.write(data + "\n\n");
+            writer.write(data + "\n");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error saving data.");
         }
