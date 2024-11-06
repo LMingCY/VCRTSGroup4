@@ -2,6 +2,7 @@ package frontend;
 
 import backend.MySQL.Driver;
 import backend.login.User;
+import backend.master.Idgenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class user extends JFrame {
     JPasswordField passwordField;
     JButton loginButton, backButton;
     Driver db = new Driver();
+    Idgenerator idgenerator;
 
     public user() {
         // Set up the main frame properties
@@ -59,7 +61,7 @@ public class user extends JFrame {
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(labelFont);
 
-        backButton = new JButton("Back");
+        backButton = new JButton("Create Account");
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
@@ -109,11 +111,21 @@ public class user extends JFrame {
             }
         });
 
-        backButton.addActionListener(new ActionListener() {
+        /* backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 main.getMainFrame(); // Go back to the main frame
                 dispose(); // Close the backend.login frame
+            }
+        }); */
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int userId = idgenerator.generateUserId();
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+                User user = new User(userId,username,password,"Jack","jack@gmail.com");
+                user.registerUser(userId,username,password,"Jack","jack@gmail.com");
             }
         });
     }

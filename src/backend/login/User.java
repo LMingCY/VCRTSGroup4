@@ -1,6 +1,8 @@
 package backend.login;
 
+import backend.MySQL.Driver;
 import backend.master.Account;
+import backend.master.Idgenerator;
 
 /*
     Needs Debate - whether we should have both user id and username since both are unique
@@ -13,6 +15,8 @@ public class User extends Account {
     private int userId;
     private String name;
     private String email;
+    private Idgenerator idgenerator = new Idgenerator();
+    private Driver db = new Driver();
 
     public User(int userId, String username, String password, String name, String email) {
         super(username, password);
@@ -42,6 +46,14 @@ public class User extends Account {
 
     public void setEmail(String contactInfo) {
         this.email = contactInfo;
+    }
+    public boolean registerUser(int userId, String username, String password, String name, String email) {
+
+        User newUser = new User(userId, username, password, name, email);
+        db.addUser(newUser);
+
+        System.out.println("User registered with ID: " + String.format("%09d", userId));
+        return true;
     }
 
 }
