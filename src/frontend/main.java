@@ -19,11 +19,11 @@ public class main {
 
         Color buttonColor = new Color(100, 150, 250);
         selectUser.setBackground(buttonColor);
-        selectUser.setForeground(Color.WHITE);
+        selectUser.setForeground(new Color(240, 240, 240));
         selectOwner.setBackground(buttonColor);
-        selectOwner.setForeground(Color.WHITE);
+        selectOwner.setForeground(new Color(240, 240, 240));
         selectVC.setBackground(buttonColor);
-        selectVC.setForeground(Color.WHITE);
+        selectVC.setForeground(new Color(240, 240, 240));
 
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         selectUser.setFont(buttonFont);
@@ -57,7 +57,7 @@ public class main {
 
     private static void setButtonPanel() {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setBackground(new Color(240, 240, 240));
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
         buttonPanel.add(selectVC); 
