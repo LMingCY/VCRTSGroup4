@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class user extends JFrame {
+public class client extends JFrame {
     // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
@@ -18,7 +18,7 @@ public class user extends JFrame {
     Driver db = new Driver();
     Idgenerator idgenerator;
 
-    public user() {
+    public client() {
         // Set up the main frame properties
         super("User Login");
         setSize(400, 350);
@@ -41,7 +41,11 @@ public class user extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+<<<<<<< HEAD:src/frontend/user.java
         loginPromptLabel = new JLabel("Please login:");
+=======
+        loginPromptLabel = new JLabel("Please log in:");
+>>>>>>> subbranch-Aldy:src/frontend/client.java
         loginPromptLabel.setFont(labelFont);
 
         usernameLabel = new JLabel("Username:");
@@ -99,6 +103,7 @@ public class user extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
+<<<<<<< HEAD:src/frontend/user.java
                 User user = db.validateLogin(username, password);
 
                 if (user != null) {
@@ -108,6 +113,11 @@ public class user extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
                 }
+=======
+                JOptionPane.showMessageDialog(null, "Logging in as " + username);
+                new client_dash(); // Open the backend.dashboard
+                setVisible(false); // Hide the backend.login frame
+>>>>>>> subbranch-Aldy:src/frontend/client.java
             }
         });
 

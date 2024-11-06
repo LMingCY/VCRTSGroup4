@@ -1,5 +1,7 @@
 package frontend;
 
+import backend.dashboard.AdminDashboard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +10,8 @@ import java.util.List;
 
 public class vc_dash extends JFrame {
     private JButton viewJobsButton, calculateCompletionTimeButton, backButton;
-    private List<Job> jobs = new ArrayList<>(); 
+    private List<Job> jobs = new ArrayList<>();
+    private AdminDashboard adminDashboard = new AdminDashboard();
 
     public vc_dash() {
         createDashboard();
@@ -51,7 +54,7 @@ public class vc_dash extends JFrame {
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> signOut());
+        backButton.addActionListener(e -> backToMain());
 
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; 
         mainPanel.add(viewJobsButton, gbc);
@@ -79,24 +82,14 @@ public class vc_dash extends JFrame {
     }
 
     private void calculateCompletionTime(ActionEvent e) {
-        List<Integer> completionTimes = new ArrayList<>();
-        int currentTime = 0;
-
-        for (Job job : jobs) {
-            currentTime += job.getDuration();
-            completionTimes.add(currentTime);
-        }
-
-        StringBuilder message = new StringBuilder("Completion Times: ");
-        for (int time : completionTimes) {
-            message.append(time).append(" ");
-        }
-
-        JOptionPane.showMessageDialog(this, message.toString());
+        adminDashboard.readJobsFromFile("user_transaction.txt");
+        adminDashboard.parse(adminDashboard.jobs.toString());
+        JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
 
-    private void signOut() {
-        System.exit(0);
+    private void backToMain() {
+        main.getMainFrame();
+        dispose();
     }
 
     public static void main(String[] args) {

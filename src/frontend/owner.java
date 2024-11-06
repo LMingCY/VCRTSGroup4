@@ -35,7 +35,7 @@ public class owner extends JFrame {
         // Initialize labels with specific fonts
         welcomeLabel = new JLabel("Welcome back!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginPromptLabel = new JLabel("Please backend.login:");
+        loginPromptLabel = new JLabel("Please log in:");
         loginPromptLabel.setFont(labelFont);
 
         ownernameLabel = new JLabel("Username:");
