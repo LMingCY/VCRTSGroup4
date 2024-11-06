@@ -111,14 +111,14 @@ public class user extends JFrame {
             }
         });
 
-        /* backButton.addActionListener(new ActionListener() {
+        backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 main.getMainFrame(); // Go back to the main frame
                 dispose(); // Close the backend.login frame
             }
-        }); */
-        backButton.addActionListener(new ActionListener() {
+        }); 
+        /* backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int userId = idgenerator.generateUserId();
@@ -127,7 +127,7 @@ public class user extends JFrame {
                 User user = new User(userId,username,password,"Jack","jack@gmail.com");
                 user.registerUser(userId,username,password,"Jack","jack@gmail.com");
             }
-        });
+        }); */ // this is the registration button
     }
 
 }

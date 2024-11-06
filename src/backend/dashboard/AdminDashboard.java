@@ -17,13 +17,13 @@ public class AdminDashboard {
     private HashMap<String, Job> jobs = new HashMap();
 
     public void checkAvailability() {
-        System.out.println("Checking backend.vehicle availability:");
+        System.out.println("Checking Vehicle availability:");
         for (Vehicle vehicle : vehicles.values()) {
             System.out.println("Vehicle ID: " + vehicle.getVehicleId() + ", Available: " + vehicle.checkAvailability());
         }
     }
     public void checkJobStatus() {
-        System.out.println("Checking backend.job status:");
+        System.out.println("Checking Job status:");
         for (Job job : jobs.values()) {
             System.out.println("Job ID: " + job.getJobId() + ", Available: " + job.getStatus());
         }
