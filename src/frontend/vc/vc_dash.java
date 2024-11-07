@@ -1,16 +1,23 @@
-package frontend;
+package frontend.vc;
+
+import backend.dashboard.AdminDashboard;
+import frontend.main;
 
 import backend.dashboard.AdminDashboard;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class vc_dash extends JFrame {
     private JButton viewJobsButton, calculateCompletionTimeButton, backButton;
+<<<<<<< HEAD:src/frontend/vc_dash.java
     private List<Job> jobs = new ArrayList<>();
+=======
+>>>>>>> subbranch-Leon:src/frontend/vc/vc_dash.java
     private AdminDashboard adminDashboard = new AdminDashboard();
 
     public vc_dash() {
@@ -18,6 +25,8 @@ public class vc_dash extends JFrame {
     }
 
     private void createDashboard() {
+        adminDashboard.readJobsFromFile("client_transaction.txt");
+        adminDashboard.parse(adminDashboard.getJobs().toString());
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
         setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,7 +49,12 @@ public class vc_dash extends JFrame {
         viewJobsButton.setBackground(buttonColor);
         viewJobsButton.setForeground(Color.WHITE);
         viewJobsButton.setFocusPainted(false);
-        viewJobsButton.addActionListener(this::viewJobs);
+        viewJobsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
+            }
+        });
 
         calculateCompletionTimeButton = new JButton("Calculate Completion Time");
         calculateCompletionTimeButton.setFont(labelFont);
@@ -69,6 +83,7 @@ public class vc_dash extends JFrame {
         setVisible(true);
     }
 
+    /*
     private void viewJobs(ActionEvent e) {
         if (jobs.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No jobs available.");
@@ -81,7 +96,10 @@ public class vc_dash extends JFrame {
         }
     }
 
+     */
+
     private void calculateCompletionTime(ActionEvent e) {
+<<<<<<< HEAD:src/frontend/vc_dash.java
         adminDashboard.readJobsFromFile("user_transaction.txt");
         adminDashboard.parse(adminDashboard.jobs.toString());
         JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
@@ -90,11 +108,16 @@ public class vc_dash extends JFrame {
     private void backToMain() {
         main.getMainFrame();
         dispose();
+=======
+        JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
 
-    public static void main(String[] args) {
-        new vc_dash();
+    private void signOut() {
+        main.getMainFrame(); // Go back to the main frame
+        dispose(); // Close the backend.login frame
+>>>>>>> subbranch-Leon:src/frontend/vc/vc_dash.java
     }
+
 
     private static class Job {
         private final String id;

@@ -97,6 +97,10 @@ public class Vehicle {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return String.valueOf(vehicleId) + "," + make + " " + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + currentJob + "," + residencyTime;
+=======
+        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + currentJob + "," + residencyTime + ",";
+>>>>>>> subbranch-Leon
     }
 }

@@ -76,7 +76,7 @@ public class Driver {
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
-            pstmt.setString(2, password); // In production, use hashed password comparison
+            pstmt.setString(2, password);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -94,7 +94,7 @@ public class Driver {
             System.out.println("Error validating login: " + e.getMessage());
         }
 
-        return user; // Returns the user object if credentials are valid, or null if invalid
+        return user;
     }
     public void addUser(User user) {
         String query = "INSERT INTO userlogin (userId, username, password, name, email) VALUES (?, ?, ?, ?, ?)";

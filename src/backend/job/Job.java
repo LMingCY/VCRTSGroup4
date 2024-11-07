@@ -3,7 +3,11 @@ package backend.job;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 
+=======
+import java.util.Date;
+>>>>>>> subbranch-Leon
 /*
     TODO:
     >Maybe good to change date format to something else;
@@ -15,7 +19,10 @@ public class Job {
     private String result; //using result as placeholder, don't know what the result is gonna be
     private LocalDate deadline;
     private Duration duration;
+<<<<<<< HEAD
     public int completionTime;
+=======
+>>>>>>> subbranch-Leon
     public Job(int jobId, int clientId, String jobName, int status, String result, LocalDate deadline, Duration duration) {
         this.jobName=jobName;
         this.deadline = deadline;
@@ -30,12 +37,22 @@ public class Job {
         return jobId;
     }
     public Duration getDuration() {
+<<<<<<< HEAD
     	return duration;
     }
 
+=======
+        return duration;
+    }
+>>>>>>> subbranch-Leon
     public int getStatus() {
         return status;
     }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
     @Override
     public String toString() {
         String timestamp = LocalDateTime.now().toString();

@@ -1,5 +1,12 @@
 package frontend;
 
+<<<<<<< HEAD
+=======
+import frontend.client.client;
+import frontend.owner.owner;
+import frontend.vc.vc;
+
+>>>>>>> subbranch-Leon
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,7 +47,7 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.setVisible(false);
-                new owner(); 
+                new owner();
             }
         });
 

@@ -1,8 +1,9 @@
-package frontend;
+package frontend.owner;
 
 import backend.dashboard.OwnerDashboard;
 import backend.master.NumericTextField;
 import backend.vehicle.Vehicle;
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;

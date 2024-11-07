@@ -1,9 +1,28 @@
-> MYSQL Integration (Not Important By Now)
+> $MYSQL Integration (Not Important By Now)
 > $Client Dashboard
 > Owner Dashboard - polishing (N.I.B.N.)
 > Login logout mechanism (N.I.B.N.)
 > Write time stamp for vehicle and job (N.I.B.N.)
 > *Calculate the completion time of each and every job
 > *Implement backend code to UI.
+//prior tasks
 
 ***I created a NumericTextfield as a replacement for Jtextfield which it only accepts numbers, you can use that for any number fields, on how to declare it follow owner_dash***
+
+//Put a dollar sign in the beginning of each bulletpoint to mark as finished.
+Added on 11/06
+!!!!!!!!!FOR FRONTEND!!!!!!!!
+>need a PROPER "create account" button for user login page
+>Also a "user_account_registration" page that takes in user name, password, name, and email
+>need to change the deadline input field into 5 fields as year(4), month(2), day(2), hour(2), minute(2)
+>need a better "view_job" and "job_queue" interface as well as "Available_resources" --- just like group 3 (could be merged into one)
+>need to specify time format
+>(FOR BOTH ENDS) Have ONE login page only, AT MOST two, it doesn't make sense to 3 different login pages.
+>a big renovation of all the UI is preferred.
+
+!!!!!!!!!!FOR BACKEND!!!!!!!!!
+>connect all the logins to the database.
+>remove the hardcoded "LocalDate" variable and actually takes in what users inputted
+>start working on the "owner" related classes
+>continue to move the backend code (functions & methods) to the backend package and leave a "clean" class for front ends.
+>(FOR BOTH ENDS) Have ONE login page only, AT MOST two, it doesn't make sense to 3 different login pages.
