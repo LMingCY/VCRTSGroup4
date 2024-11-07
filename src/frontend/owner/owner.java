@@ -1,4 +1,6 @@
-package frontend;
+package frontend.owner;
+
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;

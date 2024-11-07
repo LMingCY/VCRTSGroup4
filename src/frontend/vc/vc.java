@@ -1,4 +1,6 @@
-package frontend;
+package frontend.vc;
+
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -107,7 +109,7 @@ public class vc extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame(); 
+                main.getMainFrame();
                 dispose(); 
             }
         });

@@ -1,9 +1,9 @@
-package frontend;
+package frontend.client;
 
 import backend.MySQL.Driver;
-import backend.dashboard.ClientDashboard;
 import backend.login.User;
 import backend.master.Idgenerator;
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;

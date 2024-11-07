@@ -1,9 +1,10 @@
-package frontend;
+package frontend.client;
 
 import backend.dashboard.ClientDashboard;
 import backend.job.Job;
 import backend.login.User;
 import backend.master.NumericTextField;
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;

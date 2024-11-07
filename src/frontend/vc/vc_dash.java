@@ -1,6 +1,7 @@
-package frontend;
+package frontend.vc;
 
 import backend.dashboard.AdminDashboard;
+import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;
