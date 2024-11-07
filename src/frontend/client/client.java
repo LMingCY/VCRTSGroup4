@@ -62,7 +62,7 @@ public class client extends JFrame {
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(labelFont);
 
-        backButton = new JButton("Create Account");
+        backButton = new JButton("Back");
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
