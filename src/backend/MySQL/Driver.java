@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class Driver {
     public Connection connection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://108.30.5.201:3306/vcrts", "leonm", "05152023");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/vcrts", "", "");
     }
     public void addUser(int userId, String username, String password, String name, String email) {
         String query = "INSERT INTO users (user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?)";
