@@ -67,7 +67,6 @@ public class client extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
 
-        // Position and add components to the panel using GridBagLayout
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         panel.add(welcomeLabel, gbc); // Welcome message at the top
         gbc.gridy++;

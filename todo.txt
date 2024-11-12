@@ -2,8 +2,8 @@
 > $Client Dashboard
 > Owner Dashboard - polishing (N.I.B.N.)
 > Login logout mechanism (N.I.B.N.)
-> Write time stamp for vehicle and job (N.I.B.N.)
-> *Calculate the completion time of each and every job
+> $Write time stamp for vehicle and job (N.I.B.N.)
+> $Calculate the completion time of each and every job
 > *Implement backend code to UI.
 //prior tasks
 
