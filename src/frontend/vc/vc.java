@@ -1,5 +1,9 @@
 package frontend.vc;
 
+import backend.MySQL.Driver;
+import backend.login.Admin;
+import backend.login.User;
+import frontend.client.client_dash;
 import frontend.main;
 
 import javax.swing.*;
@@ -13,6 +17,7 @@ public class vc extends JFrame {
     JTextField usernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
+    Driver db = new Driver();
 
     public vc () {
        
@@ -95,13 +100,15 @@ public class vc extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
+                User admin = db.validateLogin(username,password);
 
-                if (username.equals("vcuser") && password.equals("vcpass")) { 
-                    JOptionPane.showMessageDialog(null, "Login successful");
+                if (admin != null) {
+                    int adminId = admin.getUserId();
+                    JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", Admin ID: " + adminId);
                     new vc_dash();
-                    setVisible(false); 
+                    setVisible(false);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Invalid credentials. Try again.");
+                    JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

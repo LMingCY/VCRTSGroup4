@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class vc_dash extends JFrame {
-    private JButton viewJobsButton, calculateCompletionTimeButton, backButton;
+    private JButton viewJobsButton, calculateCompletionTimeButton, backButton, acceptButton, rejectButton;
     private AdminDashboard adminDashboard = new AdminDashboard();
 
     public vc_dash() {
@@ -57,6 +57,16 @@ public class vc_dash extends JFrame {
         calculateCompletionTimeButton.setFocusPainted(false);
         calculateCompletionTimeButton.addActionListener(this::calculateCompletionTime);
 
+        acceptButton = new JButton("Accept");
+        acceptButton.setBackground(new Color(34, 139, 34));
+        acceptButton.setForeground(Color.WHITE);
+        acceptButton.setFont(labelFont);
+
+        rejectButton = new JButton("Reject");
+        rejectButton.setBackground(new Color(220, 20, 60));
+        rejectButton.setForeground(Color.WHITE);
+        rejectButton.setFont(labelFont);
+
         backButton = new JButton("Back");
         backButton.setFont(labelFont);
         backButton.setBackground(buttonColor);
@@ -69,6 +79,11 @@ public class vc_dash extends JFrame {
 
         gbc.gridy++;
         mainPanel.add(calculateCompletionTimeButton, gbc);
+
+        gbc.gridy++;
+        mainPanel.add(acceptButton, gbc);
+        gbc.gridy++;
+        mainPanel.add(rejectButton, gbc);
 
         gbc.gridy++;
         mainPanel.add(backButton, gbc);

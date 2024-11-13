@@ -2,11 +2,22 @@ package backend.MySQL;
 
 import backend.login.User;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.util.*;
 
 public class Driver {
-    public Connection connection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/vcrts", "", "");
+    public Connection connection() throws SQLException, IOException{
+        Path path = Paths.get("/Users/leonming/Documents/ipandports.txt");
+        List<String> lines= Files.readAllLines(path);
+        String ip = lines.get(0);
+        String mysqlPort = lines.get(1);
+        String username = lines.get(3);
+        String password = lines.get(4);
+        return DriverManager.getConnection("jdbc:mysql://"+ip + mysqlPort+"/vcrts", username, password);
     }
     public void addUser(int userId, String username, String password, String name, String email) {
         String query = "INSERT INTO users (user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?)";
@@ -23,7 +34,7 @@ public class Driver {
             pstmt.executeUpdate();
             System.out.println("User added successfully.");
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
@@ -47,7 +58,7 @@ public class Driver {
                 user = new User(retrievedUserId, username, password, name, email);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error retrieving user: " + e.getMessage());
         }
 
@@ -64,7 +75,7 @@ public class Driver {
             pstmt.executeUpdate();
             System.out.println("User deleted successfully.");
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error deleting user: " + e.getMessage());
         }
     }
@@ -90,7 +101,7 @@ public class Driver {
                 user = new User(userId, retrievedUsername, retrievedPassword, name, email);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error validating login: " + e.getMessage());
         }
 
@@ -111,7 +122,7 @@ public class Driver {
             pstmt.executeUpdate();
             System.out.println("User added successfully.");
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
