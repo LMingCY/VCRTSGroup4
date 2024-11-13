@@ -33,7 +33,7 @@ public class user_dash extends JFrame {
         userIDField = new JTextField();
         userIDField.setFont(fieldFont);
 
-        JLabel jobDurationLabel = new JLabel("Job Duration:");
+        JLabel jobDurationLabel = new JLabel("Job Duration (mins) :");
         jobDurationLabel.setFont(labelFont);
         jobDurationField = new JTextField();
         jobDurationField.setFont(fieldFont);
