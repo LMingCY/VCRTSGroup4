@@ -37,7 +37,7 @@ public class vc_dash extends JFrame {
         viewJobsButton.setFocusPainted(false);
         viewJobsButton.addActionListener(this::viewJobs);
 
-        calculateCompletionTimeButton = new JButton("Calculate Completion Time");
+        calculateCompletionTimeButton = new JButton("Calculate Completion Time (mins)");
         calculateCompletionTimeButton.setFont(labelFont);
         calculateCompletionTimeButton.setBackground(buttonColor);
         calculateCompletionTimeButton.setForeground(Color.WHITE);
