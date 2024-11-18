@@ -7,18 +7,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class vc_dash extends JFrame {
     private JButton viewJobsButton, calculateCompletionTimeButton, backButton, acceptButton, rejectButton;
     private AdminDashboard adminDashboard = new AdminDashboard();
+    //these are client-server components
+    private ServerSocket server;
+    private Socket admin;
+    private DataInputStream inputStream;
+    private DataOutputStream outputStream;
 
     public vc_dash() {
-        createDashboard();
+        try {
+            server = new ServerSocket(25565);
+            admin = new Socket("localhost", 25565);
+            admin = server.accept();
+            createDashboard();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void createDashboard() {
+
+
         adminDashboard.readJobsFromFile("client_transaction.txt");
         adminDashboard.parse(adminDashboard.getJobs().toString());
         setTitle("Vehicular Cloud RTS - Controller Dashboard");
@@ -43,12 +62,7 @@ public class vc_dash extends JFrame {
         viewJobsButton.setBackground(buttonColor);
         viewJobsButton.setForeground(Color.WHITE);
         viewJobsButton.setFocusPainted(false);
-        viewJobsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
-            }
-        });
+        viewJobsButton.addActionListener(this::displayJobList);
 
         calculateCompletionTimeButton = new JButton("Calculate Completion Time");
         calculateCompletionTimeButton.setFont(labelFont);
@@ -110,28 +124,13 @@ public class vc_dash extends JFrame {
     private void calculateCompletionTime(ActionEvent e) {
         JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
+    private void displayJobList(ActionEvent e) {
+        JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
+    }
 
     private void signOut() {
         main.getMainFrame(); // Go back to the main frame
         dispose(); // Close the backend.login frame
     }
 
-
-    private static class Job {
-        private final String id;
-        private final int duration;
-
-        public Job(String id, int duration) {
-            this.id = id;
-            this.duration = duration;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public int getDuration() {
-            return duration;
-        }
-    }
 }

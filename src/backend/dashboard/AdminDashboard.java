@@ -4,6 +4,7 @@ import backend.job.Job;
 import backend.vehicle.Vehicle;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -25,7 +26,6 @@ public class AdminDashboard {
     private HashMap<String,Vehicle> vehicles = new HashMap();
     //private HashMap<String, Job> jobs = new HashMap();
     private List<Job> jobs = new ArrayList<>();
-
     public void checkAvailability() {
         System.out.println("Checking Vehicle availability:");
         for (Vehicle vehicle : vehicles.values()) {
@@ -71,6 +71,7 @@ public class AdminDashboard {
     }
     public String getJobSummary() {
         StringBuilder jobIds = new StringBuilder("Job ID(s): ");
+        StringBuilder clientIds = new StringBuilder("Client ID(s): ");
         StringBuilder jobDurations = new StringBuilder("Job Duration(s): ");
         StringBuilder jobCompletionTimes = new StringBuilder("Completion Time: ");
 
@@ -80,6 +81,7 @@ public class AdminDashboard {
             long durationMinutes = job.getDuration().toMinutes();
 
             jobIds.append(job.getJobId()).append(", ");
+            clientIds.append(job.getClientId()).append(", ");
             jobDurations.append(durationMinutes).append(" min, ");
 
             cumulativeDurationMinutes += durationMinutes;
@@ -88,11 +90,12 @@ public class AdminDashboard {
 
         if (jobs.size() > 0) {
             jobIds.setLength(jobIds.length() - 2);
+            clientIds.setLength(clientIds.length() - 2);
             jobDurations.setLength(jobDurations.length() - 2);
             jobCompletionTimes.setLength(jobCompletionTimes.length() - 2);
         }
 
-        return jobIds.toString() + "\n" + jobDurations.toString() + "\n" + jobCompletionTimes.toString();
+        return jobIds.toString() + "\n" + clientIds + "\n" + jobDurations.toString() + "\n" + jobCompletionTimes.toString();
     }
     public List<Job> getJobs() {
         return jobs;
@@ -105,6 +108,7 @@ public class AdminDashboard {
         for (Job job : jobs) {
             StringBuilder jobInfo = new StringBuilder();
             jobInfo.append("Job ID: ").append(job.getJobId()).append("\n");
+            jobInfo.append("Client ID: ").append(job.getClientId()).append("\n");
             jobInfo.append("Status: ").append(job.getStatus()).append("\n");
             jobInfo.append("Deadline: ").append(job.getDeadline()).append("\n");
             jobInfo.append("\n");

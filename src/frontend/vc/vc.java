@@ -102,7 +102,7 @@ public class vc extends JFrame {
                 String password = new String(passwordField.getPassword());
                 User admin = db.validateLogin(username,password);
 
-                if (admin != null) {
+                if (admin != null && String.valueOf(admin.getUserId()).charAt(0)=='9') {
                     int adminId = admin.getUserId();
                     JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", Admin ID: " + adminId);
                     new vc_dash();

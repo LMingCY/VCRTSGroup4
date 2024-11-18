@@ -9,6 +9,9 @@ import frontend.main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,7 +26,16 @@ public class client_dash extends JFrame {
     private ClientDashboard clientDashboard = new ClientDashboard();
     private LocalDate deadline = LocalDate.of(2024,12,1);
 
+    //these are the client-server components
+    private Socket socket;
+    private DataInputStream inputStream;
+    private DataOutputStream outputStream;
+
     public client_dash(User user) {
+        createClientDash(user);
+    }
+
+    public void createClientDash(User user) {
         this.user=user;
         setTitle("Vehicular Cloud Console");
         setSize(400, 400);

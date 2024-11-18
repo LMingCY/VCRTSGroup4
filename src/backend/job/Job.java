@@ -37,6 +37,9 @@ public class Job {
     public LocalDate getDeadline() {
         return deadline;
     }
+    public int getClientId() {
+        return clientId;
+    }
 
     @Override
     public String toString() {
