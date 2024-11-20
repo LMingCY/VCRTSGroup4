@@ -87,7 +87,7 @@ public class owner extends JFrame {
                 String username = ownernameField.getText();
                 String password = new String(passwordField.getPassword());
                 JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new owner_dash(); 
+                new frontend.owner.owner_dash();
                 setVisible(false); 
             }
         });
