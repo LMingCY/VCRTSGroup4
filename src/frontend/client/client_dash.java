@@ -134,34 +134,11 @@ public class client_dash extends JFrame {
         job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
         saveToFile(job.toString());
         try (Socket socket = new Socket("localhost", 25565);
-             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-             DataInputStream in = new DataInputStream(socket.getInputStream())) {
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-            out.writeUTF(job.toString());
+            out.println(job.toString());
 
-            JOptionPane.showMessageDialog(this, "Job sent to server! Waiting for Controller...");
-            jobNameField.setEnabled(false);
-            jobDurationField.setEnabled(false);
-            jobDeadlineField.setEnabled(false);
-            submitButton.setEnabled(false);
-
-            String response = in.readUTF();
-            JOptionPane.showMessageDialog(this, "Admin Response: " + response);
-
-            if (response.equalsIgnoreCase("Rejected")) {
-                jobNameField.setEnabled(true);
-                jobDurationField.setEnabled(true);
-                jobDeadlineField.setEnabled(true);
-                submitButton.setEnabled(true);
-            } else {
-                jobNameField.setText("");
-                jobDurationField.setText("");
-                jobDeadlineField.setText("");
-                jobNameField.setEnabled(true);
-                jobDurationField.setEnabled(true);
-                jobDeadlineField.setEnabled(true);
-                submitButton.setEnabled(true);
-            }
+            JOptionPane.showMessageDialog(this, "Job sent to server!");
 
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error connecting to server.");
