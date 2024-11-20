@@ -4,9 +4,13 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JobStatus {
+public class JobStatus implements Serializable {
     private static final String STATUS_FILE = "job_status.txt";
-    private Map<String, String> jobStatuses = new HashMap<>();
+    private Map<String, String> jobStatuses;
+
+    public JobStatus() {
+        this.jobStatuses = new HashMap<>();
+    }
 
     public void saveJobStatus(String jobName, String status, int clientId) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(STATUS_FILE, true))) {
@@ -50,7 +54,9 @@ public class JobStatus {
             e.printStackTrace();
         }
 
-        inputFile.delete();
+        if (inputFile.exists()) {
+            inputFile.delete();
+        }
         tempFile.renameTo(inputFile);
     }
 }
