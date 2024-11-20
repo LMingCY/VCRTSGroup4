@@ -41,17 +41,33 @@ public class AdminDashboard {
             int jobId = Integer.parseInt(parts[0].replaceAll("^[^\\d]+", ""));
             String jobName = parts[1];
             int clientId = Integer.parseInt(parts[2]);
-            Duration duration = Duration.parse(parts[3]);
-            LocalDate deadline = LocalDate.parse(parts[4], DateTimeFormatter.ISO_LOCAL_DATE);
+            Duration duration = Duration.ofMinutes(Long.parseLong(parts[3]));
+            LocalDate deadline = parseDate(parts[4]);
             int status = Integer.parseInt(parts[5]);
             String result = parts[6];
 
             return new Job(jobId, clientId, jobName, status, result, deadline, duration);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Error parsing numeric fields", e);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Error parsing date/time fields", e);
         }
+    }
+
+    private static LocalDate parseDate(String date) {
+        String trimmedDate = date.trim();
+        DateTimeFormatter[] formatters = {
+                DateTimeFormatter.ISO_LOCAL_DATE,
+                DateTimeFormatter.ofPattern("MM/dd/yyyy"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        };
+
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDate.parse(trimmedDate, formatter);
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+
+        throw new IllegalArgumentException("Unrecognized date format: " + date);
     }
     public void readJobsFromFile(String fileName) {
         try {
