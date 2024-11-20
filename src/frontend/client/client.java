@@ -3,12 +3,14 @@ package frontend.client;
 import backend.MySQL.Driver;
 import backend.login.User;
 import backend.master.Idgenerator;
+import backend.job.JobStatus;  // Add this import
 import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class client extends JFrame {
     // Declare UI components
