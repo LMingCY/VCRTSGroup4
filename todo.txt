@@ -25,4 +25,11 @@ Added on 11/06
 >remove the hardcoded "LocalDate" variable and actually takes in what users inputted
 >start working on the "owner" related classes
 >continue to move the backend code (functions & methods) to the backend package and leave a "clean" class for front ends.
->(FOR BOTH ENDS) Have ONE login page only, AT MOST two, it doesn't make sense to 3 different login pages.
+>(FOR BOTH ENDS) Have ONE login page only, AT MOST two, it doesn't make sense to have 3 different login pages.
+
+
+11/19
+>Fix the parsing error due to me changing the output order of Job attributes
+>follow manage_job class and create a similar class called manage vehicles
+>add a button to manage_job class that allows admin to remove an already accepted job.
+>add a response pop-up for the submitting page so that when the vc accepted the job, on the client side, there should be a pop up saying job accepted!

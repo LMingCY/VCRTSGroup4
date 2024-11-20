@@ -105,7 +105,7 @@ public class vc extends JFrame {
                 if (admin != null && String.valueOf(admin.getUserId()).charAt(0)=='9') {
                     int adminId = admin.getUserId();
                     JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", Admin ID: " + adminId);
-                    new vc_dash();
+                    new vc_dash(admin);
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);

@@ -9,14 +9,11 @@ import frontend.main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class client_dash extends JFrame {
     private JTextField jobNameField, jobDurationField, jobDeadlineField;
@@ -137,6 +134,20 @@ public class client_dash extends JFrame {
         job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
         saveToFile(job.toString());
         JOptionPane.showMessageDialog(this, "Entries saved!");
+        try (Socket socket = new Socket("localhost", 25565);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+
+            String jobName = jobNameField.getText();
+            String jobDuration = jobDurationField.getText();
+            String jobDeadline = jobDeadlineField.getText();
+
+            out.println(job.toString());
+
+            JOptionPane.showMessageDialog(this, "Job sent to server!");
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error connecting to server.");
+        }
     }
 
     private void clearFields() {
@@ -161,4 +172,5 @@ public class client_dash extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving data.");
         }
     }
+
 }

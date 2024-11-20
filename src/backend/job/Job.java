@@ -44,6 +44,6 @@ public class Job {
     @Override
     public String toString() {
         String timestamp = LocalDateTime.now().toString();
-        return String.valueOf(jobId) + "," + jobName + "," + status + "," + String.valueOf(clientId) + "," + duration + "," + deadline + "," + result + "," + timestamp;
+        return String.valueOf(jobId) + "," + jobName + "," + String.valueOf(clientId) + "," + duration.toMinutes() + "," + deadline + "," + status + "," + result + "," + timestamp;
     }
 }

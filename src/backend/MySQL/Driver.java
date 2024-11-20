@@ -11,13 +11,15 @@ import java.util.*;
 
 public class Driver {
     public Connection connection() throws SQLException, IOException{
-        Path path = Paths.get("/Users/leonming/Documents/ipandports.txt");
+        //Path path = Paths.get("/Users/leonming/Documents/ipandports.txt"); MAC location
+        Path path = Paths.get("E:\\ipandports.txt");
         List<String> lines= Files.readAllLines(path);
         String ip = lines.get(0);
         String mysqlPort = lines.get(1);
         String username = lines.get(3);
         String password = lines.get(4);
         return DriverManager.getConnection("jdbc:mysql://"+ip + mysqlPort+"/vcrts", username, password);
+
     }
     public void addUser(int userId, String username, String password, String name, String email) {
         String query = "INSERT INTO users (user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?)";
@@ -70,7 +72,7 @@ public class Driver {
         try (Connection conn = connection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, String.format("%09d", userId)); // Convert int to 9-digit String
+            pstmt.setString(1, String.format("%09d", userId)); //convert int to 9-digit String
 
             pstmt.executeUpdate();
             System.out.println("User deleted successfully.");

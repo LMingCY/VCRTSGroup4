@@ -1,22 +1,25 @@
 package frontend.vc;
 
 import backend.dashboard.AdminDashboard;
+import backend.login.User;
 import frontend.main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class vc_dash extends JFrame {
-    private JButton viewJobsButton, calculateCompletionTimeButton, backButton, acceptButton, rejectButton;
+    private JLabel adminInfoLabel;
+    private JButton logoutButton;
+    private JButton manageJobsButton;
+    private JButton manageVehiclesButton;
+    private JButton manageUsersButton;
+    private JButton serverButton;
     private AdminDashboard adminDashboard = new AdminDashboard();
     //these are client-server components
     private ServerSocket server;
@@ -24,113 +27,80 @@ public class vc_dash extends JFrame {
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
 
-    public vc_dash() {
-        try {
-            server = new ServerSocket(25565);
-            admin = new Socket("localhost", 25565);
-            admin = server.accept();
-            createDashboard();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public vc_dash(User admin) {
+        createDashboard(admin);
     }
 
-    private void createDashboard() {
+    private void createDashboard(User admin) {
 
 
         adminDashboard.readJobsFromFile("client_transaction.txt");
         adminDashboard.parse(adminDashboard.getJobs().toString());
-        setTitle("Vehicular Cloud RTS - Controller Dashboard");
+        setTitle("Admin Dashboard");
         setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(240, 240, 240));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(topPanel, BorderLayout.NORTH);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.CENTER; 
+        adminInfoLabel = new JLabel("<html>Admin Name: " + admin.getName() + "<br>Admin ID: " + admin.getUserId() + "<br>Status: " + "</html>");
+        topPanel.add(adminInfoLabel, BorderLayout.WEST);
 
-        Font labelFont = new Font("Arial", Font.BOLD, 14);
-        Color buttonColor = new Color(100, 150, 250);
+        logoutButton = new JButton("Log Out");
+        topPanel.add(logoutButton, BorderLayout.EAST);
 
-        viewJobsButton = new JButton("View Jobs");
-        viewJobsButton.setFont(labelFont);
-        viewJobsButton.setBackground(buttonColor);
-        viewJobsButton.setForeground(Color.WHITE);
-        viewJobsButton.setFocusPainted(false);
-        viewJobsButton.addActionListener(this::displayJobList);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        add(buttonPanel, BorderLayout.CENTER);
 
-        calculateCompletionTimeButton = new JButton("Calculate Completion Time");
-        calculateCompletionTimeButton.setFont(labelFont);
-        calculateCompletionTimeButton.setBackground(buttonColor);
-        calculateCompletionTimeButton.setForeground(Color.WHITE);
-        calculateCompletionTimeButton.setFocusPainted(false);
-        calculateCompletionTimeButton.addActionListener(this::calculateCompletionTime);
+        manageJobsButton = new JButton("Manage Jobs");
+        manageJobsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        manageJobsButton.setMaximumSize(new Dimension(200, 30));
+        buttonPanel.add(manageJobsButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
 
-        acceptButton = new JButton("Accept");
-        acceptButton.setBackground(new Color(34, 139, 34));
-        acceptButton.setForeground(Color.WHITE);
-        acceptButton.setFont(labelFont);
+        manageVehiclesButton = new JButton("Manage Vehicles");
+        manageVehiclesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        manageVehiclesButton.setMaximumSize(new Dimension(200, 30));
+        buttonPanel.add(manageVehiclesButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
 
-        rejectButton = new JButton("Reject");
-        rejectButton.setBackground(new Color(220, 20, 60));
-        rejectButton.setForeground(Color.WHITE);
-        rejectButton.setFont(labelFont);
+        manageUsersButton = new JButton("Manage Users");
+        manageUsersButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        manageUsersButton.setMaximumSize(new Dimension(200, 30));
+        buttonPanel.add(manageUsersButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
 
-        backButton = new JButton("Back");
-        backButton.setFont(labelFont);
-        backButton.setBackground(buttonColor);
-        backButton.setForeground(Color.WHITE);
-        backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> signOut());
+        serverButton = new JButton("Server");
+        serverButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        serverButton.setMaximumSize(new Dimension(200, 30));
+        buttonPanel.add(serverButton);
 
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; 
-        mainPanel.add(viewJobsButton, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(calculateCompletionTimeButton, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(acceptButton, gbc);
-        gbc.gridy++;
-        mainPanel.add(rejectButton, gbc);
-
-        gbc.gridy++;
-        mainPanel.add(backButton, gbc);
-
-        add(mainPanel);
+        setupListeners();
         setVisible(true);
     }
 
-    /*
-    private void viewJobs(ActionEvent e) {
-        if (jobs.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No jobs available.");
-        } else {
-            StringBuilder jobList = new StringBuilder("Current Jobs:\n");
-            for (Job job : jobs) {
-                jobList.append("Job ID: ").append(job.getId()).append(", Duration: ").append(job.getDuration()).append(" minutes\n");
-            }
-            JOptionPane.showMessageDialog(this, jobList.toString());
-        }
-    }
+    private void setupListeners() {
+        logoutButton.addActionListener(e -> {
+            dispose();
+            main.getMainFrame();
+        });
+        manageJobsButton.addActionListener(e -> {
+            new manage_job();
+            dispose();
+        });
 
-     */
+    }
 
     private void calculateCompletionTime(ActionEvent e) {
         JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
     }
     private void displayJobList(ActionEvent e) {
         JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
-    }
-
-    private void signOut() {
-        main.getMainFrame(); // Go back to the main frame
-        dispose(); // Close the backend.login frame
     }
 
 }

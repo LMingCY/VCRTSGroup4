@@ -24,7 +24,6 @@ public class AdminDashboard {
     - Manage Cars (Remove, Add)  -> also part of the read/write stuff.
      */
     private HashMap<String,Vehicle> vehicles = new HashMap();
-    //private HashMap<String, Job> jobs = new HashMap();
     private List<Job> jobs = new ArrayList<>();
     public void checkAvailability() {
         System.out.println("Checking Vehicle availability:");
@@ -41,10 +40,10 @@ public class AdminDashboard {
         try {
             int jobId = Integer.parseInt(parts[0].replaceAll("^[^\\d]+", ""));
             String jobName = parts[1];
-            int status = Integer.parseInt(parts[2]);
-            int clientId = Integer.parseInt(parts[3]);
-            Duration duration = Duration.parse(parts[4]);
-            LocalDate deadline = LocalDate.parse(parts[5], DateTimeFormatter.ISO_LOCAL_DATE);
+            int clientId = Integer.parseInt(parts[2]);
+            Duration duration = Duration.parse(parts[3]);
+            LocalDate deadline = LocalDate.parse(parts[4], DateTimeFormatter.ISO_LOCAL_DATE);
+            int status = Integer.parseInt(parts[5]);
             String result = parts[6];
 
             return new Job(jobId, clientId, jobName, status, result, deadline, duration);
