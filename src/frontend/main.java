@@ -15,7 +15,7 @@ public class main {
     private static JButton selectUser, selectOwner, selectVC;
 
     private static void setButtons() {
-        selectUser = new JButton("User");
+        selectUser = new JButton("Client");
         selectOwner = new JButton("Owner");
         selectVC = new JButton("VC");
 
