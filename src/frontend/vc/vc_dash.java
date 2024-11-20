@@ -22,13 +22,11 @@ public class vc_dash extends JFrame {
     private JButton serverButton;
     private AdminDashboard adminDashboard = new AdminDashboard();
     //these are client-server components
-    private ServerSocket server;
-    private Socket admin;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
+    private User admin;
 
     public vc_dash(User admin) {
         createDashboard(admin);
+        this.admin = admin;
     }
 
     private void createDashboard(User admin) {
@@ -90,7 +88,7 @@ public class vc_dash extends JFrame {
             main.getMainFrame();
         });
         manageJobsButton.addActionListener(e -> {
-            manage_job jobManager = manage_job.getInstance();
+            manage_job jobManager = manage_job.getInstance(admin);
             jobManager.setVisible(true);
         });
         manageVehiclesButton.addActionListener(e -> {

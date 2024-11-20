@@ -11,8 +11,8 @@ import java.util.*;
 
 public class Driver {
     public Connection connection() throws SQLException, IOException{
-        //Path path = Paths.get("/Users/leonming/Documents/ipandports.txt"); MAC location
-        Path path = Paths.get("E:\\ipandports.txt");
+        Path path = Paths.get("/Users/leonming/Documents/ipandports.txt"); //MAC location
+        //Path path = Paths.get("E:\\ipandports.txt");
         List<String> lines= Files.readAllLines(path);
         String ip = lines.get(0);
         String mysqlPort = lines.get(1);
