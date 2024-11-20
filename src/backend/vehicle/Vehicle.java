@@ -97,6 +97,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + residencyTime + "," + currentJob + ",";
+        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + residencyTime.toMinutes() + "," + currentJob + ",";
     }
 }

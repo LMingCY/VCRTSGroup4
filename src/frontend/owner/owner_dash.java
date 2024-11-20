@@ -137,7 +137,7 @@ public class owner_dash extends JFrame {
      vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleModelField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
      ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction.txt");
      try (Socket socket = new Socket("localhost", 25566);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
             out.println(vehicle.toString());
 

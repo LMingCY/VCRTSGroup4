@@ -79,7 +79,6 @@ public class manage_vehicle extends JFrame {
         gbc.gridy++;
         buttonsPanel.add(rejectAllButton, gbc);
         gbc.gridy++;
-        buttonsPanel.add(completionTimeButton, gbc);
         gbc.gridy++;
         buttonsPanel.add(writeToFileButton, gbc);
         gbc.gridy++;

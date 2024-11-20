@@ -19,7 +19,7 @@ public class OwnerDashboard {
         int vehicleId = Idgenerator.generateVehicleId();
         int vehicleStatus = 0; //0 will indicate free;
         String currentJob = "";
-        return new Vehicle(vehicleId, make, model, ownerId, vehicleStatus, currentJob, residencyTime);
+        return new Vehicle(vehicleId, make, model, ownerId, vehicleStatus, residencyTime , currentJob);
     }
     public void writeVehicleToFile(Vehicle vehicle, String filePath) {
         String timestamp = LocalDateTime.now().toString();
