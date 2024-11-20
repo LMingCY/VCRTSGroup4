@@ -51,7 +51,7 @@ public class client_dash extends JFrame {
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
-        JLabel jobNameLabel = new JLabel("Job ID:");
+        JLabel jobNameLabel = new JLabel("Job Name:");
         jobNameLabel.setFont(labelFont);
         jobNameField = new JTextField();
         jobNameField.setFont(fieldFont);
@@ -161,7 +161,6 @@ public class client_dash extends JFrame {
                 jobDurationField.setEnabled(true);
                 jobDeadlineField.setEnabled(true);
                 submitButton.setEnabled(true);
-                saveToFileApproved(job.toString());
             }
 
         } catch (IOException ex) {
@@ -191,11 +190,5 @@ public class client_dash extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving data.");
         }
     }
-    private void saveToFileApproved(String data) {
-        try (FileWriter writer = new FileWriter("client_transaction_approved.txt", true)) {
-            writer.write(data + "\n");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error saving data.");
-        }
-    }
+
 }

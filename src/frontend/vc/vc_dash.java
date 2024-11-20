@@ -1,4 +1,4 @@
-package frontend.Vc;
+package frontend.vc;
 
 import backend.dashboard.AdminDashboard;
 import backend.login.User;
@@ -22,11 +22,13 @@ public class vc_dash extends JFrame {
     private JButton serverButton;
     private AdminDashboard adminDashboard = new AdminDashboard();
     //these are client-server components
-    private User admin;
+    private ServerSocket server;
+    private Socket admin;
+    private DataInputStream inputStream;
+    private DataOutputStream outputStream;
 
     public vc_dash(User admin) {
         createDashboard(admin);
-        this.admin = admin;
     }
 
     private void createDashboard(User admin) {
@@ -88,7 +90,7 @@ public class vc_dash extends JFrame {
             main.getMainFrame();
         });
         manageJobsButton.addActionListener(e -> {
-            manage_job jobManager = manage_job.getInstance(admin);
+            manage_job jobManager = manage_job.getInstance();
             jobManager.setVisible(true);
         });
         manageVehiclesButton.addActionListener(e -> {
