@@ -130,30 +130,51 @@ public class client_dash extends JFrame {
         setVisible(true);
     }
 
-    private void submitData(ActionEvent e) {
-    job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(),
-            Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
-    saveToFile(job.toString());
-    try (Socket socket = new Socket("localhost", 25565);
-         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+private void submitData(ActionEvent e) {
+    // Validate input fields
+    if (jobNameField.getText().isEmpty() || jobDurationField.getText().isEmpty() || 
+        jobDeadlineField.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+        return;
+    }
 
-        String jobName = jobNameField.getText();
-        String jobDuration = jobDurationField.getText(); // duration as string
-        String jobDeadline = jobDeadlineField.getText(); // deadline as string
-        String jobData = jobName + "," + jobDuration + "," + jobDeadline;
+    try {
+        // Create job object
+        job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(),
+                Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
+        
+        // Save to file
+        saveToFile(job.toString());
 
-        out.println(jobData); // Send job data to server
+        // Connect to server and submit job
+        try (Socket socket = new Socket("localhost", 25565);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-        String response = in.readLine(); // Listen for response from server
-        if (response != null && !response.isEmpty()) {
-            JOptionPane.showMessageDialog(this, response);
-        } else {
-            JOptionPane.showMessageDialog(this, "No response from server.");
+            // Format job data
+            String jobData = String.format("%s,%s,%s",
+                jobNameField.getText(),
+                jobDurationField.getText(),
+                jobDeadlineField.getText());
+
+            // Send job data
+            out.println(jobData);
+
+            // Wait for response
+            String response = in.readLine();
+            if (response != null && !response.isEmpty()) {
+                JOptionPane.showMessageDialog(this, response);
+                if (response.contains("submitted successfully")) {
+                    clearFields(); // Clear fields only on successful submission
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No response from server.");
+            }
         }
-
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid number for duration.");
     } catch (IOException ex) {
-        JOptionPane.showMessageDialog(this, "Error connecting to server.");
+        JOptionPane.showMessageDialog(this, "Error connecting to server: " + ex.getMessage());
     }
 }
 

@@ -189,7 +189,7 @@ private void rejectAll() {
         }).start();
     }
 
-    private class ClientHandler implements Runnable {
+private class ClientHandler implements Runnable {
     private Socket clientSocket;
 
     public ClientHandler(Socket clientSocket) {
@@ -206,19 +206,30 @@ private void rejectAll() {
             while ((jobData = in.readLine()) != null) {
                 // Parse the incoming job data
                 String[] jobAttributes = jobData.split(",");
-                String jobName = jobAttributes[0];  // Now at index 0, for jobName
-                String jobDuration = jobAttributes[1]; // Now at index 1, for jobDuration
-                String jobDeadline = jobAttributes[2]; // Now at index 2, for jobDeadline
-
-                // Simple logic to accept/reject the job based on duration
-                int duration = Integer.parseInt(jobDuration);
-                if (duration <= 60) {
-                    // Accept job
-                    SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
-                    out.println("Job '" + jobName + "' has been accepted.");
+                if (jobAttributes.length >= 3) {
+                    String jobName = jobAttributes[0];
+                    String jobDuration = jobAttributes[1];
+                    String jobDeadline = jobAttributes[2];
+                    
+                    // Generate a unique job ID
+                    String jobId = String.valueOf(System.currentTimeMillis());
+                    
+                    // Create row data for the table
+                    final Object[] rowData = new Object[]{
+                        jobId,           // Job ID
+                        jobName,         // Name
+                        "1",            // Client ID (you might want to pass this from client)
+                        jobDuration,     // Duration
+                        jobDeadline     // Deadline
+                    };
+                    
+                    // Add to incoming jobs table
+                    SwingUtilities.invokeLater(() -> {
+                        incomingModel.addRow(rowData);
+                        out.println("Job '" + jobName + "' has been submitted successfully.");
+                    });
                 } else {
-                    // Reject job
-                    out.println("Job '" + jobName + "' has been rejected.");
+                    out.println("Invalid job data format received.");
                 }
             }
         } catch (IOException e) {
