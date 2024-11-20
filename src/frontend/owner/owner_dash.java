@@ -9,9 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 
@@ -135,42 +137,15 @@ public class owner_dash extends JFrame {
      vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleModelField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
      ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction.txt");
      try (Socket socket = new Socket("localhost", 25566);
-          DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-          DataInputStream in = new DataInputStream(socket.getInputStream())) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-         out.writeUTF(vehicle.toString());
+            out.println(vehicle.toString());
 
-         JOptionPane.showMessageDialog(this, "Vehicle sent to server! Waiting for Controller...");
-         ownerIDField.setEnabled(false);
-         vehicleModelField.setEnabled(false);
-         vehicleInfoField.setEnabled(false);
-         residencyTimeField.setEnabled(false);
-         submitButton.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Vehicle sent to server!");
 
-         String response = in.readUTF();
-         JOptionPane.showMessageDialog(this, "Admin Response: " + response);
-
-         if (response.equalsIgnoreCase("Rejected")) {
-             ownerIDField.setEnabled(true);
-             vehicleModelField.setEnabled(true);
-             vehicleInfoField.setEnabled(true);
-             residencyTimeField.setEnabled(true);
-             submitButton.setEnabled(true);
-         } else {
-             ownerIDField.setText("");
-             vehicleModelField.setText("");
-             vehicleInfoField.setText("");
-             residencyTimeField.setText("");
-             ownerIDField.setEnabled(true);
-             vehicleModelField.setEnabled(true);
-             vehicleInfoField.setEnabled(true);
-             residencyTimeField.setEnabled(true);
-             submitButton.setEnabled(true);
-         }
-
-     } catch (IOException ex) {
-         JOptionPane.showMessageDialog(this, "Error connecting to server.");
-     }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error connecting to server.");
+        }
  }
 
  private void clearFields() {

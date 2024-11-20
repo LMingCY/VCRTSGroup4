@@ -165,7 +165,6 @@ public class manage_vehicle extends JFrame {
 
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
-        private String vehicleId;
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -173,45 +172,21 @@ public class manage_vehicle extends JFrame {
 
         @Override
         public void run() {
-            try (DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream())) {
-
-                String vehicleData = in.readUTF();
-                String[] vehicleParts = vehicleData.split(",");
-                vehicleId = vehicleParts[0];
-                SwingUtilities.invokeLater(() -> incomingModel.addRow(vehicleParts));
-
-                while (true) {
-                    Thread.sleep(100);
-                    if (isJobAccepted(vehicleId)) {
-                        out.writeUTF("Accepted");
-                        break;
-                    } else if (isVehicleRejected(vehicleId)) {
-                        out.writeUTF("Rejected");
-                        break;
-                    }
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+                String vehicleData;
+                while ((vehicleData = in.readLine()) != null) {
+                    String[] vehicleAttributes = vehicleData.split(",");
+                    SwingUtilities.invokeLater(() -> incomingModel.addRow(vehicleAttributes));
                 }
-
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 System.out.println("Error handling client: " + e.getMessage());
-            }
-        }
-
-        private boolean isJobAccepted(String vehicleId) {
-            return findRowIndex(activeModel, vehicleId) != -1;
-        }
-
-        private boolean isVehicleRejected(String vehicleId) {
-            return findRowIndex(incomingModel, vehicleId) == -1 && findRowIndex(activeModel, vehicleId) == -1;
-        }
-
-        private int findRowIndex(DefaultTableModel model, String vehicleId) {
-            for (int i = 0; i < model.getRowCount(); i++) {
-                if (model.getValueAt(i, 0).toString().equals(vehicleId)) {
-                    return i;
+            } finally {
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing client socket: " + e.getMessage());
                 }
             }
-            return -1;
         }
     }
 

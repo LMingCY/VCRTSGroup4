@@ -5,11 +5,14 @@ import backend.login.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.PrintWriter;
 
 public class manage_job extends JFrame {
     private static manage_job instance;
@@ -177,7 +180,6 @@ public class manage_job extends JFrame {
 
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
-        private String jobId;
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -185,45 +187,34 @@ public class manage_job extends JFrame {
 
         @Override
         public void run() {
-            try (DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream())) {
+            try (
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
+            ) {
+                String jobData;
+                while ((jobData = in.readLine()) != null) {
+                    String[] jobAttributes = jobData.split(",");
+                    String jobName = jobAttributes[1]; // Assume job name is at index 1
+                    String jobDuration = jobAttributes[3]; // Assume duration is at index 3
 
-                String jobData = in.readUTF();
-                String[] jobParts = jobData.split(",");
-                jobId = jobParts[0];
-                SwingUtilities.invokeLater(() -> incomingModel.addRow(jobParts));
-
-                while (true) {
-                    Thread.sleep(100);
-                    if (isJobAccepted(jobId)) {
-                        out.writeUTF("Accepted");
-                        break;
-                    } else if (isJobRejected(jobId)) {
-                        out.writeUTF("Rejected");
-                        break;
+                    // Simple logic to accept/reject the job
+                    int duration = Integer.parseInt(jobDuration.replaceAll("[^0-9]", ""));
+                    if (duration <= 60) {
+                        SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
+                        out.println("Job '" + jobName + "' has been accepted.");
+                    } else {
+                        out.println("Job '" + jobName + "' has been rejected.");
                     }
                 }
-
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 System.out.println("Error handling client: " + e.getMessage());
-            }
-        }
-
-        private boolean isJobAccepted(String jobId) {
-            return findRowIndex(acceptedModel, jobId) != -1;
-        }
-
-        private boolean isJobRejected(String jobId) {
-            return findRowIndex(incomingModel, jobId) == -1 && findRowIndex(acceptedModel, jobId) == -1;
-        }
-
-        private int findRowIndex(DefaultTableModel model, String jobId) {
-            for (int i = 0; i < model.getRowCount(); i++) {
-                if (model.getValueAt(i, 0).toString().equals(jobId)) {
-                    return i;
+            } finally {
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing client socket: " + e.getMessage());
                 }
             }
-            return -1;
         }
     }
 
