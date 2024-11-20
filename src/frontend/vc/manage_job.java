@@ -159,10 +159,8 @@ public class manage_job extends JFrame {
             }
         }).start();
     }
-    private class ClientHandler implements Runnable {
-        private Socket clientSocket;
 
-        private class ClientHandler implements Runnable {
+    private class ClientHandler implements Runnable {
     private Socket clientSocket;
 
     public ClientHandler(Socket clientSocket) {
