@@ -171,21 +171,25 @@ public class manage_job extends JFrame {
     @Override
     public void run() {
         try (
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
         ) {
             String jobData;
             while ((jobData = in.readLine()) != null) {
+                // Parse the incoming job data
                 String[] jobAttributes = jobData.split(",");
-                String jobName = jobAttributes[1]; // Assume job name is at index 1
-                String jobDuration = jobAttributes[3]; // Assume duration is at index 3
+                String jobName = jobAttributes[0];  // Now at index 0, for jobName
+                String jobDuration = jobAttributes[1]; // Now at index 1, for jobDuration
+                String jobDeadline = jobAttributes[2]; // Now at index 2, for jobDeadline
 
-                // Simple logic to accept/reject the job
-                int duration = Integer.parseInt(jobDuration.replaceAll("[^0-9]", ""));
+                // Simple logic to accept/reject the job based on duration
+                int duration = Integer.parseInt(jobDuration);
                 if (duration <= 60) {
+                    // Accept job
                     SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
                     out.println("Job '" + jobName + "' has been accepted.");
                 } else {
+                    // Reject job
                     out.println("Job '" + jobName + "' has been rejected.");
                 }
             }
