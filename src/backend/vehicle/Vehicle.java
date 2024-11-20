@@ -11,12 +11,12 @@ public class Vehicle {
     private int vehicleId, ownerId; //backend.vehicle identifiers
     private String make;
     private String model;
-    private char vehicleStatus;
+    private int vehicleStatus;
     private String currentJob; //realtime information
     private Duration residencyTime;
 
     //backend.vehicle info
-    public Vehicle(int vehicleId, String make, String model,int ownerId, char vehicleStatus, String currentJob, Duration residencyTime) {
+    public Vehicle(int vehicleId, String make, String model,int ownerId, int vehicleStatus, Duration residencyTime,String currentJob) {
         this.vehicleId = vehicleId;
         this.make = make;
         this.model = model;
@@ -59,7 +59,7 @@ public class Vehicle {
         this.ownerId = ownerId;
     }
 
-    public char getVehicleStatus() {
+    public int getVehicleStatus() {
         return vehicleStatus;
     }
 
@@ -97,6 +97,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + currentJob + "," + residencyTime + ",";
+        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + residencyTime + "," + currentJob + ",";
     }
 }

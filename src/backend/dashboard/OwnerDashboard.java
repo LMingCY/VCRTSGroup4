@@ -17,7 +17,7 @@ public class OwnerDashboard {
     private int OwnerId;
     public Vehicle addVehicle(String make, String model, int ownerId, Duration residencyTime) {
         int vehicleId = Idgenerator.generateVehicleId();
-        char vehicleStatus = 0; //0 will indicate free;
+        int vehicleStatus = 0; //0 will indicate free;
         String currentJob = "";
         return new Vehicle(vehicleId, make, model, ownerId, vehicleStatus, currentJob, residencyTime);
     }

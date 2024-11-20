@@ -13,10 +13,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 
 public class owner_dash extends JFrame {
- private JTextField vehicleInfoField;
+ private JTextField vehicleInfoField, vehicleModelField;
  private NumericTextField ownerIDField, residencyTimeField;
  private JButton submitButton, clearButton, signOutButton, helpButton;
  private OwnerDashboard ownerDashboard = new OwnerDashboard();
@@ -50,6 +52,11 @@ public class owner_dash extends JFrame {
      vehicleInfoLabel.setFont(labelFont);
      vehicleInfoField = new JTextField();
      vehicleInfoField.setFont(fieldFont);
+
+     JLabel vehicleModelLabel = new JLabel("Vehicle Model:");
+     vehicleModelLabel.setFont(labelFont);
+     vehicleModelField = new JTextField();
+     vehicleModelField.setFont(fieldFont);
 
      JLabel residencyTimeLabel = new JLabel("Residency Time:");
      residencyTimeLabel.setFont(labelFont);
@@ -97,6 +104,12 @@ public class owner_dash extends JFrame {
 
      gbc.gridy++;
      gbc.gridx = 0;
+     mainPanel.add(vehicleModelLabel, gbc); 
+     gbc.gridx = 1;
+     mainPanel.add(vehicleModelField, gbc); 
+
+     gbc.gridy++;
+     gbc.gridx = 0;
      mainPanel.add(residencyTimeLabel, gbc); 
      gbc.gridx = 1;
      mainPanel.add(residencyTimeField, gbc); 
@@ -121,9 +134,18 @@ public class owner_dash extends JFrame {
  }
 
  private void submitData(ActionEvent e) {
-     vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleInfoField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
+     vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleModelField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
      ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction.txt");
-     JOptionPane.showMessageDialog(this, "Entries saved!");
+     try (Socket socket = new Socket("localhost", 25566);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+
+            out.println(vehicle.toString());
+
+            JOptionPane.showMessageDialog(this, "Vehicle sent to server!");
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error connecting to server.");
+        }
  }
 
  private void clearFields() {

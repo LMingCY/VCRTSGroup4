@@ -133,13 +133,8 @@ public class client_dash extends JFrame {
     private void submitData(ActionEvent e) {
         job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
         saveToFile(job.toString());
-        JOptionPane.showMessageDialog(this, "Entries saved!");
         try (Socket socket = new Socket("localhost", 25565);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-
-            String jobName = jobNameField.getText();
-            String jobDuration = jobDurationField.getText();
-            String jobDeadline = jobDeadlineField.getText();
 
             out.println(job.toString());
 
