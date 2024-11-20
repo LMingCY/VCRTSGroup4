@@ -55,31 +55,44 @@ public class manage_job extends JFrame {
         listPanel.add(new JLabel("Accepted Jobs"));
         listPanel.add(acceptedScrollPane);
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(0, 1, 1, 1));
+        JPanel buttonsPanel = new JPanel(new GridBagLayout());
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        buttonsPanel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        Dimension buttonSize = new Dimension(1, 1);
+        Font buttonFont = new Font("Arial", Font.BOLD, 14);
+        Color buttonColor = new Color(100, 150, 250);
 
-        JButton acceptButton = createButton("Accept Selected", buttonSize);
-        JButton rejectButton = createButton("Reject Selected", buttonSize);
-        JButton acceptAllButton = createButton("Accept All", buttonSize);
-        JButton rejectAllButton = createButton("Reject All", buttonSize);
-        JButton completionTimeButton = createButton("Completion Time", buttonSize);
-        JButton writeToFileButton = createButton("Write to File", buttonSize);
-        JButton backButton = createButton("Back", buttonSize);
+        JButton acceptButton = createStyledButton("Accept Selected", buttonFont, buttonColor);
+        JButton rejectButton = createStyledButton("Reject Selected", buttonFont, buttonColor);
+        JButton acceptAllButton = createStyledButton("Accept All", buttonFont, buttonColor);
+        JButton rejectAllButton = createStyledButton("Reject All", buttonFont, buttonColor);
+        JButton completionTimeButton = createStyledButton("Completion Time", buttonFont, buttonColor);
+        JButton writeToFileButton = createStyledButton("Write to File", buttonFont, buttonColor);
+        JButton backButton = createStyledButton("Back", buttonFont, buttonColor);
 
-        buttonsPanel.add(acceptButton);
-        buttonsPanel.add(rejectButton);
-        buttonsPanel.add(acceptAllButton);
-        buttonsPanel.add(rejectAllButton);
-        buttonsPanel.add(completionTimeButton);
-        buttonsPanel.add(writeToFileButton);
-        buttonsPanel.add(backButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonsPanel.add(acceptButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(rejectButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(acceptAllButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(rejectAllButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(completionTimeButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(writeToFileButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(backButton, gbc);
 
         acceptButton.addActionListener(e -> acceptSelected());
         rejectButton.addActionListener(e -> rejectSelected());
         acceptAllButton.addActionListener(e -> acceptAll());
         rejectAllButton.addActionListener(e -> rejectAll());
-
         completionTimeButton.addActionListener(e -> getJobSummary());
 
         add(listPanel);
@@ -88,10 +101,12 @@ public class manage_job extends JFrame {
         setVisible(true);
     }
 
-    private JButton createButton(String text, Dimension size) {
+    private JButton createStyledButton(String text, Font font, Color color) {
         JButton button = new JButton(text);
-        button.setPreferredSize(size);
-        button.setMaximumSize(size);
+        button.setFont(font);
+        button.setBackground(color);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
         return button;
     }
 
