@@ -17,16 +17,23 @@ public class manage_vehicle extends JFrame {
     private JTable activeTable;
     private static final int port = 25566; 
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private static manage_vehicle instance;
 
     public manage_vehicle() {
         setTitle("Vehicle Manager");
         setSize(600, 500);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         setLocationRelativeTo(null);
         setupUI();
 
         startServer();
+    }
+    public static manage_vehicle getInstance() {
+        if (instance == null) {
+            instance = new manage_vehicle();
+        }
+        return instance;
     }
 
     private void setupUI() {

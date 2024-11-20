@@ -1,6 +1,7 @@
 package frontend.vc;
 
 import backend.job.Job;
+import backend.login.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,8 +13,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.PrintWriter;
 
 public class manage_job extends JFrame {
+    private static manage_job instance;
     private DefaultTableModel incomingModel;
     private DefaultTableModel acceptedModel;
     private JTable incomingTable;
@@ -24,13 +27,19 @@ public class manage_job extends JFrame {
 
     public manage_job() {
         setTitle("Job Manager");
-        setSize(800, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 500);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         setLocationRelativeTo(null);
         setupUI();
 
         startServer();
+    }
+    public static manage_job getInstance() {
+        if (instance == null) {
+            instance = new manage_job();
+        }
+        return instance;
     }
 
     private void setupUI() {
@@ -55,32 +64,46 @@ public class manage_job extends JFrame {
         listPanel.add(new JLabel("Accepted Jobs"));
         listPanel.add(acceptedScrollPane);
 
-        JPanel buttonsPanel = new JPanel(new GridLayout(0, 1, 1, 1));
+        JPanel buttonsPanel = new JPanel(new GridBagLayout());
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonsPanel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        Dimension buttonSize = new Dimension(1, 1);
+        Font buttonFont = new Font("Arial", Font.BOLD, 14);
+        Color buttonColor = new Color(100, 150, 250);
 
-        JButton acceptButton = createButton("Accept Selected", buttonSize);
-        JButton rejectButton = createButton("Reject Selected", buttonSize);
-        JButton acceptAllButton = createButton("Accept All", buttonSize);
-        JButton rejectAllButton = createButton("Reject All", buttonSize);
-        JButton completionTimeButton = createButton("Completion Time", buttonSize);
-        JButton writeToFileButton = createButton("Write to File", buttonSize);
-        JButton backButton = createButton("Back", buttonSize);
+        JButton acceptButton = createStyledButton("Accept Selected", buttonFont, buttonColor);
+        JButton rejectButton = createStyledButton("Reject Selected", buttonFont, buttonColor);
+        JButton acceptAllButton = createStyledButton("Accept All", buttonFont, buttonColor);
+        JButton rejectAllButton = createStyledButton("Reject All", buttonFont, buttonColor);
+        JButton completionTimeButton = createStyledButton("Completion Time", buttonFont, buttonColor);
+        JButton writeToFileButton = createStyledButton("Write to File", buttonFont, buttonColor);
+        JButton backButton = createStyledButton("Back", buttonFont, buttonColor);
 
-        buttonsPanel.add(acceptButton);
-        buttonsPanel.add(rejectButton);
-        buttonsPanel.add(acceptAllButton);
-        buttonsPanel.add(rejectAllButton);
-        buttonsPanel.add(completionTimeButton);
-        buttonsPanel.add(writeToFileButton);
-        buttonsPanel.add(backButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonsPanel.add(acceptButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(rejectButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(acceptAllButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(rejectAllButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(completionTimeButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(writeToFileButton, gbc);
+        gbc.gridy++;
+        buttonsPanel.add(backButton, gbc);
 
         acceptButton.addActionListener(e -> acceptSelected());
         rejectButton.addActionListener(e -> rejectSelected());
         acceptAllButton.addActionListener(e -> acceptAll());
         rejectAllButton.addActionListener(e -> rejectAll());
-
         completionTimeButton.addActionListener(e -> getJobSummary());
+        backButton.addActionListener(e -> backToMenu());
 
         add(listPanel);
         add(buttonsPanel);
@@ -88,10 +111,16 @@ public class manage_job extends JFrame {
         setVisible(true);
     }
 
-    private JButton createButton(String text, Dimension size) {
+    private void backToMenu() {
+        dispose();
+    }
+
+    private JButton createStyledButton(String text, Font font, Color color) {
         JButton button = new JButton(text);
-        button.setPreferredSize(size);
-        button.setMaximumSize(size);
+        button.setFont(font);
+        button.setBackground(color);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
         return button;
     }
 
@@ -144,6 +173,7 @@ public class manage_job extends JFrame {
             }
         }).start();
     }
+
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
 
@@ -155,11 +185,22 @@ public class manage_job extends JFrame {
         public void run() {
             try (
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
             ) {
                 String jobData;
                 while ((jobData = in.readLine()) != null) {
                     String[] jobAttributes = jobData.split(",");
-                    SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
+                    String jobName = jobAttributes[1]; // Assume job name is at index 1
+                    String jobDuration = jobAttributes[3]; // Assume duration is at index 3
+
+                    // Simple logic to accept/reject the job
+                    int duration = Integer.parseInt(jobDuration.replaceAll("[^0-9]", ""));
+                    if (duration <= 60) {
+                        SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
+                        out.println("Job '" + jobName + "' has been accepted.");
+                    } else {
+                        out.println("Job '" + jobName + "' has been rejected.");
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Error handling client: " + e.getMessage());
@@ -172,6 +213,7 @@ public class manage_job extends JFrame {
             }
         }
     }
+
     private void getJobSummary() {
         int rowCount = acceptedModel.getRowCount();
         int totalDuration = 0;

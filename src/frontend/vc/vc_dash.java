@@ -90,17 +90,14 @@ public class vc_dash extends JFrame {
             main.getMainFrame();
         });
         manageJobsButton.addActionListener(e -> {
-            new manage_job();
-            dispose();
+            manage_job jobManager = manage_job.getInstance();
+            jobManager.setVisible(true);
+        });
+        manageVehiclesButton.addActionListener(e -> {
+            manage_vehicle vehicleManager = manage_vehicle.getInstance();
+            vehicleManager.setVisible(true);
         });
 
-    }
-
-    private void calculateCompletionTime(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, adminDashboard.getJobSummary());
-    }
-    private void displayJobList(ActionEvent e) {
-        JOptionPane.showMessageDialog(null,adminDashboard.displayJobList());
     }
 
 }
