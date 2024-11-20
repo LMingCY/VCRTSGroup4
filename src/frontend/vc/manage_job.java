@@ -162,31 +162,46 @@ public class manage_job extends JFrame {
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
 
-        public ClientHandler(Socket clientSocket) {
-            this.clientSocket = clientSocket;
-        }
+        private class ClientHandler implements Runnable {
+    private Socket clientSocket;
 
-        @Override
-        public void run() {
-            try (
-                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            ) {
-                String jobData;
-                while ((jobData = in.readLine()) != null) {
-                    String[] jobAttributes = jobData.split(",");
+    public ClientHandler(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        try (
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
+        ) {
+            String jobData;
+            while ((jobData = in.readLine()) != null) {
+                String[] jobAttributes = jobData.split(",");
+                String jobName = jobAttributes[1]; // Assume job name is at index 1
+                String jobDuration = jobAttributes[3]; // Assume duration is at index 3
+
+                // Simple logic to accept/reject the job
+                int duration = Integer.parseInt(jobDuration.replaceAll("[^0-9]", ""));
+                if (duration <= 60) {
                     SwingUtilities.invokeLater(() -> incomingModel.addRow(jobAttributes));
+                    out.println("Job '" + jobName + "' has been accepted.");
+                } else {
+                    out.println("Job '" + jobName + "' has been rejected.");
                 }
+            }
+        } catch (IOException e) {
+            System.out.println("Error handling client: " + e.getMessage());
+        } finally {
+            try {
+                clientSocket.close();
             } catch (IOException e) {
-                System.out.println("Error handling client: " + e.getMessage());
-            } finally {
-                try {
-                    clientSocket.close();
-                } catch (IOException e) {
-                    System.out.println("Error closing client socket: " + e.getMessage());
-                }
+                System.out.println("Error closing client socket: " + e.getMessage());
             }
         }
     }
+}
+
     private void getJobSummary() {
         int rowCount = acceptedModel.getRowCount();
         int totalDuration = 0;
