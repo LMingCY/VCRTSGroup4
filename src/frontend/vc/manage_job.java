@@ -1,5 +1,7 @@
 package frontend.vc;
 
+import backend.login.User;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -17,9 +19,11 @@ public class manage_job extends JFrame {
     private JTable acceptedTable;
     private static final int port = 25565;
     private ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private User admin;
 
 
-    public manage_job() {
+    public manage_job(User admin) {
+        this.admin=admin;
         setTitle("Job Manager");
         setSize(600, 500);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -29,9 +33,9 @@ public class manage_job extends JFrame {
 
         startServer();
     }
-    public static manage_job getInstance() {
+    public static manage_job getInstance(User admin) {
         if (instance == null) {
-            instance = new manage_job();
+            instance = new manage_job(admin);
         }
         return instance;
     }
@@ -235,9 +239,6 @@ public class manage_job extends JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Total Completion Time: " + totalDuration + " minutes");
-    }
-    public static void main(String[] args) {
-        new manage_job();
     }
 }
 

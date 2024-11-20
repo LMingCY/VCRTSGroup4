@@ -161,6 +161,7 @@ public class client_dash extends JFrame {
                 jobDurationField.setEnabled(true);
                 jobDeadlineField.setEnabled(true);
                 submitButton.setEnabled(true);
+                saveToFile(job.toString());
             }
 
         } catch (IOException ex) {
@@ -185,6 +186,13 @@ public class client_dash extends JFrame {
 
     private void saveToFile(String data) {
         try (FileWriter writer = new FileWriter("client_transaction.txt", true)) {
+            writer.write(data + "\n");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving data.");
+        }
+    }
+    private void saveToFileAccepted(String data) {
+        try (FileWriter writer = new FileWriter("client_transaction_accepted.txt", true)) {
             writer.write(data + "\n");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error saving data.");

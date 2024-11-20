@@ -166,6 +166,7 @@ public class owner_dash extends JFrame {
              vehicleInfoField.setEnabled(true);
              residencyTimeField.setEnabled(true);
              submitButton.setEnabled(true);
+             ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction_approved.txt");
          }
 
      } catch (IOException ex) {
