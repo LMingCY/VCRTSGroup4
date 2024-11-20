@@ -93,23 +93,34 @@ public class client extends JFrame {
         add(panel);
         setVisible(true);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                User user = db.validateLogin(username, password);
-
-                if (user != null) {
-                    int userId = user.getUserId();
-                    JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", User ID: " + userId);
-                    new client_dash(user);
-                    setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+    loginButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            User user = db.validateLogin(username, password);
+    
+            if (user != null) {
+                int userId = user.getUserId();
+                JobStatus jobStatus = new JobStatus();
+                Map<String, String> statuses = jobStatus.getJobStatuses(userId);
+                
+                if (!statuses.isEmpty()) {
+                    StringBuilder message = new StringBuilder("Job Status Updates:\n\n");
+                    for (Map.Entry<String, String> entry : statuses.entrySet()) {
+                        message.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                    }
+                    JOptionPane.showMessageDialog(null, message.toString());
+                    jobStatus.clearOldStatuses(userId);
                 }
+                
+                new client_dash(user);
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
-        });
+        }
+    });
 
         backButton.addActionListener(new ActionListener() {
             @Override

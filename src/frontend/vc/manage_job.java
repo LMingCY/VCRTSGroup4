@@ -111,40 +111,67 @@ public class manage_job extends JFrame {
         return button;
     }
 
-    private void acceptSelected() {
-        int selectedRow = incomingTable.getSelectedRow();
-        if (selectedRow != -1) {
-            Object[] rowData = new Object[5];
-            for (int i = 0; i < 5; i++) {
-                rowData[i] = incomingModel.getValueAt(selectedRow, i);
-            }
-            acceptedModel.addRow(rowData);
-            incomingModel.removeRow(selectedRow);
+private void acceptSelected() {
+    int selectedRow = incomingTable.getSelectedRow();
+    if (selectedRow != -1) {
+        String jobName = (String) incomingModel.getValueAt(selectedRow, 1);
+        String clientId = (String) incomingModel.getValueAt(selectedRow, 2);
+        
+        JobStatus jobStatus = new JobStatus();
+        jobStatus.saveJobStatus(jobName, "ACCEPTED", Integer.parseInt(clientId));
+        
+        Object[] rowData = new Object[5];
+        for (int i = 0; i < 5; i++) {
+            rowData[i] = incomingModel.getValueAt(selectedRow, i);
         }
+        acceptedModel.addRow(rowData);
+        incomingModel.removeRow(selectedRow);
     }
+}
 
-    private void rejectSelected() {
-        int selectedRow = incomingTable.getSelectedRow();
-        if (selectedRow != -1) {
-            incomingModel.removeRow(selectedRow);
+private void rejectSelected() {
+    int selectedRow = incomingTable.getSelectedRow();
+    if (selectedRow != -1) {
+        String jobName = (String) incomingModel.getValueAt(selectedRow, 1);
+        String clientId = (String) incomingModel.getValueAt(selectedRow, 2);
+        
+        JobStatus jobStatus = new JobStatus();
+        jobStatus.saveJobStatus(jobName, "REJECTED", Integer.parseInt(clientId));
+        
+        incomingModel.removeRow(selectedRow);
+    }
+}
+
+private void acceptAll() {
+    int rowCount = incomingModel.getRowCount();
+    JobStatus jobStatus = new JobStatus();
+    
+    for (int i = rowCount - 1; i >= 0; i--) {
+        String jobName = (String) incomingModel.getValueAt(i, 1);
+        String clientId = (String) incomingModel.getValueAt(i, 2);
+        jobStatus.saveJobStatus(jobName, "ACCEPTED", Integer.parseInt(clientId));
+        
+        Object[] rowData = new Object[5];
+        for (int j = 0; j < 5; j++) {
+            rowData[j] = incomingModel.getValueAt(i, j);
         }
+        acceptedModel.addRow(rowData);
+        incomingModel.removeRow(i);
     }
+}
 
-    private void acceptAll() {
-        int rowCount = incomingModel.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            Object[] rowData = new Object[5];
-            for (int j = 0; j < 5; j++) {
-                rowData[j] = incomingModel.getValueAt(i, j);
-            }
-            acceptedModel.addRow(rowData);
-            incomingModel.removeRow(i);
-        }
+private void rejectAll() {
+    int rowCount = incomingModel.getRowCount();
+    JobStatus jobStatus = new JobStatus();
+    
+    for (int i = rowCount - 1; i >= 0; i--) {
+        String jobName = (String) incomingModel.getValueAt(i, 1);
+        String clientId = (String) incomingModel.getValueAt(i, 2);
+        jobStatus.saveJobStatus(jobName, "REJECTED", Integer.parseInt(clientId));
     }
-
-    private void rejectAll() {
-        incomingModel.setRowCount(0);
-    }
+    incomingModel.setRowCount(0);
+}
+    
     private void startServer() {
         new Thread(() -> {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
