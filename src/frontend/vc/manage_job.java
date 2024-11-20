@@ -1,6 +1,7 @@
 package frontend.vc;
 
 import backend.job.Job;
+import backend.job.JobStatus;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
