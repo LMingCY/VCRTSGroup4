@@ -14,12 +14,14 @@ import java.time.LocalDateTime;
  */
 
 public class OwnerDashboard {
+    private Vehicle vehicle;
     private int OwnerId;
     public Vehicle addVehicle(String make, String model, int ownerId, Duration residencyTime) {
         int vehicleId = Idgenerator.generateVehicleId();
         int vehicleStatus = 0; //0 will indicate free;
         String currentJob = "";
-        return new Vehicle(vehicleId, make, model, ownerId, vehicleStatus, residencyTime , currentJob);
+        this.vehicle = new Vehicle(vehicleId, make, model, ownerId, vehicleStatus, residencyTime , currentJob);
+        return vehicle;
     }
     public void writeVehicleToFile(Vehicle vehicle, String filePath) {
         String timestamp = LocalDateTime.now().toString();

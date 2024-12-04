@@ -132,7 +132,7 @@ public class owner_dash extends JFrame {
  }
 
  private void submitData(ActionEvent e) {
-     vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleModelField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText()))); //need to come up a way to store id as int.
+     vehicle = ownerDashboard.addVehicle(vehicleInfoField.getText(), vehicleModelField.getText(), Integer.parseInt(ownerIDField.getText()), Duration.ofMinutes(Integer.parseInt(residencyTimeField.getText())));
      ownerDashboard.writeVehicleToFile(vehicle, "owner_transaction.txt");
      try (Socket socket = new Socket("localhost", 25566);
           DataOutputStream out = new DataOutputStream(socket.getOutputStream());
