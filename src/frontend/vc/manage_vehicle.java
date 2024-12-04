@@ -1,5 +1,7 @@
 package frontend.vc;
 
+import backend.MySQL.Driver;
+import backend.login.User;
 import backend.vehicle.Vehicle;
 
 import javax.swing.*;
@@ -21,6 +23,7 @@ public class manage_vehicle extends JFrame {
     private static final int port = 25566; 
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
     private static manage_vehicle instance;
+    Driver db = new Driver();
 
     public manage_vehicle() {
         setTitle("Vehicle Manager");
@@ -99,6 +102,7 @@ public class manage_vehicle extends JFrame {
         rejectButton.addActionListener(e -> rejectSelected());
         acceptAllButton.addActionListener(e -> acceptAll());
         rejectAllButton.addActionListener(e -> rejectAll());
+        backButton.addActionListener(e -> backToMenu());
 
         add(listPanel);
         add(buttonsPanel);
@@ -200,6 +204,8 @@ public class manage_vehicle extends JFrame {
                     if (isJobAccepted(String.valueOf(vehicleId))) {
                         out.writeUTF("Accepted");
                         writeVehicleToFile(vehicle, "owner_transaction_accepted_by_vc");
+                        System.out.println(vehicle);
+                        db.addVehicle(vehicle);
                         break;
                     } else if (isVehicleRejected(String.valueOf(vehicleId))) {
                         out.writeUTF("Rejected");
@@ -237,7 +243,7 @@ public class manage_vehicle extends JFrame {
             System.out.println("Error writing backend.vehicle information to file: " + e.getMessage());
         }
     }
-    public static void main(String[] args) {
-        new manage_vehicle();
+    private void backToMenu() {
+        dispose();
     }
 }

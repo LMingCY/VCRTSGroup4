@@ -1,5 +1,8 @@
 package frontend.owner;
 
+import backend.MySQL.Driver;
+import backend.login.User;
+import frontend.client.client_dash;
 import frontend.main;
 
 import javax.swing.*;
@@ -13,6 +16,8 @@ public class owner extends JFrame {
     JTextField ownernameField;
     JPasswordField passwordField;
     JButton loginButton, backButton;
+    Driver db = new Driver();
+
 
     public owner() {
         // Set up the frontend.main frame properties
@@ -86,9 +91,16 @@ public class owner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = ownernameField.getText();
                 String password = new String(passwordField.getPassword());
-                JOptionPane.showMessageDialog(null, "Logging in as " + username);
-                new owner_dash(); 
-                setVisible(false); 
+                User user = db.validateLogin(username, password);
+
+                if (user != null) {
+                    int userId = user.getUserId();
+                    JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", User ID: " + userId);
+                    new owner_dash(user);
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 

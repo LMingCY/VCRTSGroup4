@@ -1,6 +1,7 @@
 package frontend.owner;
 
 import backend.dashboard.OwnerDashboard;
+import backend.login.User;
 import backend.master.NumericTextField;
 import backend.vehicle.Vehicle;
 import frontend.main;
@@ -21,9 +22,11 @@ public class owner_dash extends JFrame {
  private JButton submitButton, clearButton, signOutButton, helpButton;
  private OwnerDashboard ownerDashboard = new OwnerDashboard();
  private Vehicle vehicle;
+ private User user;
 
 
- public owner_dash() {
+ public owner_dash(User user) {
+     this.user = user;
      setTitle("Vehicular Cloud Console");
      setSize(400, 400);
      setDefaultCloseOperation(EXIT_ON_CLOSE); 

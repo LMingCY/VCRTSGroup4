@@ -17,7 +17,6 @@ public class client extends JFrame {
     JPasswordField passwordField;
     JButton loginButton, backButton;
     Driver db = new Driver();
-    Idgenerator idgenerator;
 
     public client() {
         // Set up the main frame properties

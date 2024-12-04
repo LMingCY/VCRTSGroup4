@@ -1,5 +1,6 @@
 package frontend.vc;
 
+import backend.MySQL.Driver;
 import backend.job.Job;
 import backend.login.User;
 
@@ -24,7 +25,7 @@ public class manage_job extends JFrame {
     private static final int port = 25565;
     private ExecutorService executorService = Executors.newFixedThreadPool(10);
     private User admin;
-
+    Driver db = new Driver();
 
     public manage_job(User admin) {
         this.admin=admin;
@@ -211,6 +212,7 @@ public class manage_job extends JFrame {
                     if (isJobAccepted(jobId)) {
                         out.writeUTF("Accepted");
                         saveToFile(job.toString());
+                        db.addJob(job);
                         break;
                     } else if (isJobRejected(jobId)) {
                         out.writeUTF("Rejected");

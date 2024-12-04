@@ -97,6 +97,7 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + residencyTime.toMinutes() + "," + currentJob;
+        String timestamp = LocalDateTime.now().toString();
+        return String.valueOf(vehicleId) + "," + make + "," + model + "," + String.valueOf(ownerId) + "," + vehicleStatus + "," + residencyTime.toMinutes() + "," + currentJob + "," + timestamp;
     }
 }

@@ -1,6 +1,8 @@
 package backend.MySQL;
 
+import backend.job.Job;
 import backend.login.User;
+import backend.vehicle.Vehicle;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,25 +22,6 @@ public class Driver {
         String password = lines.get(4);
         return DriverManager.getConnection("jdbc:mysql://"+ip + mysqlPort+"/vcrts", username, password);
 
-    }
-    public void addUser(int userId, String username, String password, String name, String email) {
-        String query = "INSERT INTO users (user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = connection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, userId);
-            pstmt.setString(2, username);
-            pstmt.setString(3, password);
-            pstmt.setString(4, name);
-            pstmt.setString(5, email);
-
-            pstmt.executeUpdate();
-            System.out.println("User added successfully.");
-
-        } catch (SQLException | IOException e) {
-            System.out.println("Error adding user: " + e.getMessage());
-        }
     }
     public User getUserByUserId(String userId) {
         String query = "SELECT * FROM userlogin WHERE userId = ?";
@@ -126,6 +109,55 @@ public class Driver {
 
         } catch (SQLException | IOException e) {
             System.out.println("Error adding user: " + e.getMessage());
+        }
+    }
+    public void addVehicle(Vehicle vehicle) {
+        String query = "INSERT INTO vehicles (vehicleId, make, model, ownerId, vehicleStatus, residencyTime, currentJob) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String jobData = vehicle.toString();
+        String[] jobParts = jobData.split(",");
+
+
+        try (Connection conn = connection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, jobParts[0]);
+            pstmt.setString(2, jobParts[1]);
+            pstmt.setString(3, jobParts[2]);
+            pstmt.setString(4, jobParts[3]);
+            pstmt.setString(5, jobParts[4]);
+            pstmt.setInt(6, Integer.valueOf(jobParts[5]));
+            pstmt.setString(7, jobParts[6]);
+
+            pstmt.executeUpdate();
+            System.out.println("Vehicle added successfully.");
+
+        } catch (SQLException | IOException e) {
+            System.out.println("Error adding vehicle: " + e.getMessage());
+        }
+
+
+    }
+    public void addJob(Job job) {
+        String query = "INSERT INTO vehicles (vehicleId, make, model, ownerId, vehicleStatus, residencyTime, currentJob) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String jobData = job.toString();
+        String[] jobParts = jobData.split(",");
+
+        try (Connection conn = connection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, jobParts[1]);
+            pstmt.setString(2, jobParts[2]);
+            pstmt.setString(3, jobParts[3]);
+            pstmt.setString(4, jobParts[4]);
+            pstmt.setString(5, jobParts[5]);
+            pstmt.setInt(6, Integer.parseInt(jobParts[6]));
+            pstmt.setString(7, jobParts[7]);
+
+            pstmt.executeUpdate();
+            System.out.println("Vehicle added successfully.");
+
+        } catch (SQLException | IOException e) {
+            System.out.println("Error adding vehicle: " + e.getMessage());
         }
     }
 

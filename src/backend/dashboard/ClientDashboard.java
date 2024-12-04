@@ -33,12 +33,4 @@ public class ClientDashboard {
         clientId = user.getUserId();
         return clientId;
     }
-
-    public void writeJobToFile(Job job, String filePath) {
-        try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write(job.toString() + "\n");
-        } catch (IOException e) {
-            System.out.println("Error writing backend.job information to file: " + e.getMessage());
-        }
-    }
 }

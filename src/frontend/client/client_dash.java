@@ -191,12 +191,5 @@ public class client_dash extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving data.");
         }
     }
-    private void saveToFileAccepted(String data) {
-        try (FileWriter writer = new FileWriter("client_transaction_accepted.txt", true)) {
-            writer.write(data + "\n");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error saving data.");
-        }
-    }
 
 }
