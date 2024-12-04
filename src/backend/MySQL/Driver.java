@@ -138,26 +138,26 @@ public class Driver {
 
     }
     public void addJob(Job job) {
-        String query = "INSERT INTO vehicles (vehicleId, make, model, ownerId, vehicleStatus, residencyTime, currentJob) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO jobs (jobId, jobName, clientId, duration, deadline, status, result) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String jobData = job.toString();
         String[] jobParts = jobData.split(",");
 
         try (Connection conn = connection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, jobParts[1]);
-            pstmt.setString(2, jobParts[2]);
-            pstmt.setString(3, jobParts[3]);
-            pstmt.setString(4, jobParts[4]);
-            pstmt.setString(5, jobParts[5]);
-            pstmt.setInt(6, Integer.parseInt(jobParts[6]));
-            pstmt.setString(7, jobParts[7]);
+            pstmt.setString(1, jobParts[0]);
+            pstmt.setString(2, jobParts[1]);
+            pstmt.setString(3, jobParts[2]);
+            pstmt.setInt(4, Integer.parseInt(jobParts[3]));
+            pstmt.setString(5, jobParts[4]);
+            pstmt.setString(6, jobParts[5]);
+            pstmt.setString(7, jobParts[6]);
 
             pstmt.executeUpdate();
-            System.out.println("Vehicle added successfully.");
+            System.out.println("Job added successfully.");
 
         } catch (SQLException | IOException e) {
-            System.out.println("Error adding vehicle: " + e.getMessage());
+            System.out.println("Error adding job: " + e.getMessage());
         }
     }
 

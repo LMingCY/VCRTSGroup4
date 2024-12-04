@@ -24,7 +24,7 @@ public class ClientDashboard {
     public Job addJob(String jobName, int clientId, Duration duration, LocalDate deadline) {
         int jobId = Idgenerator.generateJobId();
         char status = 1;
-        String result = "";
+        String result = "N/A";
         Job job = new Job(jobId, clientId, jobName, status, result, deadline, duration);
         return job;
     }
