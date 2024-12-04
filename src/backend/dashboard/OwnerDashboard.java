@@ -24,15 +24,7 @@ public class OwnerDashboard {
     public void writeVehicleToFile(Vehicle vehicle, String filePath) {
         String timestamp = LocalDateTime.now().toString();
         try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write(vehicle.toString() + "|" + timestamp + "\n");
-        } catch (IOException e) {
-            System.out.println("Error writing backend.vehicle information to file: " + e.getMessage());
-        }
-    }
-    public void writeVehicleToFileApproved(Vehicle vehicle, String filePath) {
-        String timestamp = LocalDateTime.now().toString();
-        try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write(vehicle.toString() + "|" + timestamp + "\n");
+            writer.write(vehicle.toString() + "," + timestamp + "\n");
         } catch (IOException e) {
             System.out.println("Error writing backend.vehicle information to file: " + e.getMessage());
         }

@@ -1,5 +1,7 @@
 package frontend.vc;
 
+import backend.vehicle.Vehicle;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -165,7 +168,9 @@ public class manage_vehicle extends JFrame {
 
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
-        private String vehicleId;
+        private int vehicleId, ownerId, vehicleStatus;
+        private Duration vehicleResidencyTime;
+        private String vehicleMake, vehicleModel, vehicleCurrentJob;
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -178,15 +183,25 @@ public class manage_vehicle extends JFrame {
 
                 String vehicleData = in.readUTF();
                 String[] vehicleParts = vehicleData.split(",");
-                vehicleId = vehicleParts[0];
+                vehicleId = Integer.parseInt(vehicleParts[0]);
+                vehicleMake = vehicleParts[1];
+                vehicleModel = vehicleParts[2];
+                ownerId = Integer.parseInt(vehicleParts[3]);
+                vehicleStatus = Integer.parseInt(vehicleParts[4]);
+                vehicleResidencyTime = Duration.ofMinutes(Integer.parseInt(vehicleParts[5]));
+                vehicleCurrentJob = vehicleParts[6];
+                Vehicle vehicle = new Vehicle(vehicleId, vehicleMake, vehicleModel, ownerId, vehicleStatus, vehicleResidencyTime, vehicleCurrentJob);
+
                 SwingUtilities.invokeLater(() -> incomingModel.addRow(vehicleParts));
+                //300000007,BAE,Trident,101,0,600,,,2024-11-19T22:44:10.312618800
 
                 while (true) {
                     Thread.sleep(100);
-                    if (isJobAccepted(vehicleId)) {
+                    if (isJobAccepted(String.valueOf(vehicleId))) {
                         out.writeUTF("Accepted");
+                        writeVehicleToFile(vehicle, "owner_transaction_accepted_by_vc");
                         break;
-                    } else if (isVehicleRejected(vehicleId)) {
+                    } else if (isVehicleRejected(String.valueOf(vehicleId))) {
                         out.writeUTF("Rejected");
                         break;
                     }
@@ -214,7 +229,14 @@ public class manage_vehicle extends JFrame {
             return -1;
         }
     }
-
+    public void writeVehicleToFile(Vehicle vehicle, String filePath) {
+        String timestamp = LocalDateTime.now().toString();
+        try (FileWriter writer = new FileWriter(filePath, true)) {
+            writer.write(vehicle.toString() + "," + timestamp + "\n");
+        } catch (IOException e) {
+            System.out.println("Error writing backend.vehicle information to file: " + e.getMessage());
+        }
+    }
     public static void main(String[] args) {
         new manage_vehicle();
     }

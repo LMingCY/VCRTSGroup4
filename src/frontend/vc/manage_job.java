@@ -210,6 +210,7 @@ public class manage_job extends JFrame {
                     Thread.sleep(100);
                     if (isJobAccepted(jobId)) {
                         out.writeUTF("Accepted");
+                        saveToFile(job.toString());
                         break;
                     } else if (isJobRejected(jobId)) {
                         out.writeUTF("Rejected");
@@ -255,6 +256,13 @@ public class manage_job extends JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Total Completion Time: " + totalDuration + " minutes");
+    }
+    private void saveToFile(String data) {
+        try (FileWriter writer = new FileWriter("client_transaction_accepted_by_vc.txt", true)) {
+            writer.write(data + "\n");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving data.");
+        }
     }
 }
 
