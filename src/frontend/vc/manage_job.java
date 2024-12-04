@@ -1,5 +1,6 @@
 package frontend.vc;
 
+import backend.job.Job;
 import backend.login.User;
 
 import javax.swing.*;
@@ -8,6 +9,9 @@ import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -174,7 +178,10 @@ public class manage_job extends JFrame {
 
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
-        private String jobId;
+        private int jobId, clientId, jobStatus;
+        private String jobName, jobResult;
+        private Duration jobDuration;
+        private LocalDate jobDeadline;
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -185,9 +192,18 @@ public class manage_job extends JFrame {
             try (DataInputStream in = new DataInputStream(clientSocket.getInputStream());
                  DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream())) {
 
+                //200000002,abc,100000004,50,2024-12-01,1,,2024-11-19T22:48:52.240581400
                 String jobData = in.readUTF();
                 String[] jobParts = jobData.split(",");
-                jobId = jobParts[0];
+                jobId = Integer.parseInt(jobParts[0]);
+                jobName = jobParts[1];
+                clientId = Integer.parseInt(jobParts[2]);
+                jobDuration = Duration.ofMinutes(Integer.parseInt(jobParts[3]));
+                jobDeadline = LocalDate.parse(jobParts[4]);
+                jobStatus = Integer.parseInt(jobParts[5]);
+                jobResult = jobParts[6];
+
+                Job job = new Job(jobId, clientId, jobName, jobStatus, jobResult, jobDeadline, jobDuration);
                 SwingUtilities.invokeLater(() -> incomingModel.addRow(jobParts));
 
                 while (true) {
@@ -206,12 +222,12 @@ public class manage_job extends JFrame {
             }
         }
 
-        private boolean isJobAccepted(String jobId) {
-            return findRowIndex(acceptedModel, jobId) != -1;
+        private boolean isJobAccepted(int jobId) {
+            return findRowIndex(acceptedModel, String.valueOf(jobId)) != -1;
         }
 
-        private boolean isJobRejected(String jobId) {
-            return findRowIndex(incomingModel, jobId) == -1 && findRowIndex(acceptedModel, jobId) == -1;
+        private boolean isJobRejected(int jobId) {
+            return findRowIndex(incomingModel, String.valueOf(jobId)) == -1 && findRowIndex(acceptedModel, String.valueOf(jobId)) == -1;
         }
 
         private int findRowIndex(DefaultTableModel model, String jobId) {
