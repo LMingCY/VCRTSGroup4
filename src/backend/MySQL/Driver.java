@@ -127,6 +127,23 @@ public class Driver {
         } catch (SQLException | IOException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
-    }
+    public void addJob(int jobId, int vehicleId, String description, String deadline, String status) {
+        String query = "INSERT INTO jobs (job_id, vehicle_id, description, deadline, status) VALUES (?, ?, ?, ?, ?)";
 
+        try (Connection conn = connection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, jobId);
+            pstmt.setInt(2, vehicleId);
+            pstmt.setString(3, description);
+            pstmt.setString(4, deadline);
+            pstmt.setString(5, status);
+
+            pstmt.executeUpdate();
+            System.out.println("Job added successfully.");
+
+        } catch (SQLException | IOException e) {
+            System.out.println("Error adding job: " + e.getMessage());
+        }
+    }
 }
