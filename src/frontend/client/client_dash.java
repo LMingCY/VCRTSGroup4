@@ -21,7 +21,7 @@ public class client_dash extends JFrame {
     private Job job;
     private User user;
     private ClientDashboard clientDashboard = new ClientDashboard();
-    private LocalDate deadline = LocalDate.of(2024,12,1);
+    private LocalDate deadline = LocalDate.of(2024,12,30);
 
     //these are the client-server components
     private Socket socket;
@@ -51,7 +51,7 @@ public class client_dash extends JFrame {
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
-        JLabel jobNameLabel = new JLabel("Job Name:");
+        JLabel jobNameLabel = new JLabel("Job ID:");
         jobNameLabel.setFont(labelFont);
         jobNameField = new JTextField();
         jobNameField.setFont(fieldFont);

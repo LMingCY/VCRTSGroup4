@@ -17,6 +17,8 @@ public class client extends JFrame {
     JPasswordField passwordField;
     JButton loginButton, backButton;
     Driver db = new Driver();
+    Idgenerator idgenerator;
+
 
     public client() {
         // Set up the main frame properties
@@ -110,14 +112,17 @@ public class client extends JFrame {
             }
         });
 
+
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 main.getMainFrame();
                 dispose();
             }
-        }); 
-        /* backButton.addActionListener(new ActionListener() {
+        });
+
+        /*
+        backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int userId = idgenerator.generateUserId();
@@ -126,7 +131,9 @@ public class client extends JFrame {
                 User user = new User(userId,username,password,"Jack","jack@gmail.com");
                 user.registerUser(userId,username,password,"Jack","jack@gmail.com");
             }
-        }); */ // this is the registration button
+        });
+        // this is the registration button
+         */
     }
 
 }

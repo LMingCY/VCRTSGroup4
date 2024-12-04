@@ -13,8 +13,8 @@ import java.util.*;
 
 public class Driver {
     public Connection connection() throws SQLException, IOException{
-        //Path path = Paths.get("/Users/leonming/Documents/ipandports.txt");
-        Path path = Paths.get("E:\\ipandports.txt");
+        Path path = Paths.get("/Users/leonming/Documents/ipandports.txt");
+        //Path path = Paths.get("E:\\ipandports.txt");
         List<String> lines= Files.readAllLines(path);
         String ip = lines.get(0);
         String mysqlPort = lines.get(1);
@@ -112,7 +112,7 @@ public class Driver {
         }
     }
     public void addVehicle(Vehicle vehicle) {
-        String query = "INSERT INTO vehicles (vehicleId, make, model, ownerId, vehicleStatus, residencyTime, currentJob) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO vehicles (vehicleId, make, model, ownerId, vehicleStatus, residencyTime, currentJob, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String jobData = vehicle.toString();
         String[] jobParts = jobData.split(",");
 
@@ -127,6 +127,8 @@ public class Driver {
             pstmt.setString(5, jobParts[4]);
             pstmt.setInt(6, Integer.valueOf(jobParts[5]));
             pstmt.setString(7, jobParts[6]);
+            pstmt.setString(8, jobParts[7]);
+
 
             pstmt.executeUpdate();
             System.out.println("Vehicle added successfully.");
@@ -138,7 +140,7 @@ public class Driver {
 
     }
     public void addJob(Job job) {
-        String query = "INSERT INTO jobs (jobId, jobName, clientId, duration, deadline, status, result) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO jobs (jobId, jobName, clientId, duration, deadline, status, result, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String jobData = job.toString();
         String[] jobParts = jobData.split(",");
 
@@ -152,6 +154,8 @@ public class Driver {
             pstmt.setString(5, jobParts[4]);
             pstmt.setString(6, jobParts[5]);
             pstmt.setString(7, jobParts[6]);
+            pstmt.setString(8, jobParts[7]);
+
 
             pstmt.executeUpdate();
             System.out.println("Job added successfully.");

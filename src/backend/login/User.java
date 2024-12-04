@@ -48,7 +48,7 @@ public class User extends Account {
         this.email = contactInfo;
     }
 
-    /*
+
     public boolean registerUser(int userId, String username, String password, String name, String email) {
 
         User newUser = new User(userId, username, password, name, email);
@@ -58,6 +58,6 @@ public class User extends Account {
         return true;
     }
 
-     */
+
 
 }

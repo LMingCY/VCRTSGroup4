@@ -180,6 +180,7 @@ public class owner_dash extends JFrame {
  private void clearFields() {
      ownerIDField.setText("");
      vehicleInfoField.setText("");
+     vehicleModelField.setText("");
      residencyTimeField.setText("");
  }
 
