@@ -3,7 +3,9 @@ package frontend.client;
 import backend.MySQL.Driver;
 import backend.login.User;
 import backend.master.Idgenerator;
+import frontend.createAccount;
 import frontend.main;
+import frontend.userMain;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +43,7 @@ public class client extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10); // Set component padding
 
         // Initialize labels with specific fonts
-        welcomeLabel = new JLabel("Welcome back!");
+        welcomeLabel = new JLabel("Welcome to VCRTS!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         loginPromptLabel = new JLabel("Please login:");
         loginPromptLabel.setFont(labelFont);
@@ -58,12 +60,12 @@ public class client extends JFrame {
         passwordField.setFont(fieldFont);
 
         // Initialize buttons with colors and fonts, and add action listeners
-        loginButton = new JButton("Login");
+        loginButton = new JButton("         Login          ");
         loginButton.setBackground(buttonColor);
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(labelFont);
 
-        backButton = new JButton("Create Account");
+        backButton = new JButton(" Create Account");
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
@@ -104,7 +106,17 @@ public class client extends JFrame {
                 if (user != null) {
                     int userId = user.getUserId();
                     JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", User ID: " + userId);
-                    new client_dash(user);
+                    try {
+                        new userMain(user);
+                    } catch (UnsupportedLookAndFeelException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (InstantiationException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IllegalAccessException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
@@ -116,24 +128,16 @@ public class client extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.getMainFrame();
+                new createAccount();
                 dispose();
             }
         });
-
-        /*
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int userId = idgenerator.generateUserId();
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                User user = new User(userId,username,password,"Jack","jack@gmail.com");
-                user.registerUser(userId,username,password,"Jack","jack@gmail.com");
-            }
-        });
         // this is the registration button
-         */
+
+    }
+
+    public static void main(String[] args) {
+        new client();
     }
 
 }

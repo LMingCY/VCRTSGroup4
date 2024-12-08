@@ -5,6 +5,7 @@ import backend.job.Job;
 import backend.login.User;
 import backend.master.NumericTextField;
 import frontend.main;
+import frontend.userMain;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,12 +81,24 @@ public class client_dash extends JFrame {
         clearButton.setFocusPainted(false);
         clearButton.addActionListener(e -> clearFields());
 
-        signOutButton = new JButton("Sign Out");
+        signOutButton = new JButton("Back");
         signOutButton.setFont(labelFont);
         signOutButton.setBackground(buttonColor);
         signOutButton.setForeground(Color.WHITE);
         signOutButton.setFocusPainted(false);
-        signOutButton.addActionListener(e -> signOut());
+        signOutButton.addActionListener(e -> {
+            try {
+                signOut();
+            } catch (UnsupportedLookAndFeelException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InstantiationException ex) {
+                throw new RuntimeException(ex);
+            } catch (IllegalAccessException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         helpButton = new JButton("Help");
         helpButton.setFont(labelFont);
@@ -175,8 +188,8 @@ public class client_dash extends JFrame {
         jobDeadlineField.setText("");
     }
 
-    private void signOut() {
-        main.getMainFrame();
+    private void signOut() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        new userMain(user);
         dispose();
     }
 

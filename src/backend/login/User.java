@@ -49,13 +49,14 @@ public class User extends Account {
     }
 
 
-    public boolean registerUser(int userId, String username, String password, String name, String email) {
+    public String registerUser(int userId, String username, String password, String name, String email) {
 
+        String message = "";
         User newUser = new User(userId, username, password, name, email);
         db.addUser(newUser);
 
-        System.out.println("User registered with ID: " + String.format("%09d", userId));
-        return true;
+        message = "User registered with ID: " + String.format("%09d", userId);
+        return message;
     }
 
 
