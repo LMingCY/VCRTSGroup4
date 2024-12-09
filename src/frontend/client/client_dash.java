@@ -57,7 +57,7 @@ public class client_dash extends JFrame {
         jobNameField = new JTextField();
         jobNameField.setFont(fieldFont);
 
-        JLabel jobDurationLabel = new JLabel("Job Duration (mins):");
+        JLabel jobDurationLabel = new JLabel("Job Duration (min):");
         jobDurationLabel.setFont(labelFont);
         jobDurationField = new NumericTextField(10);
         jobDurationField.setFont(fieldFont);
