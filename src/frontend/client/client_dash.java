@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class client_dash extends JFrame {
-    private JTextField jobNameField, jobDurationField, jobDeadlineField;
+    private JTextField jobIDField, jobDurationField, jobDeadlineField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
     private Job job;
     private User user;
@@ -52,10 +52,10 @@ public class client_dash extends JFrame {
         Font fieldFont = new Font("Arial", Font.PLAIN, 14);
         Color buttonColor = new Color(100, 150, 250);
 
-        JLabel jobNameLabel = new JLabel("Job ID:");
-        jobNameLabel.setFont(labelFont);
-        jobNameField = new JTextField();
-        jobNameField.setFont(fieldFont);
+        JLabel jobIDLabel = new JLabel("Job ID:");
+        jobIDLabel.setFont(labelFont);
+        jobIDField = new JTextField();
+        jobIDField.setFont(fieldFont);
 
         JLabel jobDurationLabel = new JLabel("Job Duration (min):");
         jobDurationLabel.setFont(labelFont);
@@ -108,9 +108,9 @@ public class client_dash extends JFrame {
         helpButton.addActionListener(e -> showHelp());
 
         gbc.gridx = 0; gbc.gridy = 0;
-        mainPanel.add(jobNameLabel, gbc);
+        mainPanel.add(jobIDLabel, gbc);
         gbc.gridx = 1;
-        mainPanel.add(jobNameField, gbc);
+        mainPanel.add(jobIDField, gbc);
 
         gbc.gridy++;
         gbc.gridx = 0;
@@ -144,7 +144,7 @@ public class client_dash extends JFrame {
     }
 
     private void submitData(ActionEvent e) {
-        job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
+        job = clientDashboard.addJob(jobIDField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
         saveToFile(job.toString());
         try (Socket socket = new Socket("localhost", 25565);
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -153,7 +153,7 @@ public class client_dash extends JFrame {
             out.writeUTF(job.toString());
 
             JOptionPane.showMessageDialog(this, "Job sent to server! Waiting for Controller...");
-            jobNameField.setEnabled(false);
+            jobIDField.setEnabled(false);
             jobDurationField.setEnabled(false);
             jobDeadlineField.setEnabled(false);
             submitButton.setEnabled(false);
@@ -162,15 +162,15 @@ public class client_dash extends JFrame {
             JOptionPane.showMessageDialog(this, "Admin Response: " + response);
 
             if (response.equalsIgnoreCase("Rejected")) {
-                jobNameField.setEnabled(true);
+                jobIDField.setEnabled(true);
                 jobDurationField.setEnabled(true);
                 jobDeadlineField.setEnabled(true);
                 submitButton.setEnabled(true);
             } else {
-                jobNameField.setText("");
+                jobIDField.setText("");
                 jobDurationField.setText("");
                 jobDeadlineField.setText("");
-                jobNameField.setEnabled(true);
+                jobIDField.setEnabled(true);
                 jobDurationField.setEnabled(true);
                 jobDeadlineField.setEnabled(true);
                 submitButton.setEnabled(true);
@@ -183,7 +183,7 @@ public class client_dash extends JFrame {
     }
 
     private void clearFields() {
-        jobNameField.setText("");
+        jobIDField.setText("");
         jobDurationField.setText("");
         jobDeadlineField.setText("");
     }
