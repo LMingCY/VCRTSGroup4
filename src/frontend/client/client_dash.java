@@ -62,7 +62,7 @@ public class client_dash extends JFrame {
         jobDurationField = new NumericTextField(10);
         jobDurationField.setFont(fieldFont);
 
-        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");
+        JLabel jobDeadlineLabel = new JLabel("Job Deadline (mm/dd/yyyy):");
         jobDeadlineLabel.setFont(labelFont);
         jobDeadlineField = new JTextField();
         jobDeadlineField.setFont(fieldFont);
