@@ -60,7 +60,7 @@ public class owner_dash extends JFrame {
      vehicleModelField = new JTextField();
      vehicleModelField.setFont(fieldFont);
 
-     JLabel residencyTimeLabel = new JLabel("Residency Time:");
+     JLabel residencyTimeLabel = new JLabel("Residency Time (min):");
      residencyTimeLabel.setFont(labelFont);
      residencyTimeField = new NumericTextField(10);
      residencyTimeField.setFont(fieldFont);
