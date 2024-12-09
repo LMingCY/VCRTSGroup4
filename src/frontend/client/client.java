@@ -6,6 +6,7 @@ import backend.master.Idgenerator;
 import frontend.createAccount;
 import frontend.main;
 import frontend.userMain;
+import frontend.vc.vc_dash;
 
 import javax.swing.*;
 import java.awt.*;
@@ -106,17 +107,22 @@ public class client extends JFrame {
                 if (user != null) {
                     int userId = user.getUserId();
                     JOptionPane.showMessageDialog(null, "Logged in successfully as " + username + ", User ID: " + userId);
-                    try {
-                        new userMain(user);
-                    } catch (UnsupportedLookAndFeelException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (ClassNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (InstantiationException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IllegalAccessException ex) {
-                        throw new RuntimeException(ex);
+                    if (String.valueOf(userId).charAt(0)!='9') {
+                        try {
+                            new userMain(user);
+                        } catch (UnsupportedLookAndFeelException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (ClassNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (InstantiationException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (IllegalAccessException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } else {
+                        new vc_dash(user);
                     }
+
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
