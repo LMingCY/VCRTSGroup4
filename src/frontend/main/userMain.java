@@ -1,71 +1,63 @@
-package frontend;
+package frontend.main;
 
-import frontend.client.client;
-import frontend.owner.owner;
-import frontend.vc.vc;
+import backend.login.User;
+import frontend.client.client_dash;
+import frontend.owner.owner_dash;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class main {
-    private static JFrame mainFrame;
-    private static JPanel mainPanel, buttonPanel;
-    private static JButton selectUser, selectOwner, selectVC;
-
-    private static void setButtons() {
-        selectUser = new JButton("User");
-        selectOwner = new JButton("Owner");
-        selectVC = new JButton("VC");
+public class userMain {
+    private JFrame mainFrame;
+    private JPanel mainPanel, buttonPanel;
+    private JButton selectUser, selectOwner;
+    private User user;
+    public userMain(User user) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        this.user = user;
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        getMainFrame();
+    }
+    private void setButtons() {
+        selectUser = new JButton("Client Dashboard");
+        selectOwner = new JButton("Owner Dashboard");
 
         Color buttonColor = new Color(100, 150, 250);
         selectUser.setBackground(buttonColor);
         selectUser.setForeground(Color.WHITE);
         selectOwner.setBackground(buttonColor);
         selectOwner.setForeground(Color.WHITE);
-        selectVC.setBackground(buttonColor);
-        selectVC.setForeground(Color.WHITE);
 
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         selectUser.setFont(buttonFont);
         selectOwner.setFont(buttonFont);
-        selectVC.setFont(buttonFont);
 
         selectUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainFrame.setVisible(false);
-                new client();
+                mainFrame.dispose();
+                new client_dash(user);
             }
         });
 
         selectOwner.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainFrame.setVisible(false);
-                new owner();
-            }
-        });
-
-        selectVC.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mainFrame.setVisible(false);
-                new vc();
+                new owner_dash(user);
+                mainFrame.dispose();
             }
         });
     }
 
-    private static void setButtonPanel() {
+    private void setButtonPanel() {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
-        buttonPanel.add(selectVC); 
     }
 
-    private static void setMainPanel() {
+    private void setMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -73,25 +65,21 @@ public class main {
         mainPanel.setBackground(new Color(240, 240, 240));
 
         JLabel welcomeMessage, userSelectMessage;
-        welcomeMessage = new JLabel("Welcome to VCRTS!");
-        userSelectMessage = new JLabel("I'm a");
+        welcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
 
         Font labelFont = new Font("Arial", Font.BOLD, 18);
         welcomeMessage.setFont(labelFont);
-        userSelectMessage.setFont(new Font("Arial", Font.PLAIN, 16));
 
         welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
-        userSelectMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(welcomeMessage);
-        mainPanel.add(userSelectMessage);
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(buttonPanel);
         mainPanel.add(Box.createVerticalStrut(20));
     }
 
-    public static void setMainFrame() {
+    public void setMainFrame() {
         mainFrame = new JFrame("VCRTS Dashboard");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 300);
@@ -99,8 +87,7 @@ public class main {
         mainFrame.setResizable(true);
         mainFrame.add(mainPanel, BorderLayout.CENTER);
     }
-
-    public static void getMainFrame() {
+    public void getMainFrame() {
         setButtons();
         setButtonPanel();
         setMainPanel();
@@ -109,9 +96,4 @@ public class main {
         mainFrame.setVisible(true);
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        getMainFrame();
-    }
 }
-

@@ -1,13 +1,12 @@
-package frontend;
+package frontend.misc;
 
 import backend.login.User;
 import backend.master.Idgenerator;
-import frontend.client.client;
+import frontend.main.initialLogin;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class createAccount extends JFrame{
     private JTextField usernameField, emailField, nameField;
@@ -105,10 +104,10 @@ public class createAccount extends JFrame{
         User user = new User(userId,username,password,name,email);
         JOptionPane.showMessageDialog(this, "New user registered: " + username + "\n" + user.registerUser(userId,username,password,name,email));
         dispose();
-        new client();
+        new initialLogin();
     }
     private void back(ActionEvent e) {
-        new client();
+        new initialLogin();
         dispose();
     }
 

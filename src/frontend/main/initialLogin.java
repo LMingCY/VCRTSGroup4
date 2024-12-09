@@ -1,11 +1,9 @@
-package frontend.client;
+package frontend.main;
 
 import backend.MySQL.Driver;
 import backend.login.User;
 import backend.master.Idgenerator;
-import frontend.createAccount;
-import frontend.main;
-import frontend.userMain;
+import frontend.misc.createAccount;
 import frontend.vc.vc_dash;
 
 import javax.swing.*;
@@ -13,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class client extends JFrame {
+public class initialLogin extends JFrame {
     // Declare UI components
     JLabel welcomeLabel, loginPromptLabel, usernameLabel, passwordLabel;
     JTextField usernameField;
@@ -23,7 +21,7 @@ public class client extends JFrame {
     Idgenerator idgenerator;
 
 
-    public client() {
+    public initialLogin() {
         // Set up the main frame properties
         super("User Login");
         setSize(400, 350);
@@ -143,7 +141,7 @@ public class client extends JFrame {
     }
 
     public static void main(String[] args) {
-        new client();
+        new initialLogin();
     }
 
 }

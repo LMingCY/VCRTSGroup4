@@ -4,8 +4,7 @@ import backend.dashboard.ClientDashboard;
 import backend.job.Job;
 import backend.login.User;
 import backend.master.NumericTextField;
-import frontend.main;
-import frontend.userMain;
+import frontend.main.userMain;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,6 @@ import java.io.*;
 import java.net.Socket;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class client_dash extends JFrame {
     private JTextField jobNameField, jobDurationField, jobDeadlineField;
