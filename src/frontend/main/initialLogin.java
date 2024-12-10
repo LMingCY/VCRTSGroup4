@@ -2,7 +2,7 @@ package frontend.main;
 
 import backend.MySQL.Driver;
 import backend.login.User;
-import frontend.createAccount;
+import frontend.misc.createAccount;
 import frontend.vc.vc_dash;
 
 import javax.swing.*;
