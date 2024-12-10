@@ -2,14 +2,10 @@ package frontend.vc;
 
 import backend.dashboard.AdminDashboard;
 import backend.login.User;
-import frontend.main;
+import frontend.main.initialLogin;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class vc_dash extends JFrame {
     private JLabel adminInfoLabel;
@@ -82,7 +78,7 @@ public class vc_dash extends JFrame {
     private void setupListeners() {
         logoutButton.addActionListener(e -> {
             dispose();
-            main.getMainFrame();
+            new initialLogin();
         });
         manageJobsButton.addActionListener(e -> {
             manage_job jobManager = manage_job.getInstance(admin);
