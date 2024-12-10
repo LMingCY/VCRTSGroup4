@@ -1,4 +1,4 @@
-package frontend.misc;
+package frontend.vc;
 
 import backend.login.User;
 import backend.master.Idgenerator;
