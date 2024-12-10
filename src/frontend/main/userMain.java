@@ -12,26 +12,32 @@ import java.awt.event.ActionListener;
 public class userMain {
     private JFrame mainFrame;
     private JPanel mainPanel, buttonPanel;
-    private JButton selectUser, selectOwner;
+    private JButton selectUser, selectOwner, signOut;
     private User user;
+
     public userMain(User user) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.user = user;
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         getMainFrame();
     }
+
     private void setButtons() {
         selectUser = new JButton("Client Dashboard");
         selectOwner = new JButton("Owner Dashboard");
+        signOut = new JButton("Sign Out");
 
         Color buttonColor = new Color(100, 150, 250);
         selectUser.setBackground(buttonColor);
         selectUser.setForeground(Color.WHITE);
         selectOwner.setBackground(buttonColor);
         selectOwner.setForeground(Color.WHITE);
+        signOut.setBackground(buttonColor);
+        signOut.setForeground(Color.WHITE);
 
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         selectUser.setFont(buttonFont);
         selectOwner.setFont(buttonFont);
+        signOut.setFont(buttonFont);
 
         selectUser.addActionListener(new ActionListener() {
             @Override
@@ -48,6 +54,14 @@ public class userMain {
                 mainFrame.dispose();
             }
         });
+
+        signOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.dispose();
+                new initialLogin();
+            }
+        });
     }
 
     private void setButtonPanel() {
@@ -55,6 +69,7 @@ public class userMain {
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
+        buttonPanel.add(signOut);
     }
 
     private void setMainPanel() {
@@ -64,7 +79,7 @@ public class userMain {
 
         mainPanel.setBackground(new Color(240, 240, 240));
 
-        JLabel welcomeMessage, userSelectMessage;
+        JLabel welcomeMessage;
         welcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
 
         Font labelFont = new Font("Arial", Font.BOLD, 18);
@@ -87,6 +102,7 @@ public class userMain {
         mainFrame.setResizable(true);
         mainFrame.add(mainPanel, BorderLayout.CENTER);
     }
+
     public void getMainFrame() {
         setButtons();
         setButtonPanel();
@@ -95,5 +111,4 @@ public class userMain {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
     }
-
 }
