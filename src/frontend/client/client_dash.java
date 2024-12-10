@@ -4,6 +4,7 @@ import backend.dashboard.ClientDashboard;
 import backend.job.Job;
 import backend.login.User;
 import backend.master.NumericTextField;
+import com.toedter.calendar.JDateChooser;
 import frontend.main.userMain;
 
 import javax.swing.*;
@@ -13,6 +14,9 @@ import java.io.*;
 import java.net.Socket;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class client_dash extends JFrame {
     private JTextField jobNameField, jobDurationField, jobDeadlineField;
@@ -20,12 +24,8 @@ public class client_dash extends JFrame {
     private Job job;
     private User user;
     private ClientDashboard clientDashboard = new ClientDashboard();
-    private LocalDate deadline = LocalDate.of(2024,12,30);
+    private JDateChooser dateChooser = new JDateChooser();
 
-    //these are the client-server components
-    private Socket socket;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
 
     public client_dash(User user) {
         createClientDash(user);
@@ -120,7 +120,7 @@ public class client_dash extends JFrame {
         gbc.gridx = 0;
         mainPanel.add(jobDeadlineLabel, gbc);
         gbc.gridx = 1;
-        mainPanel.add(jobDeadlineField, gbc);
+        mainPanel.add(dateChooser, gbc);
 
         gbc.gridy++;
         gbc.gridx = 0; gbc.gridwidth = 2;
@@ -142,7 +142,11 @@ public class client_dash extends JFrame {
     }
 
     private void submitData(ActionEvent e) {
-        job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), deadline);
+        Date selectedDate = dateChooser.getDate();
+        LocalDate localDate = selectedDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        job = clientDashboard.addJob(jobNameField.getText(), user.getUserId(), Duration.ofMinutes(Integer.parseInt(jobDurationField.getText())), localDate);
         saveToFile(job.toString());
         try (Socket socket = new Socket("localhost", 25565);
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
