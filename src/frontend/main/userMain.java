@@ -66,7 +66,7 @@ public class userMain {
 
     private void setButtonPanel() {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setBackground(new Color(240, 240, 240));
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
         buttonPanel.add(signOut);
@@ -76,15 +76,11 @@ public class userMain {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         mainPanel.setBackground(new Color(240, 240, 240));
 
-        JLabel welcomeMessage;
-        welcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
-
+        JLabel welcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
         Font labelFont = new Font("Arial", Font.BOLD, 18);
         welcomeMessage.setFont(labelFont);
-
         welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(Box.createVerticalStrut(20));
@@ -100,6 +96,7 @@ public class userMain {
         mainFrame.setSize(400, 300);
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setResizable(true);
+        mainFrame.getContentPane().setBackground(new Color(240, 240, 240));
         mainFrame.add(mainPanel, BorderLayout.CENTER);
     }
 
@@ -112,3 +109,4 @@ public class userMain {
         mainFrame.setVisible(true);
     }
 }
+
