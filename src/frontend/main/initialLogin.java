@@ -31,14 +31,15 @@ public class initialLogin extends JFrame {
         panel.setBackground(new Color(240, 240, 240));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(5, 10, 5, 10); // Slightly smaller vertical insets
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         welcomeLabel = new JLabel("Welcome to VCRTS!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        generalWelcomeMessage = new JLabel("<html><div style='text-align:center;'><br>Use our features to either rent out your vehicle or post a job!</div></html>");
+ 
+        generalWelcomeMessage = new JLabel("<html><div style='text-align:center;'>Use our features to either rent out your vehicle or post a job!</div></html>");
         generalWelcomeMessage.setFont(new Font("Arial", Font.PLAIN, 14));
 
         loginPromptLabel = new JLabel("Please login:");
