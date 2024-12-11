@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class userMain {
     private JFrame mainFrame;
-    private JPanel mainPanel;
+    private JPanel mainPanel, buttonPanel;
     private JButton selectUser, selectOwner;
     private User user;
 
@@ -35,9 +35,6 @@ public class userMain {
         selectUser.setFont(buttonFont);
         selectOwner.setFont(buttonFont);
 
-        selectUser.setFocusPainted(false);
-        selectOwner.setFocusPainted(false);
-
         selectUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -49,62 +46,56 @@ public class userMain {
         selectOwner.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mainFrame.dispose();
                 new owner_dash(user);
+                mainFrame.dispose();
             }
         });
     }
 
-    private void setMainPanel() {
-        mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(240, 240, 240));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel welcomeLabel = new JLabel("Welcome to VCRTS!");
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(welcomeLabel, gbc);
-
-        JLabel generalWelcomeMessage = new JLabel("Welcome to our VCRTS! Use our features to either rent out your vehicle or post a job!");
-        generalWelcomeMessage.setFont(new Font("Arial", Font.PLAIN, 14));
-        generalWelcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
-        gbc.gridy++;
-        mainPanel.add(generalWelcomeMessage, gbc);
-
-        JLabel userWelcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
-        userWelcomeMessage.setFont(new Font("Arial", Font.BOLD, 16));
-        gbc.gridy++;
-        mainPanel.add(userWelcomeMessage, gbc);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    private void setButtonPanel() {
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(selectOwner);
         buttonPanel.add(selectUser);
+    }
 
-        gbc.gridy++;
-        gbc.gridwidth = 2; 
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(buttonPanel, gbc);
+    private void setMainPanel() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        mainPanel.setBackground(new Color(240, 240, 240));
+
+        JLabel welcomeMessage;
+        welcomeMessage = new JLabel("Welcome, " + user.getName() + "!");
+
+        Font labelFont = new Font("Arial", Font.BOLD, 18);
+        welcomeMessage.setFont(labelFont);
+
+        welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(welcomeMessage);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(buttonPanel);
+        mainPanel.add(Box.createVerticalStrut(20));
     }
 
     public void setMainFrame() {
         mainFrame = new JFrame("VCRTS Dashboard");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 300);
+        mainFrame.setLayout(new BorderLayout());
         mainFrame.setResizable(true);
         mainFrame.add(mainPanel, BorderLayout.CENTER);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
     }
 
     public void getMainFrame() {
         setButtons();
+        setButtonPanel();
         setMainPanel();
         setMainFrame();
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
     }
 }
-
