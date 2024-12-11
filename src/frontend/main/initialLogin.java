@@ -2,7 +2,7 @@ package frontend.main;
 
 import backend.MySQL.Driver;
 import backend.login.User;
-import frontend.vc.createAccount;
+import frontend.misc.createAccount;
 import frontend.vc.vc_dash;
 
 import javax.swing.*;
@@ -19,7 +19,6 @@ public class initialLogin extends JFrame {
 
     public initialLogin() {
         super("User Login");
-        setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         setLocationRelativeTo(null);
@@ -33,13 +32,13 @@ public class initialLogin extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         welcomeLabel = new JLabel("Welcome to VCRTS!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
-        generalWelcomeMessage = new JLabel("Welcome to our VCRTS! Use our features to either rent out your vehicle or post a job!");
+        generalWelcomeMessage = new JLabel("<html><div style='text-align:center;'>Welcome to our VCRTS!<br>Use our features to either rent out your vehicle or post a job!</div></html>");
         generalWelcomeMessage.setFont(new Font("Arial", Font.PLAIN, 14));
-        generalWelcomeMessage.setHorizontalAlignment(SwingConstants.CENTER);
 
         loginPromptLabel = new JLabel("Please login:");
         loginPromptLabel.setFont(labelFont);
@@ -64,8 +63,8 @@ public class initialLogin extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
 
-        // Layout the components
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         panel.add(welcomeLabel, gbc);
 
         gbc.gridy++;
@@ -92,6 +91,8 @@ public class initialLogin extends JFrame {
         panel.add(backButton, gbc);
 
         add(panel);
+        pack(); 
+        setResizable(false);
         setVisible(true);
 
         loginButton.addActionListener(new ActionListener() {
@@ -133,3 +134,4 @@ public class initialLogin extends JFrame {
         new initialLogin();
     }
 }
+
