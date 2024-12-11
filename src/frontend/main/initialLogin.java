@@ -20,7 +20,6 @@ public class initialLogin extends JFrame {
     public initialLogin() {
         super("User Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
         setLocationRelativeTo(null);
 
         Color buttonColor = new Color(100, 150, 250);
@@ -29,9 +28,10 @@ public class initialLogin extends JFrame {
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.insets = new Insets(10, 10, 10, 10); 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         welcomeLabel = new JLabel("Welcome to VCRTS!");
@@ -49,9 +49,9 @@ public class initialLogin extends JFrame {
         passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
 
-        usernameField = new JTextField(10);
+        usernameField = new JTextField(12);
         usernameField.setFont(fieldFont);
-        passwordField = new JPasswordField(10);
+        passwordField = new JPasswordField(12);
         passwordField.setFont(fieldFont);
 
         loginButton = new JButton("Login");
