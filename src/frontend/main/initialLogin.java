@@ -2,7 +2,7 @@ package frontend.main;
 
 import backend.MySQL.Driver;
 import backend.login.User;
-import frontend.misc.createAccount;
+import frontend.vc.createAccount;
 import frontend.vc.vc_dash;
 
 import javax.swing.*;
@@ -36,6 +36,7 @@ public class initialLogin extends JFrame {
 
         welcomeLabel = new JLabel("Welcome to VCRTS!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         generalWelcomeMessage = new JLabel("<html><div style='text-align:center;'>Welcome to our VCRTS!<br>Use our features to either rent out your vehicle or post a job!</div></html>");
         generalWelcomeMessage.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -91,7 +92,7 @@ public class initialLogin extends JFrame {
         panel.add(backButton, gbc);
 
         add(panel);
-        pack(); 
+        pack();
         setResizable(false);
         setVisible(true);
 
