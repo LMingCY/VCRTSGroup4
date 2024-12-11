@@ -29,16 +29,15 @@ public class initialLogin extends JFrame {
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 5, 10); // Slightly smaller vertical insets
+        gbc.insets = new Insets(15, 15, 15, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         welcomeLabel = new JLabel("Welcome to VCRTS!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
- 
         generalWelcomeMessage = new JLabel("<html><div style='text-align:center;'>Use our features to either rent out your vehicle or post a job!</div></html>");
         generalWelcomeMessage.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -50,17 +49,17 @@ public class initialLogin extends JFrame {
         passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
 
-        usernameField = new JTextField(15);
+        usernameField = new JTextField(10);
         usernameField.setFont(fieldFont);
-        passwordField = new JPasswordField(15);
+        passwordField = new JPasswordField(10);
         passwordField.setFont(fieldFont);
 
-        loginButton = new JButton("         Login          ");
+        loginButton = new JButton("Login");
         loginButton.setBackground(buttonColor);
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(labelFont);
 
-        backButton = new JButton(" Create Account");
+        backButton = new JButton("Create Account");
         backButton.setBackground(buttonColor);
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
@@ -136,4 +135,5 @@ public class initialLogin extends JFrame {
         new initialLogin();
     }
 }
+
 
