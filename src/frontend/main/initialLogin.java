@@ -2,7 +2,7 @@ package frontend.main;
 
 import backend.MySQL.Driver;
 import backend.login.User;
-import frontend.vc.createAccount;
+import frontend.misc.createAccount;
 import frontend.vc.vc_dash;
 
 import javax.swing.*;
@@ -64,6 +64,7 @@ public class initialLogin extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.setFont(labelFont);
 
+        // Layout the components
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         panel.add(welcomeLabel, gbc);
 
@@ -86,6 +87,7 @@ public class initialLogin extends JFrame {
 
         gbc.gridy++; gbc.gridx = 0; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
         panel.add(loginButton, gbc);
+
         gbc.gridy++;
         panel.add(backButton, gbc);
 
@@ -111,7 +113,6 @@ public class initialLogin extends JFrame {
                     } else {
                         new vc_dash(user);
                     }
-
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
