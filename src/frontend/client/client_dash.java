@@ -15,11 +15,10 @@ import java.net.Socket;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class client_dash extends JFrame {
-    private JTextField jobIDField, jobDurationField, jobDeadlineField;
+    private JTextField jobIDField, jobDurationField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
     private Job job;
     private User user;
@@ -155,7 +154,7 @@ public class client_dash extends JFrame {
             JOptionPane.showMessageDialog(this, "Job sent to server! Waiting for Controller...");
             jobIDField.setEnabled(false);
             jobDurationField.setEnabled(false);
-            jobDeadlineField.setEnabled(false);
+            dateChooser.setEnabled(false);
             submitButton.setEnabled(false);
 
             String response = in.readUTF();
@@ -164,15 +163,15 @@ public class client_dash extends JFrame {
             if (response.equalsIgnoreCase("Rejected")) {
                 jobIDField.setEnabled(true);
                 jobDurationField.setEnabled(true);
-                jobDeadlineField.setEnabled(true);
+                dateChooser.setEnabled(true);
                 submitButton.setEnabled(true);
             } else {
                 jobIDField.setText("");
                 jobDurationField.setText("");
-                jobDeadlineField.setText("");
+                dateChooser.setCalendar(null);
                 jobIDField.setEnabled(true);
                 jobDurationField.setEnabled(true);
-                jobDeadlineField.setEnabled(true);
+                dateChooser.setEnabled(true);
                 submitButton.setEnabled(true);
                 saveToFile(job.toString());
             }
@@ -185,7 +184,7 @@ public class client_dash extends JFrame {
     private void clearFields() {
         jobIDField.setText("");
         jobDurationField.setText("");
-        jobDeadlineField.setText("");
+        dateChooser.setCalendar(null);
     }
 
     private void signOut() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
